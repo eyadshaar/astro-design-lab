@@ -1,0 +1,503 @@
+# Design Resource Catalog — UiSavior X Post
+# Source: https://x.com/UiSavior/status/2058571337614893489
+# Extracted: 2026-05-27
+
+## LINK EXTRACTION REPORT
+
+From the X post image (tweet ID 2058571337614893489 by @UiSavior), the following resource links were extracted and expanded:
+
+| Short URL | Expanded URL | Category Label |
+|-----------|-------------|----------------|
+| t.co/0ADfKyDrQ5 | https://navbar.gallery/ | Navbar |
+| t.co/CDk7WlCG83 | https://saaspo.com/ | SaaS |
+| t.co/IW20suy7rd | https://appmotion.design/ | Animation |
+| t.co/LZaaK4dbEA | https://landing.love/ | Animation |
+| t.co/N0p5xQYR0K | https://appmotion.design/ | Animation |
+| t.co/vTfMGSgYtS | https://saaspo.com/ | SaaS |
+| t.co/vy0wk4V0be | https://landing.love/ | Landing |
+| t.co/1YHU4yfOxW | https://navbar.gallery/ | Navbar |
+| t.co/EacR7Liy9H | https://saaspo.com/ | SaaS |
+| t.co/IDTg0fRObK | https://curated.design/ | Design |
+| t.co/Q38cExyN5c | https://rebrand.gallery/ | Brands |
+| t.co/RyMj2EzdSM | https://hugeicons.com/ | Icons |
+| t.co/VfRAI7e5Ch | https://appmotion.design/ | Mobile |
+| t.co/bFOrpIgWIW | https://cta.gallery/ | CTA |
+| t.co/gxq43FqLG3 | https://mobbin.com/ | Mobile |
+| t.co/s4MyCFjQSD | https://component.gallery/ | Design Systems |
+| t.co/ulUYJp3EDf | https://landing.love/ | Landing |
+
+Deduplicated resource list:
+1. https://navbar.gallery/
+2. https://saaspo.com/
+3. https://appmotion.design/
+4. https://landing.love/
+5. https://curated.design/
+6. https://rebrand.gallery/
+7. https://hugeicons.com/
+8. https://mobbin.com/
+9. https://component.gallery/
+10. https://cta.gallery/
+
+---
+
+## RESOURCE CATALOG (JSON)
+
+```json
+[
+  {
+    "name": "Navbar Gallery",
+    "url": "https://navbar.gallery/",
+    "category": "Navbar Patterns",
+    "best_for": "Navigation design inspiration. Find static navbars, sticky navs, dropdowns, mega menus, sidebars, search bars, announcement bars, full-screen menus, and breadcrumbs.",
+    "visual_patterns": [
+      "Static top bar navbars",
+      "Sticky-to-solid transition navbars",
+      "Mega menu dropdowns",
+      "Sidebar navigation panels",
+      "Full-screen overlay navs",
+      "Announcement banner + nav combos",
+      "Breadcrumb trails",
+      "Search-integrated navbars"
+    ],
+    "interaction_patterns": [
+      "Hover reveal dropdowns",
+      "Click-triggered mega menus",
+      "Scroll-based navbar transparency changes",
+      "Mobile hamburger drawer",
+      "Command palette search (Cmd+K)"
+    ],
+    "copy_patterns": [
+      "Concise top-level labels (4-7 chars typical)",
+      "Descriptive mega menu section headers",
+      "Utility-first right-nav items (Sign in, Pricing, Docs)"
+    ],
+    "section_patterns": [
+      "Navbar + hero composition",
+      "Sticky nav contextual content",
+      "Local nav sidebar layouts"
+    ],
+    "usable_principles": [
+      "Navigation should signal product complexity — simple products get simple navs",
+      "Mega menus work for content-heavy B2B; avoid for simple SaaS",
+      "Transparent-to-solid on scroll creates polish without complexity",
+      "Right-side utility nav (Sign in, CTAs) increases conversion vs left-only",
+      "Mobile bottom navigation outperforms hamburger for core actions"
+    ],
+    "avoid_copying": [
+      "Exact navbar layouts from specific brands",
+      "Dropdown structures verbatim",
+      "Color/typography choices of featured sites"
+    ],
+    "notes": "Site shows real brand navbars with visit counts. Good for understanding what industry leaders use. Curated by Christina Liubynska."
+  },
+  {
+    "name": "SaaS Po",
+    "url": "https://saaspo.com/",
+    "category": "SaaS Website Inspiration",
+    "best_for": "SaaS product landing pages, B2B tool marketing, developer tool sites, subscription product positioning.",
+    "visual_patterns": [
+      "Bold typography hero sections",
+      "Dark-themed developer/AI tool sites",
+      "Light editorial SaaS layouts",
+      "Feature animation showcases",
+      "Pricing section layouts",
+      "Social proof strips",
+      "Integration/logo cloud sections"
+    ],
+    "interaction_patterns": [
+      "Scroll-triggered feature reveals",
+      "Interactive pricing toggles",
+      "Demo video embeds",
+      "Tab-based feature comparisons"
+    ],
+    "copy_patterns": [
+      "Outcome-focused headlines",
+      "Specificity over vagueness (numbers, roles, industries)",
+      "Feature + benefit hybrid phrasing"
+    ],
+    "section_patterns": [
+      "Hero → Problem → Features → Proof → Pricing → CTA",
+      "Logo cloud → Feature deep-dive → Use cases",
+      "Comparison table → Pricing tiers → FAQ"
+    ],
+    "usable_principles": [
+      "SaaS landing pages need a dominant visual metaphor beyond 'gradient blob'",
+      "Proof must be specific: named companies, quantified outcomes, named users",
+      "Pricing should reduce cognitive load — 3 tiers max, clear recommended pick",
+      "Integration logos increase trust faster than feature lists",
+      "Dark/technical themes work for dev tools; avoid for SMB-facing products"
+    ],
+    "avoid_copying": [
+      "Generic 'supercharge your workflow' language",
+      "Centered three-card feature grid as default",
+      "Fake animated gradient blobs",
+      "Stock photography of laptops and phones"
+    ],
+    "notes": "Currently blocks automated access (Cloudflare). Use browser access for full browsing. Curated SaaS examples from real products."
+  },
+  {
+    "name": "AppMotion",
+    "url": "https://appmotion.design/",
+    "category": "Animation & Mobile Inspiration",
+    "best_for": "Mobile app design patterns, scroll animation inspiration, microinteraction ideas, app onboarding flows.",
+    "visual_patterns": [
+      "Full-page video website recordings",
+      "App UI animation showcases",
+      "Mobile-first layout patterns",
+      "Gesture-based navigation examples",
+      "Onboarding flow designs"
+    ],
+    "interaction_patterns": [
+      "Scroll-linked animations",
+      "Page transition animations",
+      "Pull-to-refresh patterns",
+      "Swipe gesture UIs",
+      "Loading state animations"
+    ],
+    "copy_patterns": [
+      "Action-oriented app descriptions",
+      "Feature highlight phrases"
+    ],
+    "section_patterns": [
+      "App preview hero",
+      "Feature showcase with animation",
+      "Onboarding step flow",
+      "Dashboard UI preview"
+    ],
+    "usable_principles": [
+      "Mobile animations must degrade gracefully — always offer reduced-motion fallback",
+      "App landing pages should show the actual UI, not marketing illustrations",
+      "Onboarding patterns: skip-first, progressive disclosure, progress indication",
+      "Motion should clarify state, not just decorate"
+    ],
+    "avoid_copying": [
+      "Exact app screenshots or UI",
+      "App icon designs",
+      "Specific onboarding copy"
+    ],
+    "notes": "Framer site — currently shows 'Site Not Found'. The resource may have moved or the Framer project was unpublished. Check for redirects or use Wayback Machine."
+  },
+  {
+    "name": "Landing.love",
+    "url": "https://landing.love/",
+    "category": "Animation & Landing Page Inspiration",
+    "best_for": "Award-winning landing page designs, scroll animation examples, WebGL/3D effects, horizontal scroll layouts, minimal design inspiration.",
+    "visual_patterns": [
+      "3D WebGL hero sections",
+      "Horizontal scroll sections within vertical page",
+      "Full-page video backgrounds",
+      "Minimal typography-forward layouts",
+      "Gradient and dark mode variations",
+      "GSAP animation showcases",
+      "Three.js experimental sites"
+    ],
+    "interaction_patterns": [
+      "Scroll-hijacked horizontal galleries",
+      "Parallax depth layers",
+      "Mouse-tracked 3D transforms",
+      "Text reveal on scroll",
+      "Marquee continuous scroll"
+    ],
+    "copy_patterns": [
+      "Short punchy headlines (under 5 words common)",
+      "Single-value proposition per section"
+    ],
+    "section_patterns": [
+      "Cinematic video hero",
+      "Horizontal scroll gallery (inside vertical page)",
+      "Minimal feature reveal",
+      "Studio/agency portfolio grid"
+    ],
+    "usable_principles": [
+      "Horizontal scroll sections create surprise and pacing variety within a standard vertical page",
+      "3D/WebGL effects work for high-end brands; performance cost must be justified",
+      "Minimal design requires stronger typography and whitespace discipline",
+      "Animation should support narrative, not replace content",
+      "Dark mode is not a design system — it is a color mode"
+    ],
+    "avoid_copying": [
+      "Specific Three.js scene layouts",
+      "Exact horizontal scroll patterns from specific brands",
+      "Particular gradient recipes"
+    ],
+    "notes": "Features 2049 animation/landing sites. Filterable by style (Dark Mode, Gradient, Retro), platform (Webflow, Framer), and category (SaaS, AI, Portfolio, etc.). Excellent for section-level pattern study."
+  },
+  {
+    "name": "Curated.design",
+    "url": "https://curated.design/",
+    "category": "Web Design Inspiration",
+    "best_for": "General web design inspiration, portfolio sites, agency work, editorial layouts, Readymag/Figma showcase pieces.",
+    "visual_patterns": [
+      "Editorial magazine-style layouts",
+      "Portfolio grid systems",
+      "Service-focused agency pages",
+      "Case study presentations",
+      "Typography-dominant compositions"
+    ],
+    "interaction_patterns": [
+      "Grid-based portfolio navigation",
+      "Hover reveal additional info",
+      "Smooth scroll within magazine layouts"
+    ],
+    "copy_patterns": [
+      "Agency tagline positioning",
+      "Service category descriptions",
+      "Case study summary framing"
+    ],
+    "section_patterns": [
+      "Portfolio grid home",
+      "Service list with category grouping",
+      "Case study hero → proof → detail flow"
+    ],
+    "usable_principles": [
+      "Agency/portfolio sites need personality visible above the fold — not generic grid",
+      "Editorial layout pacing: strong headline → supporting evidence → space to breathe",
+      "Case studies should front-load the outcome, not the process"
+    ],
+    "avoid_copying": [
+      "Specific portfolio piece layouts",
+      "Agency brand identities",
+      "Firm-specific service page structures"
+    ],
+    "notes": "Run by Craftwork. Features curated websites originally shared on the platform. Has both free (curated inspiration) and Pro (resouce packs) tiers."
+  },
+  {
+    "name": "Rebrand.gallery",
+    "url": "https://rebrand.gallery/",
+    "category": "Brand & Visual Identity",
+    "best_for": "Brand identity launches, visual identity systems, logo redesigns, design system reveals, brand repositioning examples.",
+    "visual_patterns": [
+      "Before/after rebrand reveals",
+      "Logo system presentations",
+      "Color palette showcases",
+      "Typography specimen displays",
+      "Brand identity mockup applications"
+    ],
+    "interaction_patterns": [
+      "Side-by-side brand comparisons",
+      "Animated logo reveal treatments"
+    ],
+    "copy_patterns": [
+      "Rebrand rationale narratives",
+      "Brand positioning statements"
+    ],
+    "section_patterns": [
+      "Logo system showcase",
+      "Color + typography specimen",
+      "Brand application mockup gallery"
+    ],
+    "usable_principles": [
+      "Brand identity should be visible across all touchpoints consistently",
+      "Rebrand reveals work as storytelling — before context matters",
+      "Color system is a design tool, not just decoration"
+    ],
+    "avoid_copying": [
+      "Specific logo designs",
+      "Brand color palettes",
+      "Typography pairing decisions"
+    ],
+    "notes": "Curated by Sahkyo. Good for understanding brand identity best practices and what makes a rebrand feel cohesive vs forced."
+  },
+  {
+    "name": "Hugeicons",
+    "url": "https://hugeicons.com/",
+    "category": "Icon Libraries",
+    "best_for": "Icon systems, UI icon sets, product icon design, VS Code extensions, React/Figma/SVG icon implementation.",
+    "visual_patterns": [
+      "Stroke-based icons",
+      "Filled/rounded icons",
+      "Duotone icon treatments",
+      "Icon + text combo treatments"
+    ],
+    "interaction_patterns": [
+      "Hover state icon style switching (stroke ↔ solid)",
+      "Icon search and filtering"
+    ],
+    "copy_patterns": [
+      "Icon set naming conventions"
+    ],
+    "section_patterns": [
+      "Icon showcase grid",
+      "Style variant comparisons",
+      "UI context examples (dropdown, mobile, card)"
+    ],
+    "usable_principles": [
+      "Icon consistency matters more than icon count",
+      "Stroke icons read better at small sizes; filled icons work for emphasis",
+      "Icon sets should have a single optical weight across all icons",
+      "Icon typography pairing: match stroke weight to text weight"
+    ],
+    "avoid_copying": [
+      "Specific icon shapes",
+      "Icon set naming conventions verbatim",
+      "Hugeicons branding elements"
+    ],
+    "notes": "51,000+ icons. Free tier available. Pro tier for expanded libraries. Useful for component-level icon integration patterns."
+  },
+  {
+    "name": "Mobbin",
+    "url": "https://mobbin.com/",
+    "category": "Mobile App & UX Inspiration",
+    "best_for": "Mobile app UI patterns, user flow inspiration, iOS/Android design patterns, app onboarding, dashboard layouts, settings flows.",
+    "visual_patterns": [
+      "iOS design pattern library",
+      "Android Material patterns",
+      "App store landing page layouts",
+      "Dashboard UI grids",
+      "Profile/account setup flows"
+    ],
+    "interaction_patterns": [
+      "Swipe navigation patterns",
+      "Bottom sheet interactions",
+      "Pull-to-refresh",
+      "FAB (floating action button) usage",
+      "Tab bar navigation"
+    ],
+    "copy_patterns": [
+      "Mobile-first microcopy",
+      "Onboarding step labels",
+      "Empty state messaging"
+    ],
+    "section_patterns": [
+      "App hero + feature strip",
+      "User onboarding flow",
+      "Settings/Preferences tree",
+      "Search + filter interface"
+    ],
+    "usable_principles": [
+      "Mobile design is its own discipline — do not stack desktop sections",
+      "Bottom navigation for core actions; hamburger for secondary navigation",
+      "Gestures (swipe, pull) reduce UI clutter if discoverable",
+      "Dashboard mobile: prioritize 3-4 KPIs, not full data tables"
+    ],
+    "avoid_copying": [
+      "Specific app UI screenshots",
+      "App icon designs",
+      "Named app flows"
+    ],
+    "notes": "1,704 apps, 588,100 screens, 135,100 flows. Massive resource. Best used for pattern-level inspiration, not visual copying."
+  },
+  {
+    "name": "Component.gallery",
+    "url": "https://component.gallery/",
+    "category": "Design Systems & Components",
+    "best_for": "Design system component reference, component naming, component structure, accessibility guidance, code pattern examples.",
+    "visual_patterns": [
+      "Clean component showcase cards",
+      "Dark/light mode component previews",
+      "Component anatomy labels",
+      "Accessibility annotation overlays"
+    ],
+    "interaction_patterns": [
+      "Component state switching (default/hover/active/disabled)",
+      "Dark/light mode toggle",
+      "Code snippet switching (React/Vue/HTML)"
+    ],
+    "copy_patterns": [
+      "Component naming conventions",
+      "Variant labeling systems"
+    ],
+    "section_patterns": [
+      "Component index → detail drill-down",
+      "Design system overview",
+      "Component usage guidelines"
+    ],
+    "usable_principles": [
+      "Component naming should be semantic (what it IS, not what it LOOKS like)",
+      "Components need documented: default, hover, active, disabled, empty, loading states",
+      "Design system components should be platform-agnostic at the concept level",
+      "Accessibility is not optional — every component needs ARIA roles documented"
+    ],
+    "avoid_copying": [
+      "Specific component code",
+      "Component library branding",
+      "Design system token structures verbatim"
+    ],
+    "notes": "60 components, 95 design systems, 2,672 examples. Excellent for understanding how to structure a component library and name components consistently."
+  },
+  {
+    "name": "CTA.gallery",
+    "url": "https://cta.gallery/",
+    "category": "CTA (Call-to-Action) Patterns",
+    "best_for": "Button design, conversion copywriting, CTA section layouts, pricing CTAs, download CTAs, newsletter signup forms, modal/popup patterns.",
+    "visual_patterns": [
+      "High-contrast CTA buttons",
+      "Full-width CTA sections",
+      "Multi-step form layouts",
+      "Pricing table CTA cells",
+      "Modal dialog triggers"
+    ],
+    "interaction_patterns": [
+      "Button hover micro-animations",
+      "Form input focus states",
+      "Modal trigger + close patterns",
+      "Newsletter signup submit flow"
+    ],
+    "copy_patterns": [
+      "Outcome-focused CTA copy (not 'Submit', but 'Get my report')",
+      "Specificity in CTA value props",
+      "Social proof in CTA proximity (logos, review stars)"
+    ],
+    "section_patterns": [
+      "Above-the-fold CTA banner",
+      "Pricing tier CTA column",
+      "Final page CTA (final conviction)",
+      "Mid-content CTA interruption",
+      "Exit-intent modal CTA"
+    ],
+    "usable_principles": [
+      "CTA copy must name the user's desired outcome, not the action ('Book my audit' not 'Submit')",
+      "CTAs should be surrounded by proof — the button is the climax, not the opening",
+      "One primary CTA per section — multiple CTAs divide attention",
+      "Button color should contrast with surrounding palette — deliberate, not default",
+      "Form CTAs: reduce field count to minimum viable — every field drops conversion"
+    ],
+    "avoid_copying": [
+      "Specific button styles",
+      "Form field arrangements",
+      "CTA color palettes"
+    ],
+    "notes": "Filterable by CTA type (Button, Call-to-Buy, Download, Form, Modal, Navigation, Newsletter, Pricing). Good for understanding CTA section composition."
+  }
+]
+```
+
+---
+
+## CATEGORY GROUPINGS
+
+### Web Design Inspiration
+- curated.design — General web design, portfolios, editorial layouts
+
+### Landing Page Inspiration
+- landing.love — Award-winning animated landing pages, scroll effects
+- saaspo.com — SaaS product landing pages
+
+### SaaS Website Inspiration
+- saaspo.com — B2B SaaS, dev tools, AI product sites
+
+### Navbar Patterns
+- navbar.gallery — All navigation types (static, sticky, mega menu, sidebar, mobile)
+
+### CTA Sections
+- cta.gallery — Button design, forms, pricing CTAs, conversion sections
+
+### Animation Inspiration
+- landing.love — Scroll animations, WebGL, GSAP, horizontal scroll
+- appmotion.design — Mobile app animations, microinteractions
+
+### Mobile App Inspiration
+- mobbin.com — iOS/Android UI patterns, 1,700+ apps, user flows
+- appmotion.design — Mobile animation patterns
+
+### Brand & Visual Identity
+- rebrand.gallery — Logo redesigns, brand identity systems, color palettes
+
+### Icon Libraries
+- hugeicons.com — 51,000+ icon sets, stroke/filled/solid variants
+
+### Design Systems
+- component.gallery — Component naming, design tokens, accessibility, 60 components
+
+### Section-Level Design Ideas
+- All resources contribute to section patterns

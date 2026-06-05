@@ -1,0 +1,82 @@
+---
+// Quote.astro — Pull quote
+---
+<section class="quote-section">
+  <div class="quote-section__inner">
+    <span class="ornament quote-section__ornament">&#10022;</span>
+    <blockquote class="quote-section__text">
+      We built the rooms we wished existed: no plastic, no pretense, no programming.
+      Just the forest, and the time to hear it.
+    </blockquote>
+    <cite class="quote-section__cite">
+      <span class="quote-section__cite-line"></span>
+      <span>Maren Kvale, Founder — The Canopy House</span>
+    </cite>
+  </div>
+</section>
+
+<style>
+.quote-section {
+  background: var(--green-dark);
+  padding: var(--space-2xl) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.quote-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--amber), transparent);
+  opacity: 0.3;
+}
+
+.quote-section__inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.quote-section__ornament {
+  font-size: 1rem;
+  color: var(--amber);
+  opacity: 0.6;
+}
+
+.quote-section__text {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--cream);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+.quote-section__cite {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--amber-light);
+}
+
+.quote-section__cite-line {
+  display: block;
+  width: 36px;
+  height: 1px;
+  background: var(--amber);
+  opacity: 0.5;
+}
+</style>

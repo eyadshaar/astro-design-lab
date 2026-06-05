@@ -1,0 +1,35 @@
+name: "Design Research"
+description: "Track design research and resource extraction tasks"
+labels: ["research"]
+body:
+  - type: textarea
+    id: resource-urls
+    attributes:
+      label: "Resource URLs"
+      description: "Comma-separated list of URLs to research"
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: "Category"
+      options:
+        - Web Design Inspiration
+        - Landing Page Inspiration
+        - SaaS Website Inspiration
+        - Navbar Patterns
+        - CTA Sections
+        - Animation Inspiration
+        - Mobile App Inspiration
+        - Brand Inspiration
+        - Icon Libraries
+        - Design Systems
+        - Section Libraries
+        - Experimental / High-End References
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: "Research Notes"
+      description: "Patterns, principles, and observations"

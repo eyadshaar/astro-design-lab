@@ -1,0 +1,58 @@
+name: "QA Review"
+description: "Quality review checklist for a completed demo site"
+labels: ["qa"]
+body:
+  - type: input
+    id: site-path
+    attributes:
+      label: "Site Path"
+      description: "Path to the Astro app"
+    validations:
+      required: true
+  - type: input
+    id: originality-score
+    attributes:
+      label: "Originality Score (1-5)"
+      description: "Does it look meaningfully different from generic AI sites?"
+    validations:
+      required: true
+  - type: input
+    id: conversion-score
+    attributes:
+      label: "Conversion Score (1-5)"
+      description: "Is the CTA clear? Is trust built before asking for action?"
+    validations:
+      required: true
+  - type: input
+    id: design-score
+    attributes:
+      label: "Design Score (1-5)"
+      description: "Typography, spacing, rhythm, visual distinction"
+    validations:
+      required: true
+  - type: input
+    id: technical-score
+    attributes:
+      label: "Technical Score (1-5)"
+      description: "Clean Astro implementation, minimal JS, performance"
+    validations:
+      required: true
+  - type: input
+    id: maintainability-score
+    attributes:
+      label: "Maintainability Score (1-5)"
+      description: "Reusable components, clear structure, easy updates"
+    validations:
+      required: true
+  - type: input
+    id: deployment-score
+    attributes:
+      label: "Deployment Score (1-5)"
+      description: "Cloudflare Pages ready, build succeeds, URLs work"
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: "QA Notes"
+      description: "Issues found, improvements needed"

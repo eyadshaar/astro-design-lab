@@ -1,0 +1,149 @@
+---
+// Testimonials — 3 client testimonials on blush background
+const testimonials = [
+  {
+    quote:
+      'After just three sessions with Mara, I felt my chronic shoulder tension — held for fifteen years — begin to soften. Solace is unlike any wellness space I have encountered.',
+    author: 'Amara D.',
+    context: 'Somatic Therapy client, 6 months',
+    avatar: '/images/testimonial-avatar-1.jpg?w=200&q=80&auto=format&fit=crop&facepad=3&faces=1',
+    avatarAlt: 'Amara D., smiling woman with short hair',
+  },
+  {
+    quote:
+      "Theo's MBSR course gave me tools I use every single morning. For the first time in my life, I have a meditation practice that feels alive, not like a chore.",
+    author: 'James O.',
+    context: 'MBSR 8-week course graduate',
+    avatar: '/images/testimonial-avatar-2.jpg?w=200&q=80&auto=format&fit=crop&facepad=3&faces=1',
+    avatarAlt: 'James O., man with kind eyes',
+  },
+  {
+    quote:
+      'I came to the breathwork circle in a state of near-burnout. I left two hours later feeling like I had slept for a week. Priya holds the most incredible space.',
+    author: 'Lena S.',
+    context: 'Monthly Breathwork Circle attendee',
+    avatar: '/images/testimonial-avatar-3.jpg?w=200&q=80&auto=format&fit=crop&facepad=3&faces=1',
+    avatarAlt: 'Lena S., woman with warm smile',
+  },
+];
+---
+
+<section class="section section--blush">
+  <div class="container">
+    <div class="section__header reveal">
+      <p class="eyebrow">Voices</p>
+      <h2>What <span class="gradient-text">Our Clients</span> Say</h2>
+    </div>
+
+    <div class="testimonials stagger">
+      {testimonials.map((t) => (
+        <figure class="testimonial reveal">
+          <div class="testimonial__quote-mark" aria-hidden="true">"</div>
+          <blockquote class="testimonial__text">
+            <p>{t.quote}</p>
+          </blockquote>
+          <figcaption class="testimonial__author">
+            <img
+              src={t.avatar}
+              alt={t.avatarAlt}
+              class="testimonial__avatar"
+              loading="lazy"
+            />
+            <div>
+              <span class="testimonial__name">{t.author}</span>
+              <span class="testimonial__context">{t.context}</span>
+            </div>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+  }
+
+  .testimonial {
+    position: relative;
+    background: #fff;
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-soft);
+    transition: var(--transition);
+    margin: 0;
+  }
+
+  .testimonial:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card);
+  }
+
+  .testimonial {
+    border-left: 3px solid var(--color-amber);
+  }
+
+  .testimonial__quote-mark {
+    position: absolute;
+    top: var(--space-6);
+    left: var(--space-6);
+    font-family: var(--font-display);
+    font-size: 5rem;
+    line-height: 1;
+    color: var(--color-blush);
+    opacity: 0.6;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .testimonial__text {
+    position: relative;
+    z-index: 1;
+    margin-bottom: var(--space-6);
+    padding-top: var(--space-8);
+  }
+
+  .testimonial__text p {
+    font-size: 0.9375rem;
+    line-height: 1.8;
+    color: var(--color-text);
+    font-style: italic;
+  }
+
+  .testimonial__author {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .testimonial__avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top;
+    flex-shrink: 0;
+    border: 2px solid var(--color-blush);
+  }
+
+  .testimonial__name {
+    display: block;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: var(--color-text);
+  }
+
+  .testimonial__context {
+    display: block;
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    margin-top: 2px;
+  }
+
+  @media (max-width: 960px) {
+    .testimonials { grid-template-columns: 1fr; max-width: 540px; margin-inline: auto; }
+  }
+</style>

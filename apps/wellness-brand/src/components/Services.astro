@@ -1,0 +1,154 @@
+---
+// Services — practice cards with sage border
+const services = [
+  {
+    number: '01',
+    title: 'Mindfulness & Meditation',
+    description:
+      'Guided meditation and mindfulness-based stress reduction (MBSR) to quiet mental noise, improve foco, and cultivate steady, present awareness throughout your daily life.',
+    detail: '8-week MBSR course · Private 1:1 sessions · Group sittings on Tuesdays',
+    image: '/images/services-meditation.jpg?w=800&q=80&auto=format&fit=crop',
+    imageAlt: 'Person sitting in peaceful meditation near a window with morning light',
+  },
+  {
+    number: '02',
+    title: 'Conscious Breathwork',
+    description:
+      'Ancient and modern breathing techniques — from diaphragmatic breathing to holotropic breathwork — to release stored tension, regulate emotions, and restore nervous-system balance.',
+    detail: 'Private breathwork sessions · Breathwork circles (monthly) · Workshop series',
+    image: '/images/services-breathwork.jpg?w=800&q=80&auto=format&fit=crop',
+    imageAlt: 'Soft light filtering through curtains, evoking calm breath and stillness',
+  },
+  {
+    number: '03',
+    title: 'Somatic Therapy',
+    description:
+      'Body-based trauma therapy that helps you notice, move through, and release held patterns in the body. A gentle, empowering approach to healing that honors your whole self.',
+    detail: '1:1 somatic therapy · Movement workshops · Trauma-informed yoga',
+    image: '/images/services-somatic.jpg?w=800&q=80&auto=format&fit=crop',
+    imageAlt: 'Gentle stretching in a bright, minimalist studio space',
+  },
+];
+---
+
+<section id="services" class="section section--cream">
+  <div class="container">
+    <div class="section__header reveal">
+      <p class="eyebrow">What We Offer</p>
+      <h2><span class="gradient-text">Three Paths</span> to Presence</h2>
+      <p>
+        Each practice complements the others. Together they form a complete ecosystem
+        for healing — accessible to beginners and deep enough for experienced seekers.
+      </p>
+    </div>
+
+    <div class="services stagger">
+      {services.map((svc) => (
+        <article class="service-card reveal">
+          <div class="service-card__image-wrap kenburns">
+            <img
+              src={svc.image}
+              alt={svc.imageAlt}
+              class="service-card__image"
+              loading="lazy"
+            />
+            <span class="service-card__number" aria-hidden="true">{svc.number}</span>
+          </div>
+          <div class="service-card__body">
+            <h3 class="service-card__title">{svc.title}</h3>
+            <p class="service-card__desc">{svc.description}</p>
+            <p class="service-card__detail">{svc.detail}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .services {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+  }
+
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    border: 1.5px solid rgba(157, 180, 160, 0.25);
+    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card);
+    border-color: var(--color-sage);
+  }
+
+  .service-card__image-wrap {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+  }
+
+  .service-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .service-card:hover .service-card__image {
+    transform: scale(1.05);
+  }
+
+  .service-card__number {
+    position: absolute;
+    top: var(--space-4);
+    right: var(--space-4);
+    font-family: var(--font-display);
+    font-size: 2.75rem;
+    color: rgba(255,255,255,0.9);
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    line-height: 1;
+  }
+
+  .service-card__body {
+    padding: var(--space-7);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .service-card__title {
+    font-size: 1.625rem;
+    margin-bottom: var(--space-4);
+    color: var(--color-text);
+  }
+
+  .service-card__desc {
+    color: var(--color-muted);
+    font-size: 0.9375rem;
+    line-height: 1.8;
+    flex: 1;
+    margin-bottom: var(--space-5);
+  }
+
+  .service-card__detail {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-sage);
+    letter-spacing: 0.04em;
+    padding-top: var(--space-4);
+    border-top: 1px solid rgba(157, 180, 160, 0.2);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 960px) {
+    .services { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; }
+  }
+</style>

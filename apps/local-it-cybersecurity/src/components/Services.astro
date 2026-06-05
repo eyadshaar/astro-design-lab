@@ -1,0 +1,160 @@
+---
+const services = [
+  {
+    icon: `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M6 8h12M6 11h8"/></svg>`,
+    title: "Managed IT",
+    desc: "Full outsourced IT department — monitoring, patching, helpdesk, and strategic guidance for one fixed monthly price.",
+    tags: ["Help Desk", "Network Ops", "vCIO"]
+  },
+  {
+    icon: `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>`,
+    title: "Cybersecurity",
+    desc: "Advanced threat detection, endpoint protection, email security, and employee training — layered defense for real threats.",
+    tags: ["EDR", "SIEM", "MFA"]
+  },
+  {
+    icon: `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17.5 19H9a7 7 0 110-14h1.5m6 0a7 7 0 10-14 0"/><circle cx="19" cy="12" r="1"/></svg>`,
+    title: "Cloud Services",
+    desc: "Microsoft 365, Azure, and AWS management — migration, optimization, and ongoing governance with zero surprises.",
+    tags: ["M365", "Azure", "AWS"]
+  },
+  {
+    icon: `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>`,
+    title: "Data Backup & Recovery",
+    desc: "Military-grade 3-2-1 backup strategy with tested recovery runbooks. RTO under 4 hours or we credit your month.",
+    tags: ["BC/DR", "Cloud Backup", "Testing"]
+  },
+  {
+    icon: `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>`,
+    title: "Network Infrastructure",
+    desc: "Design, install, and manage wired and wireless networks built for performance and security — no corner cutting.",
+    tags: ["Wi-Fi 6", "SD-WAN", "Switches"]
+  },
+  {
+    icon: `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>`,
+    title: "IT Compliance",
+    desc: "HIPAA, SOC 2, PCI-DSS gap assessments and remediation support — get audit-ready without the audit panic.",
+    tags: ["HIPAA", "SOC 2", "PCI"]
+  }
+];
+
+const phoneNumber = "(503) 555-0142";
+---
+
+<section class="services section" id="services">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="tag">What We Do</span>
+      <h2><span class="gradient-text">Full-Stack IT & Security</span></h2>
+      <p>From day-to-day helpdesk to round-the-clock threat monitoring — we handle every layer of your technology stack.</p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="services-grid stagger">
+      {services.map(service => (
+        <div class="service-card card reveal">
+          <div class="service-icon" set:html={service.icon} />
+          <h3 class="service-title">{service.title}</h3>
+          <p class="service-desc">{service.desc}</p>
+          <div class="service-tags">
+            {service.tags.map(tag => <span class="service-tag">{tag}</span>)}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="services-cta">
+      <p>Not sure what you need? Let's talk it through — free consultation.</p>
+      <a href="tel:+150****0142" class="btn btn-primary">
+        Call (503) 555-0142
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .services {
+    background: var(--warm-gray);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    transition: all 0.4s var(--ease-spring);
+  }
+
+  .service-card.reveal:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(184, 122, 58, 0.18);
+  }
+
+  .service-icon {
+    color: var(--amber);
+    width: 36px;
+    height: 36px;
+  }
+
+  .service-title {
+    font-size: 1.3rem;
+    color: var(--slate);
+  }
+
+  .service-desc {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    flex-grow: 1;
+  }
+
+  .service-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: auto;
+  }
+
+  .service-tag {
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--slate);
+    background: var(--stone-warm);
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .services-cta {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .services-cta p {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+  }
+
+  @media (max-width: 900px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

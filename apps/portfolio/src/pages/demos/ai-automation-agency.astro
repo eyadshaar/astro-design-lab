@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Meridian Security — AI Automation Agency Demo">
+  <div class="demo-page">
+    <nav class="demo-nav">
+      <a href="/" class="back-link">← Back to Portfolio</a>
+    </nav>
+    <main class="demo-content">
+      <div class="demo-hero">
+        <div class="kenburns"><img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&h=600&fit=crop&q=80" alt="Meridian Security" class="demo-hero-img" /></div>
+        <div class="demo-badge">Live Demo</div>
+      </div>
+      <h1 class="reveal gradient-text">Meridian Security</h1>
+      <p class="demo-category">AI Automation Agency</p>
+      <p class="demo-description">An operations-center visual language for a cybersecurity automation firm. Dark terminal aesthetic, real dashboard patterns.</p>
+      <div class="demo-tags">
+        <span>SaaS</span><span>Developer Tools</span><span>Dark Mode</span>
+      </div>
+      <a href="https://meridian-security.pages.dev" target="_blank" rel="noopener" class="demo-cta-button">
+        View live site →
+      </a>
+    </main>
+  </div>
+</BaseLayout>
+
+<style>
+  .demo-page { min-height: 100vh; background: #0a0a0f; color: #e8e8e8; }
+  .demo-nav { padding: 2rem; }
+  .back-link { color: #00ff88; text-decoration: none; font-size: 0.875rem; }
+  .demo-content { max-width: 680px; margin: 0 auto; padding: 4rem 2rem; text-align: center; }
+  .demo-hero { position: relative; margin-bottom: 2.5rem; border-radius: 12px; overflow: hidden; }
+  .demo-hero-img { width: 100%; height: 280px; object-fit: cover; display: block; }
+  .demo-badge { position: absolute; top: 1rem; left: 1rem; display: inline-block; padding: 0.25rem 0.75rem; background: #00ff88; color: #0a0a0f; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
+  h1 { font-size: 2.5rem; font-weight: 400; margin-bottom: 0.5rem; }
+  .demo-category { color: #00ff88; font-size: 0.875rem; margin-bottom: 1.5rem; }
+  .demo-description { color: #888; line-height: 1.6; margin-bottom: 2rem; max-width: 50ch; margin-left: auto; margin-right: auto; }
+  .demo-tags { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+  .demo-tags span { padding: 0.25rem 0.75rem; border: 1px solid #1a2a1f; border-radius: 4px; font-size: 0.8125rem; color: #666; }
+  .demo-cta-button { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.875rem 2rem; background: #00ff88; color: #0a0a0f; border-radius: 8px; font-weight: 600; font-size: 0.9375rem; text-decoration: none; transition: background 0.2s, transform 0.2s; }
+  .demo-cta-button:hover { background: #33ffaa; transform: translateY(-2px); }
+</style>

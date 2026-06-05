@@ -1,0 +1,55 @@
+---
+const integrations = [
+  {
+    icon: '💳',
+    name: 'Square',
+    desc: 'Payments',
+  },
+  {
+    icon: '📱',
+    name: 'Twilio',
+    desc: 'SMS & Voice',
+  },
+  {
+    icon: '🍽️',
+    name: 'Toast',
+    desc: 'POS Sync',
+  },
+  {
+    icon: '🛒',
+    name: 'DoorDash',
+    desc: 'Delivery',
+  },
+  {
+    icon: '📦',
+    name: 'Shopify',
+    desc: 'Online Orders',
+  },
+  {
+    icon: '📊',
+    name: 'QuickBooks',
+    desc: 'Accounting',
+  },
+];
+---
+<section id="integrations" class="integrations">
+  <div class="integrations-inner">
+    <div class="section-header reveal">
+      <p class="section-label">Plug In</p>
+      <h2 class="section-title">Works <span class="gradient-text">With Your Stack</span></h2>
+      <p style="max-width:460px; margin:0.75rem auto 0; font-size:0.95rem; color:var(--muted);">
+        Copper Kitchen connects to the tools you already use — no rip-and-replace required.
+      </p>
+    </div>
+
+    <div class="logos-grid stagger">
+      {integrations.map((item) => (
+        <div class="integration-logo-card">
+          <div class="integration-logo-icon">{item.icon}</div>
+          <div class="integration-logo-name">{item.name}</div>
+          <div class="integration-logo-desc">{item.desc}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

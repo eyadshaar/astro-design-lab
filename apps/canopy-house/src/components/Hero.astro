@@ -1,0 +1,192 @@
+---
+---
+<section class="hero" aria-label="Hero">
+  <div class="hero__bg">
+    <img
+      src="/images/hero-forest-mist.jpg"
+      alt="Old-growth forest at dawn, mist rising between towering Douglas firs"
+      class="hero__img"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div class="hero__overlay"></div>
+  </div>
+  <div class="hero__content" aria-hidden="true">
+    <span class="hero__vertical-text">Pacific Northwest</span>
+  </div>
+  <div class="hero__center">
+    <p class="eyebrow">Pacific Northwest</p>
+    <h1 class="hero__title">The Canopy House</h1>
+    <p class="hero__subtitle">Where old-growth forest meets refined retreat.</p>
+  </div>
+  <div class="hero__scroll-indicator" aria-label="Scroll">
+    <div class="hero__scroll-line"></div>
+    <span class="hero__scroll-label">Scroll</span>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    height: 100svh;
+    min-height: 700px;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    overflow: hidden;
+  }
+
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+    display: block;
+  }
+
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(20, 28, 20, 0.45) 0%,
+      rgba(20, 28, 20, 0.25) 50%,
+      rgba(20, 28, 20, 0.65) 100%
+    );
+  }
+
+  /* Ken Burns — slow zoom on hero image */
+  .hero__img {
+    --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+    animation: kenBurns 18s ease-in-out infinite alternate;
+    transform-origin: center center;
+  }
+
+  @keyframes kenBurns {
+    from { transform: scale(1) translate(0, 0); }
+    to   { transform: scale(1.06) translate(-1%, 1%); }
+  }
+
+  .hero__content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    padding-left: 2.5rem;
+    pointer-events: none;
+  }
+
+  .hero__vertical-text {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(200, 169, 126, 0.55);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    user-select: none;
+  }
+
+  .hero__center {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 0 var(--space-lg);
+    opacity: 0;
+    animation: heroFadeIn 1.2s ease forwards;
+  }
+
+  /* Stagger entrance for hero content */
+  .hero__center > * {
+    opacity: 0;
+    transform: translateY(24px);
+    animation: heroSlideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .hero__center > *:nth-child(1) { animation-delay: 0ms; }
+  .hero__center > *:nth-child(2) { animation-delay: 150ms; }
+  .hero__center > *:nth-child(3) { animation-delay: 300ms; }
+
+  @keyframes heroSlideUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes heroFadeIn {
+    to { opacity: 1; }
+  }
+
+  .eyebrow {
+    color: rgba(200, 169, 126, 0.9);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.25em;
+  }
+
+  .hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(5rem, 10vw, 8rem);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    margin-bottom: 2rem;
+  }
+
+  .hero__subtitle {
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(248, 245, 240, 0.75);
+    max-width: 38ch;
+    margin-inline: auto;
+    line-height: 1.5;
+  }
+
+  .hero__scroll-indicator {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    z-index: 2;
+  }
+
+  .hero__scroll-line {
+    display: block;
+    width: 1px;
+    height: 64px;
+    background: linear-gradient(to bottom, rgba(200,169,126,0.7), transparent);
+    animation: scrollPulse 2.2s ease-in-out infinite;
+  }
+
+  .hero__scroll-label {
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(200,169,126,0.6);
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 1; transform: scaleY(1); }
+    50% { opacity: 0.4; transform: scaleY(0.7); }
+  }
+
+  @media (max-width: 600px) {
+    .hero__content { display: none; }
+    .hero__title { font-size: clamp(3.5rem, 14vw, 5rem); }
+  }
+</style>

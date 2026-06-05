@@ -1,0 +1,100 @@
+---
+const contact = {
+  address: '8142 Hoh River Loop, Forks, WA 98331',
+  phone: '(360) 555-0192',
+  email: 'stay@thecanopyhouse.com',
+  checkIn: '4:00 PM',
+  checkOut: '11:00 AM',
+};
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="/" class="footer__logo">The Canopy House</a>
+        <p class="footer__tagline">Old-growth forest. Refined retreat.</p>
+      </div>
+      <div class="footer__contact">
+        <p class="footer__address">{contact.address}</p>
+        <a href={"tel:" + contact.phone.replace('-', '')} class="footer__phone">{contact.phone}</a>
+        <a href={"mailto:" + contact.email} class="footer__email">{contact.email}</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__legal">&copy; 2025 The Canopy House. All rights reserved.</p>
+      <p class="footer__hours">Open year-round. Advance reservations required.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--forest);
+    padding: var(--space-2xl) 0 var(--space-xl);
+  }
+
+  .footer__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-2xl);
+    padding-bottom: var(--space-xl);
+    border-bottom: 1px solid rgba(248,245,240,0.1);
+    margin-bottom: var(--space-lg);
+  }
+
+  .footer__logo {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--cream);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer__tagline {
+    font-size: 0.875rem;
+    color: var(--amber);
+    font-style: italic;
+  }
+
+  .footer__contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    text-align: right;
+  }
+
+  .footer__address, .footer__phone, .footer__email {
+    font-size: 0.875rem;
+    color: rgba(248,245,240,0.6);
+    text-decoration: none;
+  }
+
+  .footer__phone:hover, .footer__email:hover {
+    color: var(--cream);
+    transform: translateY(-1px);
+    display: inline-block;
+    transition: color 0.25s, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-lg);
+  }
+
+  .footer__legal, .footer__hours {
+    font-size: 0.8rem;
+    color: rgba(248,245,240,0.35);
+  }
+
+  @media (max-width: 768px) {
+    .footer__top { flex-direction: column; }
+    .footer__contact { text-align: left; }
+    .footer__bottom { flex-direction: column; align-items: flex-start; }
+  }
+</style>

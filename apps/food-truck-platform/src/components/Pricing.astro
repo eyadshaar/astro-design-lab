@@ -1,0 +1,71 @@
+---
+const tiers = [
+  {
+    name: 'Street',
+    price: '$49',
+    period: '/mo',
+    desc: 'Perfect for solo operators running one truck.',
+    features: [
+      'Up to 100 orders / month',
+      'QR code menu & ordering',
+      'SMS order notifications',
+      '1 operator seat',
+      'Basic queue dashboard',
+      'Square + Stripe payments',
+    ],
+    featured: false,
+  },
+  {
+    name: 'Fleet',
+    price: '$129',
+    period: '/mo',
+    desc: 'For crews running multiple stations or shifts.',
+    features: [
+      'Unlimited orders',
+      'Multi-truck support',
+      'Advanced queue management',
+      '5 operator seats',
+      'SMS + voice alerts',
+      'All payment integrations',
+      'Priority support',
+      'Custom branding',
+    ],
+    featured: true,
+  },
+];
+---
+<section id="pricing" class="pricing">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-label">Pricing</p>
+      <h2 class="section-title">Simple, <span class="gradient-text">Honest Pricing</span></h2>
+      <p style="max-width:440px; margin:0.75rem auto 0; font-size:0.95rem; color:var(--muted);">
+        No per-transaction fees. No surprise bills. Just one flat monthly rate.
+      </p>
+    </div>
+
+    <div class="pricing-grid stagger">
+      {tiers.map((tier) => (
+        <div class={`pricing-card ${tier.featured ? 'featured' : ''}`}>
+          {tier.featured && <div class="pricing-badge">Most Popular</div>}
+          <p class="pricing-tier">{tier.featured ? '★ Recommended' : 'Starter'}</p>
+          <div class="pricing-name">{tier.name}</div>
+          <div class="pricing-price">{tier.price}<span>{tier.period}</span></div>
+          <p class="pricing-desc">{tier.desc}</p>
+          <ul class="pricing-features">
+            {tier.features.map((f) => <li>{f}</li>)}
+          </ul>
+          <a href="#demo" class={`btn ${tier.featured ? 'btn-primary' : 'btn-outline'}`} style="width:100%; text-align:center; margin-top:1.5rem; display:block;">
+            Start Free Trial
+          </a>
+        </div>
+      ))}
+    </div>
+
+    <div class="receipt" style="max-width:420px; margin:2rem auto 0; text-align:center;">
+      <p style="font-size:0.8rem; color:var(--muted);">
+        All plans include a <strong style="color:var(--charcoal);">14-day free trial</strong>. No credit card required.
+      </p>
+    </div>
+  </div>
+</section>

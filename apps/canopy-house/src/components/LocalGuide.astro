@@ -1,0 +1,142 @@
+---
+const recommendations = [
+  {
+    category: 'Morning',
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--amber)"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>`,
+    items: [
+      { name: 'Hoh Rainforest Loop', duration: '2–3 hrs', distance: '0.8 mi trail' },
+      { name: 'Rialto Beach at Low Tide', duration: 'Sunrise recommended', distance: '2 hrs drive' },
+    ],
+  },
+  {
+    category: 'Afternoon',
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--amber)"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>`,
+    items: [
+      { name: 'Forks Bookshop', duration: 'Browse + buy', distance: '12 min' },
+      { name: 'Olympic Peninsula AVA Wineries', duration: '3–5 tastings', distance: '45 min' },
+    ],
+  },
+  {
+    category: 'Evening',
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--amber)"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`,
+    items: [
+      { name: 'Stairs Beach Fire Pit', duration: 'S\u2019mores included', distance: '20 min' },
+      { name: 'On-site cedar sauna', duration: 'Available all evening', distance: 'Walk out back' },
+    ],
+  },
+];
+---
+
+<section class="guide" id="guide">
+  <div class="container">
+    <div class="guide__header">
+      <span class="eyebrow">Local Knowledge</span>
+      <h2 class="guide__title">What to Do<br />When You're Here</h2>
+      <p class="guide__subtitle">Curated by the people who live here. Not TripAdvisor.</p>
+    </div>
+    <div class="guide__grid reveal">
+      {recommendations.map(timeblock => (
+        <div class="guide__block">
+          <div class="guide__block-header">
+            <span class="guide__icon">{timeblock.icon}</span>
+            <h3 class="guide__category">{timeblock.category}</h3>
+          </div>
+          <ul class="guide__list">
+            {timeblock.items.map(item => (
+              <li class="guide__item">
+                <span class="guide__item-name">{item.name}</span>
+                <span class="guide__item-meta">{item.duration} · {item.distance}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .guide { background: #fff; }
+
+  .guide__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-bottom: var(--space-2xl);
+    max-width: 600px;
+  }
+
+  .guide__title {
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    font-weight: 300;
+    line-height: 1.1;
+  }
+
+  .guide__subtitle {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--charcoal);
+    opacity: 0.65;
+  }
+
+  .guide__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-xl);
+  }
+
+  .guide__block {
+    border-top: 2px solid var(--forest);
+    padding-top: var(--space-lg);
+  }
+
+  .guide__block-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .guide__block:hover .guide__block-header {
+    transform: translateX(6px);
+  }
+
+  .guide__icon { font-size: 1.5rem; }
+
+  .guide__category {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--forest);
+  }
+
+  .guide__list { display: flex; flex-direction: column; gap: var(--space-md); }
+
+  .guide__item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .guide__item:last-child { border-bottom: none; }
+
+  .guide__item-name {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--charcoal);
+  }
+
+  .guide__item-meta {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    opacity: 0.5;
+  }
+</style>

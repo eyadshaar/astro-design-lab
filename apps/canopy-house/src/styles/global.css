@@ -1,0 +1,213 @@
+/* ─────────────────────────────────────────────────────────
+   The Canopy House — Global Styles
+   Forest Journal / Grounded Luxury aesthetic
+   ───────────────────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+/* ── Easing Library (from premium sites: pacomepertant, incredibles, rauno) ── */
+:root {
+  --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);   /* spring overshoot */
+  --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);      /* standard reveal */
+  --ease-snap:     cubic-bezier(0.76, 0, 0.24, 1);      /* quick snap exit */
+  --ease-slow:     cubic-bezier(0.25, 1, 0.5, 1);       /* slow reveal */
+}
+
+/* ── Design Tokens ── */
+:root {
+  --cream:      #F8F5F0;
+  --forest:     #4A5D4A;
+  --forest-dim: #3A4A3A;
+  --amber:      #C8A97E;
+  --amber-dim:  #B8956A;
+  --charcoal:   #2D2A26;
+  --dark:       #1C1C1A;
+  --border:     rgba(74, 93, 74, 0.15);
+  --shadow:     0 4px 24px rgba(45, 42, 38, 0.08);
+
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+
+  --space-xs:  0.5rem;
+  --space-sm:  1rem;
+  --space-md:  1.5rem;
+  --space-lg:  2rem;
+  --space-xl:  3rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+
+  --transition: 0.3s ease;
+}
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--cream);
+  color: var(--charcoal);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+
+/* ── Typography ── */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--charcoal);
+}
+
+h1 { font-size: clamp(2.8rem, 6vw, 5.5rem); font-weight: 300; }
+h2 { font-size: clamp(2rem, 4vw, 3.25rem); }
+h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
+h4 { font-size: 1.25rem; }
+
+p { font-size: 1.0625rem; color: var(--charcoal); }
+
+/* ── Eyebrow Label ── */
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--forest);
+}
+
+/* ── Layout ── */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+.container--narrow {
+  max-width: 720px;
+}
+
+/* ── Buttons ── */
+.btn {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.875rem 2rem;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+.btn--primary {
+  background: var(--forest);
+  color: var(--cream);
+}
+.btn--primary:hover {
+  background: var(--forest-dim);
+  transform: translateY(-1px);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--cream);
+  border: 1px solid rgba(255,255,255,0.5);
+}
+.btn--ghost:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: var(--cream);
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--forest);
+  border: 1.5px solid var(--forest);
+}
+.btn--outline:hover {
+  background: var(--forest);
+  color: var(--cream);
+}
+
+/* ── Section spacing ── */
+section { padding: var(--space-3xl) 0; }
+
+/* ── Cards ── */
+.card {
+  background: #fff;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+.card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(45,42,38,0.12); }
+
+/* ── Utility ── */
+.text-center { text-align: center; }
+.text-muted  { color: var(--charcoal); opacity: 0.65; }
+
+/* ── Scrollbar (amber accent) ── */
+::-webkit-scrollbar { width: 2px; height: 2px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--amber); border-radius: 1px; }
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--amber) transparent;
+}
+
+/* ── Reveal Animation (IntersectionObserver) ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.7s var(--ease-standard),
+    transform 0.7s var(--ease-standard);
+}
+.reveal.is-visible, .reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Stagger delays for child reveals */
+.stagger > *:nth-child(1) { transition-delay: 0ms; }
+.stagger > *:nth-child(2) { transition-delay: 80ms; }
+.stagger > *:nth-child(3) { transition-delay: 160ms; }
+.stagger > *:nth-child(4) { transition-delay: 240ms; }
+.stagger > *:nth-child(5) { transition-delay: 320ms; }
+.stagger > *:nth-child(6) { transition-delay: 400ms; }
+.stagger > *:nth-child(7) { transition-delay: 480ms; }
+.stagger > *:nth-child(8) { transition-delay: 560ms; }
+
+/* ── CSS Mask Fades (gallery edges) ── */
+.mask-fade-bottom {
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 75%);
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 75%);
+}
+.mask-fade-left {
+  -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%, #000 88%);
+  mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%, #000 88%);
+}
+
+/* ── Gradient Text ── */
+.gradient-text {
+  background: linear-gradient(135deg, var(--amber) 0%, var(--amber-dim) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

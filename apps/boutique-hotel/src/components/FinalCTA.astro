@@ -1,0 +1,179 @@
+---
+// FinalCTA.astro — Reserve section with gradient text + spring button
+---
+<section class="cta" id="reserve">
+  <div class="cta__media">
+    <img
+      src="/images/cta-campfire-dusk.jpg"
+      alt="Forest clearing at golden hour — the property at dusk"
+    />
+    <div class="cta__overlay"></div>
+  </div>
+
+  <div class="cta__content">
+    <span class="label cta__label reveal">Begin your stay</span>
+    <h2 class="headline cta__headline gradient-text reveal">
+      Stillness is<br />available<br />year-round
+    </h2>
+    <p class="cta__body reveal">
+      Twelve rooms. Four seasons. No two stays are the same — the forest sees to that.
+      <br /><br />
+      We accept reservations two weeks in advance at a time, to keep the pace slow and the
+      attention deliberate. We do not take groups. We do not host events. We do not rush.
+    </p>
+    <div class="cta__actions reveal">
+      <a href="#" class="btn btn--ghost cta__btn">Request a Room</a>
+    </div>
+    <div class="cta__detail reveal">
+      <p class="cta__detail-line">
+        <span class="cta__detail-label">Availability</span>
+        <span class="cta__detail-val">Currently accepting stays through December 2025</span>
+      </p>
+      <p class="cta__detail-line">
+        <span class="cta__detail-label">Contact</span>
+        <span class="cta__detail-val">stay@thecanopyhouse.com</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+/* ── Easing ── */
+.cta {
+  --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cta {
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.cta__media {
+  position: absolute;
+  inset: 0;
+}
+
+.cta__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+}
+
+.cta__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(53,66,53,0.92) 0%,
+    rgba(53,66,53,0.6) 60%,
+    rgba(53,66,53,0.3) 100%
+  );
+}
+
+.cta__content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-2xl) 2rem;
+  text-align: center;
+}
+
+.cta__label {
+  color: var(--amber-light);
+  display: block;
+  margin-bottom: 1.5rem;
+}
+
+.cta__headline {
+  color: var(--cream);
+  margin-bottom: 2rem;
+  line-height: 1.05;
+}
+
+/* Gradient text on CTA headline */
+.cta__headline.gradient-text {
+  background: linear-gradient(
+    135deg,
+    var(--amber-light) 0%,
+    var(--cream) 50%,
+    var(--amber-light) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cta__body {
+  font-size: 1rem;
+  color: rgba(248,245,240,0.75);
+  line-height: 1.7;
+  margin-bottom: 3rem;
+}
+
+.cta__actions {
+  margin-bottom: 4rem;
+}
+
+/* Spring hover on CTA button */
+.cta__btn {
+  transition:
+    background-color 0.3s var(--ease-standard),
+    border-color 0.3s var(--ease-standard),
+    transform 0.4s var(--ease-spring),
+    box-shadow 0.4s var(--ease-spring) !important;
+}
+
+.cta__btn:hover {
+  background: rgba(248,245,240,0.12);
+  border-color: var(--cream);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.cta__detail {
+  border-top: 1px solid rgba(248,245,240,0.15);
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.cta__detail-line {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  font-size: 0.8rem;
+}
+
+.cta__detail-label {
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+.cta__detail-val {
+  font-family: var(--serif);
+  font-style: italic;
+  color: rgba(248,245,240,0.7);
+}
+
+@media (max-width: 768px) {
+  .cta {
+    min-height: auto;
+    padding: var(--space-xl) 0;
+  }
+
+  .cta__detail-line {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+</style>

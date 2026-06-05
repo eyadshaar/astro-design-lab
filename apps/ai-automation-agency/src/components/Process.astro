@@ -1,0 +1,132 @@
+---
+---
+<section id="process">
+  <div class="container">
+    <div class="section-label">How It Works</div>
+    <h2 class="section-title reveal">From Integration to Fully Automated SOC</h2>
+    <p class="section-desc">Most organizations are operational within 2 weeks. Our onboarding is designed to deliver value fast without disrupting your existing workflows.</p>
+    
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="tl-marker">
+          <div class="tl-dot"></div>
+          <div class="tl-line"></div>
+        </div>
+        <div class="tl-content">
+          <div class="tl-week">Week 1</div>
+          <h3>Discovery & Architecture</h3>
+          <p>We analyze your existing security stack, identify integration points, and design a custom agent architecture aligned with your threat model and compliance requirements.</p>
+          <div class="tl-deliverables">
+            <span class="deliverable">Security stack audit</span>
+            <span class="deliverable">Integration roadmap</span>
+            <span class="deliverable">Agent configuration spec</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="timeline-item">
+        <div class="tl-marker">
+          <div class="tl-dot"></div>
+          <div class="tl-line"></div>
+        </div>
+        <div class="tl-content">
+          <div class="tl-week">Week 2</div>
+          <h3>Integration & Testing</h3>
+          <p>Our engineering team deploys connectors to your SIEM, EDR, cloud, and network tools. Agents are calibrated using your historical data for high-fidelity detection.</p>
+          <div class="tl-deliverables">
+            <span class="deliverable">All integrations active</span>
+            <span class="deliverable">Baseline detection tuned</span>
+            <span class="deliverable">Parallel running validation</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="timeline-item">
+        <div class="tl-marker">
+          <div class="tl-dot"></div>
+          <div class="tl-line"></div>
+        </div>
+        <div class="tl-content">
+          <div class="tl-week">Weeks 3–4</div>
+          <h3>Calibration & Fine-Tuning</h3>
+          <p>Agents learn from your environment's normal behavior. False positives are suppressed, detection rules are refined, and automated response playbooks are customized.</p>
+          <div class="tl-deliverables">
+            <span class="deliverable">False positive rate &lt;2%</span>
+            <span class="deliverable">Response playbooks live</span>
+            <span class="deliverable">Analyst training complete</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="timeline-item">
+        <div class="tl-marker">
+          <div class="tl-dot filled"></div>
+        </div>
+        <div class="tl-content">
+          <div class="tl-week">Ongoing</div>
+          <h3>Continuous Optimization</h3>
+          <p>Your dedicated threat intelligence team monitors agent performance, updates detection models weekly, and provides monthly reports on security posture improvements.</p>
+          <div class="tl-deliverables">
+            <span class="deliverable">Weekly model updates</span>
+            <span class="deliverable">24/7 agent monitoring</span>
+            <span class="deliverable">Monthly ROI reports</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+#process { background: var(--dark-bg); }
+.timeline {
+  margin-top: 3rem;
+  position: relative;
+}
+.timeline-item {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+.tl-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 20px;
+  flex-shrink: 0;
+}
+.tl-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--card-bg);
+  border: 2px solid var(--blue);
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+}
+.tl-dot.filled { background: var(--blue); }
+.tl-line { flex: 1; width: 2px; background: var(--card-border); margin-top: 0.5rem; }
+.timeline-item:last-child .tl-line { display: none; }
+.tl-content { flex: 1; padding-bottom: 2rem; }
+.tl-week {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--teal);
+  margin-bottom: 0.5rem;
+}
+.tl-content h3 { margin-bottom: 0.75rem; }
+.tl-content p { font-size: 0.9375rem; margin-bottom: 1rem; }
+.tl-deliverables {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.deliverable {
+  font-size: 0.75rem;
+  background: rgba(59, 123, 247, 0.1);
+  color: var(--blue);
+  padding: 0.25rem 0.75rem;
+  border-radius: 100px;
+  border: 1px solid rgba(59, 123, 247, 0.2);
+}
+</style>

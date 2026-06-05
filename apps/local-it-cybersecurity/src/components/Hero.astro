@@ -1,0 +1,568 @@
+---
+const phoneNumber = "(503) 555-0142";
+const phoneHref = "tel:+150****0142";
+---
+
+<section class="hero">
+  <div class="hero-scanline" aria-hidden="true"></div>
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hero-grid-diagonal" aria-hidden="true"></div>
+
+  <div class="container hero-inner">
+    <!-- Left: command summary -->
+    <div class="hero-content stagger">
+      <div class="cmd-bar reveal">
+        <span class="cmd-prompt">root@fieldstone:~#</span>
+        <span class="cmd-text">system status --live</span>
+        <span class="live-dot"></span>
+      </div>
+
+      <h1 class="hero-headline reveal">
+        Your Business.<br />
+        <span class="headline-accent gradient-text">Protected 24/7.</span>
+      </h1>
+
+      <p class="hero-sub reveal">
+        Fieldstone IT delivers enterprise-grade cybersecurity and managed IT support
+        to Portland-area businesses — without the enterprise complexity.
+      </p>
+
+      <div class="hero-ctas reveal">
+        <a href={phoneHref} class="btn btn-primary hero-phone-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+          </svg>
+          Call (503) 555-0142
+        </a>
+        <a href="#services" class="btn btn-ghost-white">View Services</a>
+      </div>
+
+      <div class="hero-trust reveal">
+        <span class="trust-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--amber)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          SOC 2 Compliant
+        </span>
+        <span class="trust-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--amber)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Microsoft Partner
+        </span>
+        <span class="trust-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--amber)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Portland-Based
+        </span>
+      </div>
+    </div>
+
+    <!-- Right: dashboard panel -->
+    <div class="hero-visual reveal">
+      <div class="dash-frame kenburns">
+        <div class="dash-header">
+          <div class="dash-dots">
+            <span></span><span></span><span></span>
+          </div>
+          <span class="dash-title">FIELDSTONE IT — COMMAND CENTER</span>
+          <span class="dash-live">
+            <span class="live-dot"></span> LIVE
+          </span>
+        </div>
+
+        <div class="dash-body">
+          <!-- Status row -->
+          <div class="dash-status-row">
+            <span class="dash-status-ok">
+              <span class="live-dot"></span>
+              ALL SYSTEMS NOMINAL
+            </span>
+            <span class="dash-clock">PORTLAND, OR — <span id="hero-clock">--:--:--</span></span>
+          </div>
+
+          <!-- KPI panels -->
+          <div class="dash-kpis">
+            <div class="kpi-panel">
+              <span class="kpi-label">ENDPOINTS</span>
+              <span class="kpi-value ok">847</span>
+              <span class="kpi-sub">All secured</span>
+              <div class="kpi-spark">
+                <svg viewBox="0 0 60 20" class="sparkline">
+                  <polyline points="0,18 10,15 20,16 30,10 40,12 50,8 60,5" fill="none" stroke="var(--green-ok)" stroke-width="1.5"/>
+                </svg>
+              </div>
+            </div>
+            <div class="kpi-panel">
+              <span class="kpi-label">THREATS BLOCKED</span>
+              <span class="kpi-value warn">12</span>
+              <span class="kpi-sub">Today</span>
+              <div class="kpi-spark">
+                <svg viewBox="0 0 60 20" class="sparkline">
+                  <polyline points="0,5 10,8 20,6 30,12 40,9 50,14 60,10" fill="none" stroke="var(--amber)" stroke-width="1.5"/>
+                </svg>
+              </div>
+            </div>
+            <div class="kpi-panel">
+              <span class="kpi-label">UPTIME</span>
+              <span class="kpi-value ok">99.97%</span>
+              <span class="kpi-sub">90-day avg</span>
+              <div class="kpi-spark">
+                <svg viewBox="0 0 60 20" class="sparkline">
+                  <polyline points="0,12 10,11 20,10 30,11 40,9 50,8 60,8" fill="none" stroke="var(--green-ok)" stroke-width="1.5"/>
+                </svg>
+              </div>
+            </div>
+            <div class="kpi-panel">
+              <span class="kpi-label">RESP TIME</span>
+              <span class="kpi-value ok">4m</span>
+              <span class="kpi-sub">Avg ticket</span>
+              <div class="kpi-spark">
+                <svg viewBox="0 0 60 20" class="sparkline">
+                  <polyline points="0,8 10,10 20,9 30,12 40,10 50,7 60,6" fill="none" stroke="var(--green-ok)" stroke-width="1.5"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bars -->
+          <div class="dash-bars">
+            <div class="dash-bar-row">
+              <span class="dash-bar-label">Network Security</span>
+              <div class="dash-bar"><div class="dash-bar-fill" style="width:94%"></div></div>
+              <span class="dash-bar-pct">94%</span>
+            </div>
+            <div class="dash-bar-row">
+              <span class="dash-bar-label">Endpoint Protection</span>
+              <div class="dash-bar"><div class="dash-bar-fill" style="width:100%"></div></div>
+              <span class="dash-bar-pct">100%</span>
+            </div>
+            <div class="dash-bar-row">
+              <span class="dash-bar-label">Cloud Backup</span>
+              <div class="dash-bar"><div class="dash-bar-fill" style="width:98%"></div></div>
+              <span class="dash-bar-pct">98%</span>
+            </div>
+          </div>
+
+          <!-- Log tail -->
+          <div class="dash-log mask-fade-bottom">
+            <div class="dash-log-line"><span class="log-ts">[08:01:44]</span> <span class="log-ok">SIEM heartbeat — all sensors active</span></div>
+            <div class="dash-log-line"><span class="log-ts">[08:01:41]</span> <span class="log-ok">Backup verification — 847 endpoints OK</span></div>
+            <div class="dash-log-line"><span class="log-ts">[08:01:38]</span> <span class="log-warn">Threat intel feed updated — 12 events processed</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function updateClock() {
+    const el = document.getElementById('hero-clock');
+    if (el) {
+      const now = new Date();
+      el.textContent = now.toLocaleTimeString('en-US', { hour12: false });
+    }
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+</script>
+
+<style>
+  .hero {
+    position: relative;
+    background: var(--slate-dark);
+    padding: 140px 0 80px;
+    overflow: hidden;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Scanline overlay */
+  .hero-scanline {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(0,0,0,0.03) 3px,
+      rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* Grid (orthogonal) */
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(184, 122, 58, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(184, 122, 58, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  /* Diagonal grid overlay */
+  .hero-grid-diagonal {
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 20px,
+      rgba(184, 122, 58, 0.025) 20px,
+      rgba(184, 122, 58, 0.025) 21px
+    );
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3xl);
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Cmd bar */
+  .cmd-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    color: var(--green-ok);
+    background: rgba(61, 158, 111, 0.08);
+    border: 1px solid rgba(61, 158, 111, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    width: fit-content;
+  }
+
+  .cmd-prompt {
+    color: var(--amber);
+    font-weight: 700;
+  }
+
+  .cmd-text {
+    color: rgba(255,255,255,0.6);
+  }
+
+  /* Live dot */
+  .live-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green-ok);
+    animation: livePulse 1.5s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes livePulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(61, 158, 111, 0.6); }
+    50% { opacity: 0.7; box-shadow: 0 0 0 5px rgba(61, 158, 111, 0); }
+  }
+
+  /* Headline */
+  .hero-headline {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: var(--space-lg);
+    letter-spacing: -0.03em;
+  }
+
+  .headline-accent { color: var(--amber); }
+
+  /* Fade-up load animation */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: none; }
+  }
+  .fade-up {
+    animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.7);
+    max-width: 50ch;
+    margin-bottom: var(--space-xl);
+    line-height: 1.7;
+  }
+
+  /* CTAs */
+  .hero-ctas {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-xl);
+  }
+
+  .hero-phone-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 1.05rem;
+    padding: 1rem 2rem;
+    box-shadow: 0 0 30px rgba(184, 122, 58, 0.35);
+  }
+
+  /* Trust */
+  .hero-trust {
+    display: flex;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Dashboard frame */
+  .hero-visual {
+    display: flex;
+    justify-content: center;
+  }
+
+  .dash-frame {
+    width: 100%;
+    max-width: 500px;
+    border-radius: var(--radius-lg);
+    border: 2px solid rgba(184, 122, 58, 0.35);
+    background: var(--slate);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 50px rgba(184, 122, 58, 0.08);
+    overflow: hidden;
+  }
+
+  .dash-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--slate-dark);
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid rgba(184, 122, 58, 0.25);
+  }
+
+  .dash-dots {
+    display: flex;
+    gap: 5px;
+  }
+
+  .dash-dots span {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: rgba(184, 122, 58, 0.5);
+  }
+
+  .dash-title {
+    font-family: var(--font-display);
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.1em;
+  }
+
+  .dash-live {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-display);
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--green-ok);
+    text-transform: uppercase;
+  }
+
+  .dash-body {
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  /* Status row */
+  .dash-status-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-display);
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .dash-status-ok {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--green-ok);
+  }
+
+  .dash-clock {
+    color: rgba(255,255,255,0.3);
+    font-size: 0.55rem;
+  }
+
+  /* KPIs */
+  .dash-kpis {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-sm);
+  }
+
+  .kpi-panel {
+    background: var(--slate-dark);
+    border-radius: var(--radius-md);
+    padding: 0.6rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-align: center;
+  }
+
+  .kpi-label {
+    font-family: var(--font-display);
+    font-size: 0.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.35);
+  }
+
+  .kpi-value {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .kpi-value.ok  { color: var(--green-ok); }
+  .kpi-value.warn { color: var(--amber); }
+
+  .kpi-sub {
+    font-size: 0.5rem;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .kpi-spark {
+    height: 16px;
+    margin-top: 4px;
+  }
+
+  .sparkline {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Bars */
+  .dash-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .dash-bar-row {
+    display: grid;
+    grid-template-columns: 120px 1fr 32px;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .dash-bar-label {
+    font-family: var(--font-display);
+    font-size: 0.55rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.35);
+    white-space: nowrap;
+  }
+
+  .dash-bar {
+    height: 6px;
+    background: var(--slate-dark);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .dash-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--amber), #F97316);
+    border-radius: 3px;
+  }
+
+  .dash-bar-pct {
+    font-family: var(--font-display);
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.4);
+    text-align: right;
+  }
+
+  /* Log tail */
+  .dash-log {
+    background: var(--slate-dark);
+    border-radius: var(--radius-md);
+    padding: 0.5rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .dash-log-line {
+    font-family: var(--font-display);
+    font-size: 0.55rem;
+    color: rgba(255,255,255,0.35);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .log-ts { color: rgba(255,255,255,0.2); margin-right: 6px; }
+  .log-ok { color: rgba(61, 158, 111, 0.7); }
+  .log-warn { color: rgba(184, 122, 58, 0.7); }
+
+  @media (max-width: 900px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+    }
+
+    .hero {
+      min-height: auto;
+      padding: 120px 0 60px;
+    }
+
+    .hero-visual { order: -1; }
+
+    .dash-frame { max-width: 420px; }
+
+    .dash-kpis {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dash-bar-row {
+      grid-template-columns: 90px 1fr 28px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-ctas { flex-direction: column; }
+    .btn { text-align: center; width: 100%; }
+    .hero-trust { gap: var(--space-md); }
+  }
+</style>

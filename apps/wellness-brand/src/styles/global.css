@@ -1,0 +1,190 @@
+/* ─────────────────────────────────────────────
+   Solace Wellness — Global Styles
+   Brand: Morning Practice aesthetic
+   ───────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Nunito:wght@300;400;500;600;700&display=swap');
+
+/* ── Design Tokens ── */
+:root {
+  --color-sage:   #9DB4A0;
+  --color-blush:  #E8C1C1;
+  --color-amber:  #C9923A;
+  --color-cream:  #FBF9F7;
+  --color-text:   #3A3533;
+  --color-muted:  #8C8482;
+
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body:    'Nunito', system-ui, sans-serif;
+
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  --radius-sm: 4px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  --shadow-soft: 0 4px 20px rgba(58, 53, 51, 0.07);
+  --shadow-card: 0 8px 32px rgba(58, 53, 51, 0.10);
+
+  --transition: 0.3s ease;
+
+  /* ── Premium Easing Curves ── */
+  --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-snap:     cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-slow:     cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-cream);
+  color: var(--color-text);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+
+/* ── Custom Amber Scrollbar ── */
+::-webkit-scrollbar { width: 2px; height: 2px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-amber); border-radius: 1px; }
+* { scrollbar-width: thin; scrollbar-color: var(--color-amber) transparent; }
+::selection { background: var(--color-amber); color: var(--color-cream); }
+
+/* ── Typography ── */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  line-height: 1.2;
+  font-weight: 400;
+}
+
+h1 { font-size: clamp(2.5rem, 6vw, 5rem); }
+h2 { font-size: clamp(2rem, 4vw, 3.25rem); }
+h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
+h4 { font-size: 1.25rem; }
+
+p { font-size: 1.0625rem; }
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+/* ── Layout Utilities ── */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+}
+
+.section {
+  padding-block: var(--space-24);
+}
+
+.section--sage { background-color: var(--color-sage); color: #fff; }
+.section--blush { background-color: var(--color-blush); }
+.section--cream { background-color: var(--color-cream); }
+
+.section__header {
+  text-align: center;
+  max-width: 680px;
+  margin-inline: auto;
+  margin-bottom: var(--space-16);
+}
+
+.section__header h2 { margin-top: var(--space-3); }
+.section__header p  { margin-top: var(--space-4); color: var(--color-muted); }
+.section--sage .section__header p { color: rgba(255,255,255,0.8); }
+
+/* ── Buttons ── */
+.btn {
+  display: inline-block;
+  padding: var(--space-4) var(--space-8);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.4s var(--ease-spring);
+  border: none;
+}
+
+.btn--primary {
+  background-color: var(--color-sage);
+  color: #fff;
+}
+.btn--primary:hover { background-color: #7fa088; transform: translateY(-2px); }
+
+.btn--outline {
+  background-color: transparent;
+  color: var(--color-sage);
+  border: 1.5px solid var(--color-sage);
+}
+.btn--outline:hover { background-color: var(--color-sage); color: #fff; }
+
+.btn--blush {
+  background-color: var(--color-blush);
+  color: var(--color-text);
+}
+.btn--blush:hover { background-color: #d9a9a9; transform: translateY(-2px); }
+
+/* ── Cards ── */
+.card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-card);
+  transition: all 0.4s var(--ease-spring);
+}
+.card:hover { transform: translateY(-4px); box-shadow: 0 14px 44px rgba(58,53,51,0.13); }
+
+/* ── Scroll Reveal ── */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s var(--ease-standard), transform 0.7s var(--ease-standard); }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ── Stagger Entrance ── */
+.stagger > *:nth-child(1) { transition-delay: 0ms; }
+.stagger > *:nth-child(2) { transition-delay: 80ms; }
+.stagger > *:nth-child(3) { transition-delay: 160ms; }
+.stagger > *:nth-child(4) { transition-delay: 240ms; }
+.stagger > *:nth-child(5) { transition-delay: 320ms; }
+.stagger > *:nth-child(6) { transition-delay: 400ms; }
+.stagger > *:nth-child(7) { transition-delay: 480ms; }
+.stagger > *:nth-child(8) { transition-delay: 560ms; }
+
+/* ── Mask Fades ── */
+.mask-fade-bottom { -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 75%); mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 75%); }
+.mask-fade-left { -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%, #000 88%); mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%, #000 88%); }
+
+/* ── Gradient Text ── */
+.gradient-text { background: linear-gradient(135deg, var(--color-amber) 0%, var(--color-blush) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+/* ── Ken Burns Hover ── */
+.kenburns { overflow: hidden; }
+.kenburns img { transition: transform 1.2s var(--ease-spring); will-change: transform; }
+.kenburns:hover img { transform: scale(1.06); }

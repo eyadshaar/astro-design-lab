@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-all:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        site:
+          - portfolio
+          - boutique-hotel
+          - ai-automation-agency
+          - local-it-cybersecurity
+          - food-truck-platform
+          - wellness-brand
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+        working-directory: ./apps/${{ matrix.site }}
+
+      - run: npm run build
+        working-directory: ./apps/${{ matrix.site }}
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}
+
+      - name: Preview
+        if: github.event_name == 'pull_request'
+        run: npx serve dist -p 3000 &
+        working-directory: ./apps/${{ matrix.site }}

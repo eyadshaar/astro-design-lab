@@ -1,0 +1,15 @@
+{
+  "name": "astro-design-lab",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=apps/portfolio",
+    "build": "npm run build --workspace=apps/portfolio",
+    "dev:boutique-hotel": "npm run dev --workspace=apps/boutique-hotel",
+    "build:boutique-hotel": "npm run build --workspace=apps/boutique-hotel"
+  }
+}

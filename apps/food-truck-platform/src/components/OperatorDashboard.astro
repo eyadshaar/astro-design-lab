@@ -1,0 +1,50 @@
+---
+const queue = [
+  { num: '47', items: '2× Smoked Brisket Taco\n1× Elote Bowl', progress: 90, status: 'active', label: 'Ready' },
+  { num: '48', items: '1× Birria Queso\n1× Horchata', progress: 65, status: 'active', label: 'Cooking' },
+  { num: '49', items: '3× Al Pastor Tacos\n1× Mexican Coke', progress: 30, status: 'waiting', label: 'Queued' },
+  { num: '50', items: '1× Veggie Bowl\n1× Agua Fresca', progress: 10, status: 'waiting', label: 'Prep' },
+];
+---
+<section id="operator" class="operator-dashboard mask-fade-bottom">
+  <div class="dashboard-inner">
+    <div class="dashboard-header">
+      <p class="section-label">Operator View</p>
+      <h2 class="section-title reveal">Live <span class="gradient-text">Queue Dashboard</span></h2>
+      <p>One screen. Every order. Zero confusion.</p>
+    </div>
+
+    <div class="queue-grid stagger">
+      {queue.map((order) => (
+        <div class="queue-card">
+          <div class="queue-ticket-punch"></div>
+          <div class="queue-number">#{order.num}</div>
+          <div class="queue-label">Ticket</div>
+          <div class="queue-items" style="white-space:pre-line;">{order.items}</div>
+          <div class="queue-bar">
+            <div class="queue-bar-fill" style={`width:${order.progress}%`}></div>
+          </div>
+          <div class={`queue-status ${order.status}`}>{order.label}</div>
+        </div>
+      ))}
+    </div>
+
+    <div style="text-align:center; margin-top:2rem;">
+      <div class="receipt" style="display:inline-block; max-width:400px; width:100%;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+          <span style="font-family:var(--font-display); font-size:1.1rem;">Avg Wait Time</span>
+          <span style="font-family:var(--font-display); font-size:1.8rem; color:var(--orange);">6:42</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+          <span style="font-family:var(--font-display); font-size:1.1rem;">Orders Today</span>
+          <span style="font-family:var(--font-display); font-size:1.8rem; color:var(--sage);">143</span>
+        </div>
+        <hr class="receipt-divider" />
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-family:var(--font-display); font-size:1.1rem;">Revenue</span>
+          <span style="font-family:var(--font-display); font-size:1.8rem; color:var(--charcoal);">$2,840</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

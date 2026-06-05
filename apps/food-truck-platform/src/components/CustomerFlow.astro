@@ -1,0 +1,48 @@
+---
+const steps = [
+  {
+    num: '01',
+    title: 'Browse the Menu',
+    desc: 'Customers scan a QR code or visit the menu page. Full menu with photos, modifiers, and dietary info.',
+    receipt: 'Item selected — order queued',
+  },
+  {
+    num: '02',
+    title: 'Place Order + Pay',
+    desc: 'Secure card payment via Square or Stripe. Order confirmed instantly with a ticket number.',
+    receipt: 'Payment received — ticket #47',
+  },
+  {
+    num: '03',
+    title: 'Relax. We\'ll Text You.',
+    desc: 'Copper Kitchen sends real-time SMS updates: "Order received," "Cooking," and "Ready for pickup!"',
+    receipt: '📱 SMS sent to customer',
+  },
+  {
+    num: '04',
+    title: 'Grab & Go',
+    desc: 'Customer shows their ticket number. Operator hands off. No friction, no standing in line.',
+    receipt: '✓ Order complete',
+  },
+];
+---
+<section id="customer-flow" class="customer-flow">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">The Flow</p>
+      <h2 class="section-title reveal">From Scan to Snack<br /><span class="gradient-text">in 4 Steps</span></h2>
+    </div>
+
+    <div class="steps-grid stagger">
+      {steps.map((step) => (
+        <div class="step-card reveal">
+          <div class="step-ticket-accent"></div>
+          <div class="step-number">{step.num}</div>
+          <h3 class="step-title">{step.title}</h3>
+          <p class="step-desc">{step.desc}</p>
+          <div class="step-receipt-line">{step.receipt}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

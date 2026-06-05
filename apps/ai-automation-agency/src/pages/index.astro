@@ -1,0 +1,33 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import Problem from '../components/Problem.astro';
+import Systems from '../components/Systems.astro';
+import Process from '../components/Process.astro';
+import CaseStudyCards from '../components/CaseStudyCards.astro';
+import Toolchain from '../components/Toolchain.astro';
+import RiskSection from '../components/RiskSection.astro';
+import Pricing from '../components/Pricing.astro';
+import FAQ from '../components/FAQ.astro';
+import FinalCTA from '../components/FinalCTA.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout>
+  <Navbar />
+  <main>
+    <Hero />
+    <Problem />
+    <div class="divider"></div>
+    <Systems />
+    <Process />
+    <CaseStudyCards />
+    <Toolchain />
+    <RiskSection />
+    <Pricing />
+    <FAQ />
+    <FinalCTA />
+  </main>
+  <Footer />
+</Layout>

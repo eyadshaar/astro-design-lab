@@ -1,0 +1,360 @@
+---
+// Rooms.astro — Magazine spread editorial, NOT card grid
+---
+<section class="rooms" id="rooms">
+  <div class="rooms__header reveal">
+    <span class="label">The Rooms</span>
+    <h2 class="headline rooms__title">Crafted for<br /><em>stillness</em></h2>
+  </div>
+
+  <!-- Room 01 — Full bleed left, content right -->
+  <div class="rooms__feature rooms__feature--left">
+    <div class="rooms__feature-media">
+      <img
+        src="/images/rooms-cozy-interior.jpg"
+        alt="The Canopy Suite — second floor, forest view"
+      />
+      <span class="rooms__feature-num">01</span>
+    </div>
+    <div class="rooms__feature-content">
+      <span class="label rooms__label">The Canopy Suite</span>
+      <h3 class="rooms__name">Second Floor · Forest View</h3>
+      <p class="rooms__desc">
+        A king bed oriented toward the eastern canopy, where morning light filters through
+        Sitka spruce at first hour. Hand-hewn cedar beams overhead, a soaking tub positioned
+        beneath a window that has never known a curtain.
+      </p>
+      <div class="rooms__details">
+        <div class="rooms__detail">
+          <span class="rooms__detail-label">Size</span>
+          <span class="rooms__detail-val">680 ft²</span>
+        </div>
+        <div class="rooms__detail">
+          <span class="rooms__detail-label">Bed</span>
+          <span class="rooms__detail-val">King, Edmunds &amp; Myers</span>
+        </div>
+        <div class="rooms__detail">
+          <span class="rooms__detail-label">View</span>
+          <span class="rooms__detail-val">Old-growth canopy, east</span>
+        </div>
+        <div class="rooms__detail">
+          <span class="rooms__detail-label">Tub</span>
+          <span class="rooms__detail-val">Copper soaking, floor-level</span>
+        </div>
+      </div>
+      <a href="#reserve" class="btn btn--outline rooms__btn">Inquire</a>
+    </div>
+  </div>
+
+  <!-- Room 02 — Content left, full bleed right -->
+  <div class="rooms__feature rooms__feature--right">
+    <div class="rooms__feature-content rooms__feature-content--right">
+      <span class="label rooms__label">The Bark Room</span>
+      <h3 class="rooms__name">Ground Level · Garden Edge</h3>
+      <p class="rooms__desc">
+        Named for the contractor who refused to sand any of the reclaimed fir beams.
+        "The texture is the story," he said. A private garden terrace faces south toward
+        a meadow that turns gold every August without anyone's help.
+      </p>
+      <div class="rooms__details">
+        <div class="rooms__detail">
+          <span class="rooms__detail-label">Size</span>
+          <span class="rooms__detail-val">540 ft²</span>
+        </div>
+        <div class="rooms__detail">
+          <span class="rooms__detail-label">Bed</span>
+          <span class="rooms__detail-val">Queen, West Elm</span>
+        </div>
+        <div class="rooms__detail">
+          <span class="rooms__detail-label">Terrace</span>
+          <span class="rooms__detail-val">Private, 220 ft²</span>
+        </div>
+        <div class="rooms__detail">
+          <span class="rooms__detail-label">Bath</span>
+          <span class="rooms__detail-val">Rainfall shower, slate floor</span>
+        </div>
+      </div>
+      <a href="#reserve" class="btn btn--outline rooms__btn">Inquire</a>
+    </div>
+    <div class="rooms__feature-media">
+      <img
+        src="/images/rooms-soaking-tub.jpg"
+        alt="The Bark Room — garden terrace, afternoon light"
+      />
+      <span class="rooms__feature-num">02</span>
+    </div>
+  </div>
+
+  <!-- Room 03 — Cinematic horizontal -->
+  <div class="rooms__horizontal">
+    <div class="rooms__horizontal-media">
+      <img
+        src="/images/rooms-cabin-greatroom.jpg"
+        alt="The Ember Loft — mezzanine suite, wood stove"
+      />
+    </div>
+    <div class="rooms__horizontal-content">
+      <span class="rooms__feature-num">03</span>
+      <span class="label rooms__label">The Ember Loft</span>
+      <h3 class="rooms__name">Mezzanine Suite · Wood Stove</h3>
+      <p class="rooms__desc">
+        Accessed by a ladder of recycled hickory, this loft sits in the upper canopy
+        where the building meets the treetops. A masonry heater burns oak overnight —
+        one load at dusk, embers until dawn. The porch faces west where storms arrive
+        in slow motion and the sky turns the color of dark honey.
+      </p>
+      <div class="rooms__details rooms__details--inline">
+        <div class="rooms__detail">
+          <span class="rooms__detail-label">Size</span>
+          <span class="rooms__detail-val">820 ft²</span>
+        </div>
+        <div class="rooms__detail">
+          <span class="rooms__detail-label">Heating</span>
+          <span class="rooms__detail-val">Masonry wood stove</span>
+        </div>
+        <div class="rooms__detail">
+          <span class="rooms__detail-label">Porch</span>
+          <span class="rooms__detail-val">West-facing, canopy level</span>
+        </div>
+      </div>
+      <a href="#reserve" class="btn btn--outline rooms__btn">Inquire</a>
+    </div>
+  </div>
+
+</section>
+
+<style>
+.rooms {
+  background: var(--cream-dark);
+  padding: var(--space-2xl) 0;
+}
+
+.rooms__header {
+  max-width: 1200px;
+  margin: 0 auto 6rem;
+  padding: 0 2rem;
+}
+
+.rooms__title {
+  margin-top: 1rem;
+  color: var(--ink);
+}
+
+.rooms__title em {
+  font-style: italic;
+  color: var(--green);
+}
+
+/* Feature row */
+.rooms__feature {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  min-height: 600px;
+  margin-bottom: 6rem;
+}
+
+.rooms__feature--left {
+  direction: ltr;
+}
+
+.rooms__feature--right {
+  direction: rtl;
+}
+
+.rooms__feature--right > * {
+  direction: rtl;
+}
+
+.rooms__feature-media {
+  position: relative;
+  overflow: hidden;
+}
+
+.rooms__feature-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s var(--ease-spring);
+}
+
+.rooms__feature:hover .rooms__feature-media img {
+  transform: scale(1.04);
+}
+
+.rooms__feature-num {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  font-family: var(--serif);
+  font-size: 4rem;
+  font-weight: 300;
+  color: rgba(248,245,240,0.3);
+  line-height: 1;
+  z-index: 2;
+}
+
+.rooms__feature-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 3.5rem;
+  background: var(--cream);
+}
+
+.rooms__feature-content--right {
+  padding: 4rem 3.5rem 4rem 4rem;
+}
+
+.rooms__label {
+  margin-bottom: 0.75rem;
+}
+
+.rooms__name {
+  font-family: var(--serif);
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.rooms__desc {
+  font-size: 0.9rem;
+  color: var(--ink-light);
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
+.rooms__details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 1.5rem;
+  margin-bottom: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(74,93,74,0.12);
+}
+
+.rooms__details--inline {
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+.rooms__detail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.rooms__detail-label {
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--green-mid);
+}
+
+.rooms__detail-val {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+.rooms__btn {
+  align-self: flex-start;
+}
+
+/* Horizontal feature */
+.rooms__horizontal {
+  max-width: 1400px;
+  margin: 0 auto 0;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  min-height: 580px;
+}
+
+.rooms__horizontal-media {
+  overflow: hidden;
+}
+
+.rooms__horizontal-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s var(--ease-spring);
+}
+
+.rooms__horizontal:hover .rooms__horizontal-media img {
+  transform: scale(1.04);
+}
+
+.rooms__horizontal-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem;
+  background: var(--green-dark);
+  color: var(--cream);
+}
+
+.rooms__horizontal-content .rooms__label {
+  color: var(--amber-light);
+}
+
+.rooms__horizontal-content .rooms__name {
+  color: var(--cream);
+}
+
+.rooms__horizontal-content .rooms__desc {
+  color: rgba(248,245,240,0.75);
+}
+
+.rooms__horizontal-content .rooms__detail-label {
+  color: var(--amber);
+}
+
+.rooms__horizontal-content .rooms__detail-val {
+  color: var(--cream);
+}
+
+.rooms__horizontal-content .btn--outline {
+  border-color: rgba(248,245,240,0.4);
+  color: var(--cream);
+}
+
+.rooms__horizontal-content .btn--outline:hover {
+  background: var(--cream);
+  color: var(--green-dark);
+}
+
+@media (max-width: 1024px) {
+  .rooms__feature {
+    grid-template-columns: 1fr;
+    direction: ltr !important;
+  }
+
+  .rooms__feature-media {
+    min-height: 400px;
+  }
+
+  .rooms__feature-content {
+    padding: 3rem 2rem;
+  }
+
+  .rooms__feature-content--right {
+    padding: 3rem 2rem;
+  }
+
+  .rooms__horizontal {
+    grid-template-columns: 1fr;
+  }
+
+  .rooms__horizontal-media {
+    min-height: 380px;
+  }
+
+  .rooms__horizontal-content {
+    padding: 3rem 2rem;
+  }
+}
+</style>

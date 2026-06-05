@@ -1,0 +1,247 @@
+---
+// Hero.astro — Forest journal editorial hero
+---
+<section class="hero">
+  <div class="hero__media">
+    <img
+      src="/images/hero-forest-dawn.jpg"
+      alt="Old-growth forest canopy at dawn, Pacific Northwest"
+      class="hero__img"
+    />
+    <div class="hero__overlay"></div>
+  </div>
+
+  <div class="hero__content">
+    <span class="label hero__label reveal">Pacific Northwest, Oregon</span>
+    <h1 class="display hero__headline" data-split>
+      <span data-text="where-the">Where the</span>
+      <span data-text="forest"><em>Forest</em></span>
+      <span data-text="welcomes">Welcomes</span>
+    </h1>
+    <div class="divider reveal"></div>
+    <p class="hero__sub reveal">
+      Twelve rooms woven into ancient canopy.<br />
+      Unhurried. Uncommon. Unforgettable.
+    </p>
+    <div class="hero__actions reveal">
+      <a href="#reserve" class="btn btn--ghost hero__btn">Reserve a Room</a>
+      <a href="#philosophy" class="hero__scroll">
+        <span>Discover</span>
+        <span class="hero__scroll-line"></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="hero__meta">
+    <span class="hero__meta-text">
+      <span class="ornament">&#10022;</span>
+      Est. 2018 — Old Growth District
+    </span>
+  </div>
+</section>
+
+<style>
+/* ── Easing ── */
+.hero {
+  --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 0 8rem;
+  overflow: hidden;
+}
+
+.hero__media {
+  position: absolute;
+  inset: 0;
+}
+
+.hero__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(20,25,20,0.85) 0%,
+    rgba(20,25,20,0.3) 50%,
+    rgba(20,25,20,0.15) 100%
+  );
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  width: 100%;
+}
+
+.hero__label {
+  color: var(--amber-light);
+  display: block;
+  margin-bottom: 1.5rem;
+  transition: color 0.5s var(--ease-standard);
+}
+
+/* Gradient text variant for label */
+.hero__label.gradient-text {
+  background: linear-gradient(90deg, var(--amber-light), var(--amber-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Text Splitting (word-by-word stagger) ── */
+.hero__headline {
+  color: var(--cream);
+  margin-bottom: 2rem;
+}
+
+.hero__headline[data-split] {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.hero__headline[data-split] span {
+  display: block;
+  opacity: 0;
+  transform: translateY(0.6em);
+  transition:
+    opacity 0.8s var(--ease-standard),
+    transform 0.8s var(--ease-standard);
+}
+
+.hero__headline[data-split] span:nth-child(1) { transition-delay: 0.1s; }
+.hero__headline[data-split] span:nth-child(2) { transition-delay: 0.25s; }
+.hero__headline[data-split] span:nth-child(3) { transition-delay: 0.4s; }
+
+.hero__headline[data-split].is-visible span {
+  opacity: 1;
+  transform: none;
+}
+
+.hero__headline em {
+  font-style: italic;
+  color: var(--amber-light);
+}
+
+.hero__sub {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: rgba(248,245,240,0.75);
+  line-height: 1.6;
+  margin-bottom: 2.5rem;
+}
+
+.hero__actions {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+/* Spring hover on CTA button */
+.hero__btn {
+  transition:
+    background-color 0.3s var(--ease-standard),
+    border-color 0.3s var(--ease-standard),
+    color 0.3s var(--ease-standard),
+    transform 0.4s var(--ease-spring),
+    box-shadow 0.4s var(--ease-spring) !important;
+}
+
+.hero__btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+}
+
+.hero__scroll {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(248,245,240,0.6);
+  transition: color 0.3s var(--ease-standard);
+}
+
+.hero__scroll:hover {
+  color: var(--cream);
+}
+
+.hero__scroll-line {
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.4s var(--ease-spring);
+}
+
+.hero__scroll:hover .hero__scroll-line {
+  width: 60px;
+}
+
+.hero__meta {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 2;
+}
+
+.hero__meta-text {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(248,245,240,0.4);
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding-bottom: 5rem;
+  }
+
+  .hero__headline {
+    font-size: clamp(3rem, 12vw, 5rem);
+  }
+
+  .hero__actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .hero__meta {
+    display: none;
+  }
+}
+</style>
+
+<script>
+  // Hero text-splitting — trigger entrance on load
+  const headline = document.querySelector('.hero__headline[data-split]');
+  if (headline) {
+    setTimeout(() => headline.classList.add('is-visible'), 200);
+  }
+
+  // Hero label gradient pulse after delay
+  const heroLabel = document.querySelector('.hero__label');
+  if (heroLabel) {
+    setTimeout(() => heroLabel.classList.add('gradient-text'), 600);
+  }
+</script>

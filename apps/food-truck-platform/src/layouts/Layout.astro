@@ -1,0 +1,35 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = 'Copper Kitchen — Food Truck POS',
+  description = 'Modern point-of-sale for the modern food truck. Queue management, SMS updates, and seamless integrations.',
+} = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <title>{title}</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23C4580A'/><text x='50%25' y='55%25' font-family='sans-serif' font-weight='900' font-size='18' fill='white' text-anchor='middle' dominant-baseline='middle'>CK</text></svg>" />
+</head>
+<body>
+  <slot />
+<script>
+const observer = new IntersectionObserver(e => e.forEach(el => el.isIntersecting && el.target.classList.add('visible')), {threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+<script>
+  // Stagger entrance: add .stagger to .reveal containers so children animate in sequence
+  document.querySelectorAll('.reveal-stagger').forEach(el => el.classList.add('stagger'));
+</script>
+</body>
+</html>
+
+<style is:global>
+  @import '../styles/global.css';
+</style>

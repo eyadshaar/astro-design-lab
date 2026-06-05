@@ -1,0 +1,122 @@
+---
+const faqs = [
+  {
+    q: "How long does implementation typically take?",
+    a: "Most organizations are fully operational within 2 weeks. Week 1 focuses on discovery and architecture; Week 2 covers integration and testing. Complex enterprise environments with multiple compliance requirements may take 4–6 weeks."
+  },
+  {
+    q: "How do AI agents handle false positives?",
+    a: "Our agents use a multi-layered approach: baseline behavioral analysis to understand your environment's normal, cross-correlation with threat intelligence to identify known patterns, and feedback loops that continuously refine detection thresholds based on analyst feedback. Current false positive rate: under 2%."
+  },
+  {
+    q: "What happens when agents encounter something they can't handle?",
+    a: "Agents are designed with clear escalation criteria. Ambiguous situations, novel attack patterns, or decisions with regulatory implications are automatically escalated to designated human analysts with full context. Every escalation is logged for continuous improvement."
+  },
+  {
+    q: "How do you ensure agent decisions don't disrupt legitimate business operations?",
+    a: "Response actions are categorized by risk level. Low-risk actions (logging, enrichment) execute autonomously. Medium-risk (session termination, IP blocking) execute with automatic rollback. High-risk (endpoint isolation, user lockout) require human approval unless your runbook explicitly authorizes automation. We work with you to configure these thresholds."
+  },
+  {
+    q: "Can agents integrate with our existing SIEM?",
+    a: "Yes. We support Splunk, Microsoft Sentinel, Elastic Security, IBM QRadar, Sumo Logic, and Chronicle. Our integration layer normalizes data formats so agents see a consistent security event model regardless of source."
+  },
+  {
+    q: "How do you handle data privacy and compliance?",
+    a: "All data processing can occur within your environment (on-premise or private cloud) for regulated industries. We offer a FedRAMP-authorized cloud option. Agent decisions and actions are fully logged for audit purposes. We support data retention policies and can implement data masking for sensitive fields."
+  },
+  {
+    q: "What ROI can we expect?",
+    a: "Based on our customer data: 89% reduction in alert volume, 3-minute average response time vs. 45+ minutes previously, and 40+ hours per week saved on manual SOC tasks. Most customers see payback within 6 months. We provide monthly ROI reports tracking these metrics."
+  },
+  {
+    q: "How are agents updated as threats evolve?",
+    a: "Your dedicated threat intelligence team monitors the threat landscape continuously. Detection models are updated weekly with new indicators, TTPs, and IOCs. When major vulnerability disclosures occur (Log4j-level events), we push emergency updates within hours."
+  }
+];
+---
+
+<section id="faq">
+  <div class="container">
+    <div class="section-label">FAQ</div>
+    <h2 class="section-title reveal">Common Questions</h2>
+    <p class="section-desc">Everything you need to know about deploying AI agents in your security operations.</p>
+    
+    <div class="faq-list">
+      {faqs.map((item, i) => (
+        <details class="faq-item" name={`faq-${i}`}>
+          <summary class="faq-question">
+            <span class="faq-num">{String(i + 1).padStart(2, '0')}</span>
+            <span class="faq-text">{item.q}</span>
+            <span class="faq-icon">+</span>
+          </summary>
+          <div class="faq-answer">
+            <p>{item.a}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+#faq { background: linear-gradient(180deg, var(--dark-bg) 0%, #0D1520 100%); }
+.faq-list {
+  max-width: 800px;
+  margin: 2rem 0;
+}
+.faq-item {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  transition: border-color 0.4s var(--ease-spring);
+}
+.faq-item[open] { border-color: var(--blue); }
+.faq-question {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+.faq-question::-webkit-details-marker { display: none; }
+.faq-num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--teal);
+  flex-shrink: 0;
+}
+.faq-text {
+  flex: 1;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+.faq-icon {
+  font-size: 1.25rem;
+  color: var(--text-muted);
+  transition: transform 0.4s var(--ease-spring);
+}
+.faq-item[open] .faq-icon { transform: rotate(45deg); color: var(--blue); }
+.faq-answer {
+  padding: 0 1.5rem 1.5rem 1.5rem;
+  border-top: 1px solid var(--card-border);
+}
+.faq-answer p { font-size: 0.9375rem; padding-top: 1.25rem; }
+</style>
+
+<script>
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.addEventListener('toggle', () => {
+    if (item.open) {
+      document.querySelectorAll('.faq-item[open]').forEach(openItem => {
+        if (openItem !== item) openItem.removeAttribute('open');
+      });
+    }
+  });
+});
+</script>

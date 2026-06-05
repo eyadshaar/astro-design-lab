@@ -1,0 +1,193 @@
+---
+const navLinks = [
+  { label: 'How It Works', href: '#customer-flow' },
+  { label: 'Dashboard',   href: '#operator' },
+  { label: 'Integrations', href: '#integrations' },
+  { label: 'Pricing',     href: '#pricing' },
+];
+---
+
+<header class="navbar">
+  <a href="/" class="navbar-brand">
+    <div class="navbar-logo-ticket">
+      <div class="ticket-punch"></div>
+      COPPER KITCHEN
+    </div>
+  </a>
+
+  <nav class="navbar-links" aria-label="Primary">
+    {navLinks.map(link => (
+      <a href={link.href} class="navbar-link">{link.label}</a>
+    ))}
+    <a href="#demo" class="btn btn-primary navbar-cta">Get Demo</a>
+  </nav>
+
+  <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+    <nav class="mobile-nav">
+      {navLinks.map(link => (
+        <a href={link.href} class="mobile-nav-link">{link.label}</a>
+      ))}
+      <a href="#demo" class="btn btn-primary" style="margin-top:1rem; text-align:center;">Get Demo</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .navbar {
+    position: relative;
+    top: 0;
+    z-index: 100;
+    background: var(--cream);
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .navbar::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--orange)  0px,  var(--orange)  6px,
+      transparent   6px,  transparent    10px,
+      var(--border)  10px, var(--border)  16px,
+      transparent   16px, transparent    22px
+    );
+  }
+
+  .navbar-brand {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--orange);
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .navbar-link {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--charcoal);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.3s var(--ease-standard), color 0.3s var(--ease-standard);
+    position: relative;
+    padding: 0.25rem 0;
+  }
+
+  .navbar-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    width: 100%;
+    height: 2px;
+    background: var(--orange);
+    transform-origin: center;
+    transition: transform 0.4s var(--ease-spring);
+  }
+
+  .navbar-link:hover { opacity: 1; color: var(--orange); }
+  .navbar-link:hover::after { transform: translateX(-50%) scaleX(1); }
+
+  .navbar-cta {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    text-decoration: none;
+  }
+
+  /* Hamburger */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background: var(--charcoal);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+
+  /* Mobile Drawer */
+  .mobile-drawer {
+    display: none;
+    position: fixed;
+    top: 53px;
+    left: 0;
+    right: 0;
+    background: var(--cream);
+    border-bottom: 1.5px dashed var(--border);
+    padding: 1.5rem 2rem;
+  }
+
+  .mobile-drawer.open { display: flex; }
+
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .mobile-nav-link {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--charcoal);
+    text-decoration: none;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+    opacity: 0.7;
+    transition: opacity 0.3s var(--ease-standard), color 0.3s var(--ease-standard);
+  }
+  .mobile-nav-link:hover { opacity: 1; color: var(--orange); }
+
+  @media (max-width: 768px) {
+    .navbar-links { display: none; }
+    .hamburger { display: flex; }
+  }
+</style>
+
+<script>
+  const btn = document.getElementById('hamburgerBtn');
+  const drawer = document.getElementById('mobileDrawer');
+  if (btn && drawer) {
+    btn.addEventListener('click', () => {
+      const isOpen = drawer.classList.toggle('open');
+      btn.setAttribute('aria-expanded', String(isOpen));
+      drawer.setAttribute('aria-hidden', String(!isOpen));
+    });
+    drawer.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        drawer.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        drawer.setAttribute('aria-hidden', 'true');
+      });
+    });
+  }
+</script>

@@ -1,0 +1,265 @@
+/* ─────────────────────────────────────────────────
+   THE CANOPY HOUSE — Global Styles
+   Forest Journal aesthetic, Pacific Northwest
+   ───────────────────────────────────────────────── */
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap');
+
+/* ── Variables ── */
+:root {
+  --green:      #4A5D4A;
+  --green-dark: #354235;
+  --green-mid:  #5E7360;
+  --amber:      #C8A97E;
+  --amber-light:#D9BF9E;
+  --amber-dark: #A88B5E;
+  --cream:      #F8F5F0;
+  --cream-dark: #EDE8DF;
+  --cream-mid:  #F2EDE5;
+  --ink:        #1C1C1A;
+  --ink-light:  #4A4A46;
+
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans:  'DM Sans', system-ui, sans-serif;
+
+  --space-xs:  0.5rem;
+  --space-sm:  1rem;
+  --space-md:  2rem;
+  --space-lg:  4rem;
+  --space-xl:  8rem;
+  --space-2xl: 12rem;
+
+  --radius: 2px;
+}
+
+/* ── Easing Library (from premium sites: pacomepertant, incredibles, rauno) ── */
+:root {
+  --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);   /* spring overshoot */
+  --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);      /* standard reveal */
+  --ease-snap:     cubic-bezier(0.76, 0, 0.24, 1);      /* quick snap exit */
+  --ease-slow:     cubic-bezier(0.25, 1, 0.5, 1);       /* slow reveal */
+}
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; background: none; font: inherit; }
+
+/* ── Selection ── */
+::selection { background: var(--amber); color: var(--cream); }
+
+/* ── Scrollbar (amber accent) ── */
+::-webkit-scrollbar { width: 2px; height: 2px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--amber);
+  border-radius: 1px;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--amber) transparent;
+}
+
+/* ── Scroll Reveal System (IntersectionObserver) ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.7s var(--ease-standard),
+    transform 0.7s var(--ease-standard);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-clip {
+  overflow: hidden;
+}
+.reveal-clip .reveal-inner {
+  display: block;
+  opacity: 0;
+  transform: translateY(100%);
+  transition:
+    opacity 1s var(--ease-standard),
+    transform 1s var(--ease-standard);
+  will-change: transform;
+}
+.reveal-clip.is-visible .reveal-inner {
+  opacity: 1;
+  transform: none;
+}
+
+/* Stagger delays for child reveals */
+.stagger > *:nth-child(1) { transition-delay: 0ms; }
+.stagger > *:nth-child(2) { transition-delay: 80ms; }
+.stagger > *:nth-child(3) { transition-delay: 160ms; }
+.stagger > *:nth-child(4) { transition-delay: 240ms; }
+.stagger > *:nth-child(5) { transition-delay: 320ms; }
+.stagger > *:nth-child(6) { transition-delay: 400ms; }
+.stagger > *:nth-child(7) { transition-delay: 480ms; }
+.stagger > *:nth-child(8) { transition-delay: 560ms; }
+
+/* ── CSS Mask Fades (gallery edges) ── */
+.mask-fade-bottom {
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 75%);
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 75%);
+}
+.mask-fade-left {
+  -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%, #000 88%);
+  mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%, #000 88%);
+}
+
+/* ── Gradient Text ── */
+.gradient-text {
+  background: linear-gradient(135deg, var(--amber-light) 0%, var(--amber-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Typography ── */
+h1, h2, h3, h4, h5 {
+  font-family: var(--serif);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.display {
+  font-family: var(--serif);
+  font-size: clamp(3.5rem, 8vw, 9rem);
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.headline {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 4.5rem);
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.subhead {
+  font-family: var(--serif);
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.label {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--green-mid);
+}
+
+.ornament {
+  color: var(--amber);
+  font-size: 1.2rem;
+}
+
+/* ── Layout ── */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+.container--narrow {
+  max-width: 800px;
+}
+
+.container--wide {
+  max-width: 1440px;
+}
+
+/* ── Dividers ── */
+.divider {
+  display: block;
+  width: 60px;
+  height: 1px;
+  background: var(--amber);
+  margin: var(--space-md) 0;
+}
+
+.divider--center { margin-left: auto; margin-right: auto; }
+
+/* ── Buttons ── */
+.btn {
+  display: inline-block;
+  padding: 0.85rem 2.2rem;
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  border-radius: var(--radius);
+}
+
+.btn--primary {
+  background: var(--green);
+  color: var(--cream);
+  border: 1px solid var(--green);
+}
+.btn--primary:hover {
+  background: var(--green-dark);
+  border-color: var(--green-dark);
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--green);
+  border: 1px solid var(--green);
+}
+.btn--outline:hover {
+  background: var(--green);
+  color: var(--cream);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--cream);
+  border: 1px solid rgba(248,245,240,0.5);
+}
+.btn--ghost:hover {
+  background: rgba(248,245,240,0.15);
+  border-color: var(--cream);
+}
+
+/* ── Animations ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeUp {
+  animation: fadeUp 0.8s ease forwards;
+  opacity: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  :root {
+    --space-lg:  3rem;
+    --space-xl:  5rem;
+    --space-2xl: 8rem;
+  }
+}

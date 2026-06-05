@@ -1,0 +1,243 @@
+---
+const phoneNumber = "(503) 555-0142";
+const phoneHref = "tel:+150****0142";
+const businessName = "Fieldstone IT";
+---
+
+<header class="navbar">
+  <div class="container navbar-inner">
+    <!-- Logo -->
+    <a href="/" class="logo">
+      <span class="logo-icon">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="6" fill="#3D4F5F"/>
+          <path d="M8 8h16v12l-4 4H8l4-4V8z" fill="#B87A3A"/>
+          <rect x="20" y="18" width="4" height="6" rx="1" fill="#B87A3A"/>
+          <rect x="8" y="18" width="10" height="2" rx="1" fill="rgba(255,255,255,0.5)"/>
+        </svg>
+      </span>
+      <span class="logo-text">{businessName}</span>
+    </a>
+
+    <!-- Desktop Nav -->
+    <nav class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#security">Security</a>
+      <a href="#plans">Plans</a>
+      <a href="#clients">Clients</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <!-- Phone CTA -->
+    <div class="nav-phone">
+      <span class="nav-phone-label">24/7 Support</span>
+      <a href={phoneHref} class="nav-phone-number">{phoneNumber}</a>
+    </div>
+
+    <!-- Mobile menu button -->
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- Mobile Nav Drawer -->
+  <div class="mobile-nav" id="mobileNav">
+    <nav>
+      <a href="#services" class="mobile-nav-link">Services</a>
+      <a href="#security" class="mobile-nav-link">Security</a>
+      <a href="#plans" class="mobile-nav-link">Plans</a>
+      <a href="#clients" class="mobile-nav-link">Clients</a>
+      <a href="#contact" class="mobile-nav-link">Contact</a>
+    </nav>
+    <a href={phoneHref} class="mobile-phone-cta">{phoneNumber}</a>
+  </div>
+</header>
+
+<style>
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: var(--slate);
+    border-bottom: 3px solid var(--amber);
+    box-shadow: 0 4px 24px rgba(42, 56, 68, 0.25);
+  }
+
+  .navbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+    gap: var(--space-lg);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    color: var(--white);
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .logo-text {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 1.3rem;
+    letter-spacing: -0.02em;
+    color: var(--white);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: var(--space-lg);
+    align-items: center;
+  }
+
+  .nav-links a {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.25rem 0;
+    position: relative;
+    transition: color 0.4s var(--ease-spring);
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -2px;
+    width: 0;
+    height: 2px;
+    background: var(--amber);
+    transform: translateX(-50%);
+    transition: width 0.4s var(--ease-spring);
+  }
+
+  .nav-links a:hover {
+    color: var(--amber);
+  }
+
+  .nav-links a:hover::after {
+    width: 100%;
+  }
+
+  .nav-phone {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    flex-shrink: 0;
+  }
+
+  .nav-phone-label {
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--amber);
+  }
+
+  .nav-phone-number {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--white);
+    text-decoration: none;
+    line-height: 1;
+    transition: color 0.4s var(--ease-spring);
+  }
+
+  .nav-phone-number:hover { color: var(--amber); }
+
+  .mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .mobile-menu-btn span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: var(--white);
+    border-radius: 2px;
+    transition: all 0.4s var(--ease-spring);
+  }
+
+  .mobile-nav {
+    display: none;
+    flex-direction: column;
+    background: var(--slate-dark);
+    padding: var(--space-lg);
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .mobile-nav.open { display: flex; }
+
+  .mobile-nav nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .mobile-nav-link {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--white);
+    text-decoration: none;
+    padding: var(--space-sm) 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    transition: color 0.4s var(--ease-spring);
+  }
+
+  .mobile-nav-link:hover { color: var(--amber); }
+
+  .mobile-phone-cta {
+    margin-top: var(--space-lg);
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 1.5rem;
+    color: var(--amber);
+    text-align: center;
+    text-decoration: none;
+    padding: var(--space-md);
+    background: rgba(184, 122, 58, 0.15);
+    border-radius: var(--radius-md);
+    border: 2px solid var(--amber);
+  }
+
+  @media (max-width: 768px) {
+    .nav-links, .nav-phone { display: none; }
+    .mobile-menu-btn { display: flex; }
+  }
+</style>
+
+<script>
+  const btn = document.getElementById('mobileMenuBtn');
+  const nav = document.getElementById('mobileNav');
+  if (btn && nav) {
+    btn.addEventListener('click', () => {
+      nav.classList.toggle('open');
+    });
+    nav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => nav.classList.remove('open'));
+    });
+  }
+</script>

@@ -1,0 +1,141 @@
+---
+// Practitioners — 3 team members
+const team = [
+  {
+    name: 'Mara Osei',
+    title: 'Founder & Lead Somatic Therapist',
+    bio: 'Mara trained inbody-based trauma therapy in Nairobi and São Paulo, and has spent 12 years helping people reconnect with their bodies after adversity. She brings warmth, rigor, and deep presence to every session.',
+    image: '/images/team-mara.jpg?w=600&q=80&auto=format&fit=crop&facepad=3&faces=1',
+    imageAlt: 'Mara Osei, warm smile, dark curly hair',
+    tags: ['Somatic Therapy', 'Trauma-Informed Yoga'],
+  },
+  {
+    name: 'Theo Lindqvist',
+    title: 'Mindfulness & MBSR Teacher',
+    bio: 'A former monk who spent three years in a Vipassana retreat, Theo returned to share meditation with the modern world. His sessions are grounded, precise, and quietly transformative.',
+    image: '/images/team-theo.jpg?w=600&q=80&auto=format&fit=crop&facepad=3&faces=1',
+    imageAlt: 'Theo Lindqvist, calm expression, light hair',
+    tags: ['MBSR', 'Vipassana', 'Guided Meditation'],
+  },
+  {
+    name: 'Priya Nambiar',
+    title: 'Breathwork Facilitator',
+    bio: 'Priya studied pranayama in Rishikesh and holotropic breathwork in Prague. She holds safe, powerful space for deep emotional release and nervous-system reset.',
+    image: '/images/team-priya.jpg?w=600&q=80&auto=format&fit=crop&facepad=3&faces=1',
+    imageAlt: 'Priya Nambiar, serene presence, long dark hair',
+    tags: ['Pranayama', 'Holotropic Breathwork', 'Nadi Shodhana'],
+  },
+];
+---
+
+<section id="practitioners" class="section">
+  <div class="container">
+    <div class="section__header">
+      <p class="eyebrow">Our Team</p>
+      <h2 class="reveal">The People Behind Solace</h2>
+      <p>
+        Three practitioners, three specialisms, one shared belief: that healing
+        happens best in connection, care, and community.
+      </p>
+    </div>
+
+    <div class="practitioners stagger">
+      {team.map((member) => (
+        <div class="practitioner card reveal">
+          <div class="practitioner__photo-wrap kenburns">
+            <img
+              src={member.image}
+              alt={member.imageAlt}
+              class="practitioner__photo"
+              loading="lazy"
+            />
+          </div>
+          <div class="practitioner__body">
+            <h3 class="practitioner__name">{member.name}</h3>
+            <p class="practitioner__title">{member.title}</p>
+            <p class="practitioner__bio">{member.bio}</p>
+            <div class="practitioner__tags">
+              {member.tags.map(tag => <span class="tag">{tag}</span>)}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .practitioners {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+  }
+
+  .practitioner {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .practitioner__photo-wrap {
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+  }
+
+  .practitioner__photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    transition: transform 1.2s var(--ease-spring);
+    will-change: transform;
+  }
+
+  .practitioner:hover .practitioner__photo {
+    transform: scale(1.06);
+  }
+
+  .practitioner__body {
+    padding: var(--space-6);
+  }
+
+  .practitioner__name {
+    font-size: 1.6rem;
+    margin-bottom: var(--space-1);
+  }
+
+  .practitioner__title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-sage);
+    letter-spacing: 0.04em;
+    margin-bottom: var(--space-4);
+  }
+
+  .practitioner__bio {
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    line-height: 1.75;
+    margin-bottom: var(--space-4);
+  }
+
+  .practitioner__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .tag {
+    display: inline-block;
+    padding: var(--space-1) var(--space-3);
+    background: rgba(157, 180, 160, 0.12);
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-sage);
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 960px) {
+    .practitioners { grid-template-columns: 1fr; max-width: 480px; margin-inline: auto; }
+  }
+</style>

@@ -1,0 +1,192 @@
+---
+const navLinks = [
+  { label: 'Demos', href: '#demos' },
+  { label: 'Research', href: '#research' },
+  { label: 'Patterns', href: '#patterns' },
+  { label: 'Methodology', href: '#methodology' },
+];
+---
+
+<nav class="navbar">
+  <div class="navbar-inner container">
+    <a href="/" class="logo">
+      <span class="logo-mark">⬡</span>
+      <span class="logo-text">Astro Design Lab</span>
+    </a>
+    
+    <ul class="nav-links">
+      {navLinks.map(link => (
+        <li><a href={link.href} class="nav-link">{link.label}</a></li>
+      ))}
+    </ul>
+    
+    <a href="#contact" class="nav-cta">Start a project</a>
+    
+    <button class="mobile-menu-btn" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-nav" aria-hidden="true">
+  <ul class="mobile-nav-links">
+    {navLinks.map(link => (
+      <li><a href={link.href} class="mobile-nav-link">{link.label}</a></li>
+    ))}
+    <li><a href="#contact" class="mobile-nav-link accent">Start a project</a></li>
+  </ul>
+</div>
+
+<style>
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: var(--space-4) 0;
+  background: rgba(10, 10, 11, 0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.logo-mark {
+  font-size: 1.5rem;
+  color: var(--color-accent);
+}
+
+.logo-text {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.nav-links {
+  display: none;
+  list-style: none;
+  gap: var(--space-6);
+}
+
+@media (min-width: 768px) {
+  .nav-links {
+    display: flex;
+  }
+}
+
+.nav-link {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  transition: color 0.4s var(--ease-spring);
+}
+
+.nav-link:hover {
+  color: var(--color-text);
+}
+
+.nav-cta {
+  display: none;
+  padding: var(--space-2) var(--space-5);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-bg);
+  background: var(--color-accent);
+  border-radius: var(--radius-md);
+  transition: all 0.4s var(--ease-spring);
+}
+
+@media (min-width: 768px) {
+  .nav-cta {
+    display: block;
+  }
+}
+
+.nav-cta:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+.mobile-menu-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: var(--space-2);
+  background: none;
+  border: none;
+}
+
+@media (min-width: 768px) {
+  .mobile-menu-btn {
+    display: none;
+  }
+}
+
+.mobile-menu-btn span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--color-text);
+  border-radius: 1px;
+  transition: transform 0.4s var(--ease-spring), opacity 0.4s var(--ease-spring);
+}
+
+.mobile-nav {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+  background: var(--color-bg);
+  padding: var(--space-6);
+  transform: translateX(100%);
+  transition: transform 0.5s var(--ease-standard);
+}
+
+.mobile-nav.open {
+  transform: translateX(0);
+}
+
+.mobile-nav-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.mobile-nav-link {
+  font-size: 1.25rem;
+  font-family: var(--font-display);
+}
+
+.mobile-nav-link.accent {
+  color: var(--color-accent);
+}
+</style>
+
+<script>
+const menuBtn = document.querySelector('.mobile-menu-btn');
+const mobileNav = document.querySelector('.mobile-nav');
+
+menuBtn?.addEventListener('click', () => {
+  const isOpen = mobileNav?.classList.contains('open');
+  mobileNav?.classList.toggle('open', !isOpen);
+  menuBtn.setAttribute('aria-expanded', String(!isOpen));
+  mobileNav?.setAttribute('aria-hidden', String(isOpen));
+});
+</script>

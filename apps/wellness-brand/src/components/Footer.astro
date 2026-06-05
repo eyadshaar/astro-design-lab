@@ -1,0 +1,202 @@
+---
+const year = new Date().getFullYear();
+
+const links = {
+  Practice: [
+    { label: 'Mindfulness & Meditation', href: '#services' },
+    { label: 'Conscious Breathwork',     href: '#services' },
+    { label: 'Somatic Therapy',           href: '#services' },
+  ],
+  Studio: [
+    { label: 'Our Philosophy',   href: '#philosophy' },
+    { label: 'Our Team',        href: '#practitioners' },
+    { label: 'Morning Practice', href: '#timeline' },
+    { label: 'Packages & Pricing', href: '#packages' },
+  ],
+  Connect: [
+    { label: 'Book a Session',   href: '#booking' },
+    { label: 'Breathwork Circle', href: '#timeline' },
+    { label: 'Contact Us',       href: 'mailto:hello@solacewellness.example.com' },
+  ],
+};
+
+const social = [
+  {
+    label: 'Instagram',
+    href: '#',
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>`,
+  },
+  {
+    label: 'YouTube',
+    href: '#',
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22.5 6.5a2.8 2.8 0 0 0-2-2C18.8 4 12 4 12 4s-6.8 0-8.5.5A2.8 2.8 0 0 0 1.5 6.5 29 29 0 0 0 1 12a29 29 0 0 0 .5 5.5 2.8 2.8 0 0 0 2 2C5.2 20 12 20 12 20s6.8 0 8.5-.5a2.8 2.8 0 0 0 2-2A29 29 0 0 0 23 12a29 29 0 0 0-.5-5.5z"/><polygon points="9.75 15.5 15.5 12 9.75 8.5 9.75 15.5" fill="currentColor" stroke="none"/></svg>`,
+  },
+];
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <!-- Brand -->
+      <div class="footer__brand">
+        <a href="/" class="footer__logo">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+            <circle cx="14" cy="14" r="13" stroke="#9DB4A0" stroke-width="1.5"/>
+            <path d="M14 6C14 6 8 10 8 15a6 6 0 0 0 12 0c0-5-6-9-6-9z" fill="#9DB4A0" opacity="0.35"/>
+            <path d="M14 8C14 8 9.5 11.5 9.5 15.5a4.5 4.5 0 0 0 9 0c0-4-4.5-7.5-4.5-7.5z" stroke="#9DB4A0" stroke-width="1.2" fill="none"/>
+          </svg>
+          <span class="gradient-text">Solace Wellness</span>
+        </a>
+        <p class="footer__tagline">
+          A morning practice for the mind,<br />body, and breath.
+        </p>
+        <div class="footer__social">
+          {social.map(s => (
+            <a href={s.href} class="footer__social-link" aria-label={s.label} set:html={s.icon} />
+          ))}
+        </div>
+      </div>
+
+      <!-- Nav columns -->
+      {Object.entries(links).map(([category, items]) => (
+        <div class="footer__col">
+          <p class="footer__col-heading">{category}</p>
+          <ul>
+            {items.map(item => (
+              <li><a href={item.href} class="footer__link">{item.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <div class="footer__bottom">
+      <p class="footer__copy">&copy; {year} Solace Wellness Ltd. All rights reserved.</p>
+      <p class="footer__legal">
+        <a href="#">Privacy Policy</a>
+        <span aria-hidden="true">&middot;</span>
+        <a href="#">Terms of Service</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background-color: var(--color-text);
+    color: rgba(255,255,255,0.75);
+    padding-top: var(--space-20);
+    padding-bottom: var(--space-8);
+  }
+
+  .footer__top {
+    display: grid;
+    grid-template-columns: 1.8fr repeat(3, 1fr);
+    gap: var(--space-12);
+    padding-bottom: var(--space-12);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .footer__logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    color: #fff;
+    margin-bottom: var(--space-4);
+  }
+
+  .footer__tagline {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: var(--space-6);
+  }
+
+  .footer__social {
+    display: flex;
+    gap: var(--space-4);
+  }
+
+  .footer__social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.7);
+    transition: all 0.4s var(--ease-spring);
+  }
+
+  .footer__social-link:hover {
+    background: var(--color-amber);
+    color: #fff;
+    transform: translateY(-2px);
+  }
+
+  .footer__col-heading {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-sage);
+    margin-bottom: var(--space-4);
+  }
+
+  .footer__col ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .footer__link {
+    font-size: 0.9375rem;
+    color: rgba(255,255,255,0.65);
+    transition: color 0.4s var(--ease-spring);
+  }
+
+  .footer__link:hover { color: var(--color-amber); }
+
+  .footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: var(--space-8);
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  .footer__copy {
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.45);
+  }
+
+  .footer__legal {
+    display: flex;
+    gap: var(--space-3);
+    align-items: center;
+    font-size: 0.875rem;
+  }
+
+  .footer__legal a {
+    color: rgba(255,255,255,0.45);
+    transition: color 0.4s var(--ease-spring);
+  }
+
+  .footer__legal a:hover { color: rgba(255,255,255,0.8); }
+
+  @media (max-width: 900px) {
+    .footer__top {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8);
+    }
+    .footer__brand { grid-column: 1 / -1; }
+  }
+
+  @media (max-width: 480px) {
+    .footer__top { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,47 @@
+name: "Website Build"
+description: "Track a new Astro website build from concept to deploy"
+labels: ["build"]
+body:
+  - type: input
+    id: demo-name
+    attributes:
+      label: "Demo Name"
+      description: "e.g., boutique-hotel, ai-automation-agency"
+    validations:
+      required: true
+  - type: dropdown
+    id: industry
+    attributes:
+      label: "Industry"
+      options:
+        - Boutique Hotel / Hospitality
+        - Local Service Business
+        - SaaS Product
+        - AI Automation Agency
+        - Developer Tool
+        - Wellness Brand
+        - Restaurant / Food Truck
+        - B2B Operations Platform
+        - Creative Studio
+        - Real Estate / Property Management
+        - Cybersecurity / IT Support
+        - Nonprofit / Community Organization
+    validations:
+      required: true
+  - type: textarea
+    id: brand-direction
+    attributes:
+      label: "Brand Direction"
+      description: "Visual metaphor, palette, typography, key differentiators"
+    validations:
+      required: true
+  - type: textarea
+    id: sections
+    attributes:
+      label: "Required Sections"
+      description: "List all sections for this site"
+  - type: textarea
+    id: anti-patterns
+    attributes:
+      label: "Anti-Boilerplate Checklist"
+      description: "What generic patterns to deliberately avoid"

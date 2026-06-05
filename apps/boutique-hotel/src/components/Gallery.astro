@@ -1,0 +1,166 @@
+---
+// Gallery.astro — Masonry editorial grid with mask-fade + Ken Burns spring
+---
+<section class="gallery" id="gallery">
+  <div class="gallery__header reveal">
+    <span class="label">Gallery</span>
+    <h2 class="headline gallery__title">
+      The place<br />in <em>light</em>
+    </h2>
+  </div>
+
+  <div class="gallery__grid-wrap mask-fade-bottom">
+    <div class="gallery__grid">
+      <div class="gallery__item gallery__item--tall" item-style="tall">
+        <img
+          src="/images/gallery-stream-moss.jpg"
+          alt="Morning light through canopy — bedroom window"
+        />
+      </div>
+      <div class="gallery__item" item-style="small">
+        <img
+          src="/images/gallery-fern-close.jpg"
+          alt="Copper soaking tub, forest view"
+        />
+      </div>
+      <div class="gallery__item gallery__item--wide" item-style="wide">
+        <img
+          src="/images/gallery-foggy-path.jpg"
+          alt="Terrace at dusk, meadow in background"
+        />
+      </div>
+      <div class="gallery__item" item-style="small">
+        <img
+          src="/images/gallery-fern-macro.jpg"
+          alt="Handcrafted cedar furniture in room"
+        />
+      </div>
+      <div class="gallery__item gallery__item--tall" item-style="tall">
+        <img
+          src="/images/gallery-mountain-valley.jpg"
+          alt="Mountain view from terrace — early morning"
+        />
+      </div>
+      <div class="gallery__item" item-style="small">
+        <img
+          src="/images/gallery-rain-window.jpg"
+          alt="Breakfast spread — seasonal and local"
+        />
+      </div>
+      <div class="gallery__item gallery__item--wide" item-style="wide">
+        <img
+          src="/images/gallery-hotel-exterior.jpg"
+          alt="Main lodge exterior — evening, warm lights in windows"
+        />
+      </div>
+      <div class="gallery__item" item-style="small">
+        <img
+          src="/images/gallery-coastal-rocks.jpg"
+          alt="Fire pit area — forest clearing at night"
+        />
+      </div>
+    </div>
+  </div>
+
+  <p class="gallery__caption reveal">
+    Photography by Rikki S. — captured across four seasons at The Canopy House
+  </p>
+</section>
+
+<style>
+/* ── Easing ── */
+.gallery {
+  --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.gallery {
+  background: var(--cream-dark);
+  padding: var(--space-2xl) 0;
+}
+
+.gallery__header {
+  max-width: 1200px;
+  margin: 0 auto 4rem;
+  padding: 0 2rem;
+}
+
+.gallery__title {
+  margin-top: 1rem;
+  color: var(--ink);
+}
+
+.gallery__title em {
+  font-style: italic;
+  color: var(--green);
+}
+
+/* ── Grid wrap (mask fade container) ── */
+.gallery__grid-wrap {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  overflow: hidden;
+}
+
+/* ── Masonry grid ── */
+.gallery__grid {
+  columns: 3;
+  column-gap: 1rem;
+}
+
+.gallery__item {
+  break-inside: avoid;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+/* Ken Burns hover — spring easing */
+.gallery__item img {
+  width: 100%;
+  display: block;
+  transition: transform 0.7s var(--ease-spring);
+}
+
+.gallery__item:hover img {
+  transform: scale(1.06);
+}
+
+/* Non-standard grid item-style sizing */
+.gallery__item[item-style="wide"] {
+  /* Wide items span 2 columns in masonry via inline width */
+}
+
+.gallery__item[item-style="tall"] {
+  /* Tall items get natural height from image */
+}
+
+.gallery__item[item-style="small"] {
+  /* Small items stay at natural column width */
+}
+
+.gallery__caption {
+  max-width: 1200px;
+  margin: 3rem auto 0;
+  padding: 0 2rem;
+  font-family: var(--serif);
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--green-mid);
+  text-align: center;
+}
+
+@media (max-width: 1024px) {
+  .gallery__grid {
+    columns: 2;
+  }
+}
+
+@media (max-width: 640px) {
+  .gallery__grid {
+    columns: 1;
+  }
+}
+</style>

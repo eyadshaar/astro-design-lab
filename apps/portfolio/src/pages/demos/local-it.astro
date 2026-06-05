@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Fieldstone IT — Local IT / Cybersecurity Demo">
+  <div class="demo-page">
+    <nav class="demo-nav">
+      <a href="/" class="back-link">← Back to Portfolio</a>
+    </nav>
+    <main class="demo-content">
+      <div class="demo-hero">
+        <div class="kenburns"><img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1200&h=600&fit=crop&q=80" alt="Fieldstone IT" class="demo-hero-img" /></div>
+        <div class="demo-badge">Live Demo</div>
+      </div>
+      <h1 class="reveal gradient-text">Fieldstone IT</h1>
+      <p class="demo-category">Local IT / Cybersecurity</p>
+      <p class="demo-description">A control-room aesthetic for a local managed IT provider. Professional, grounded, with prominent phone CTA.</p>
+      <div class="demo-tags">
+        <span>Local Business</span><span>Trust-First</span><span>Service</span>
+      </div>
+      <a href="https://fieldstone-it.pages.dev" target="_blank" rel="noopener" class="demo-cta-button">
+        View live site →
+      </a>
+    </main>
+  </div>
+</BaseLayout>
+
+<style>
+  .demo-page { min-height: 100vh; background: #111418; color: #e8e8e8; }
+  .demo-nav { padding: 2rem; }
+  .back-link { color: #4a9eff; text-decoration: none; font-size: 0.875rem; }
+  .demo-content { max-width: 680px; margin: 0 auto; padding: 4rem 2rem; text-align: center; }
+  .demo-hero { position: relative; margin-bottom: 2.5rem; border-radius: 12px; overflow: hidden; }
+  .demo-hero-img { width: 100%; height: 280px; object-fit: cover; display: block; }
+  .demo-badge { position: absolute; top: 1rem; left: 1rem; display: inline-block; padding: 0.25rem 0.75rem; background: #4a9eff; color: #111418; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
+  h1 { font-size: 2.5rem; font-weight: 400; margin-bottom: 0.5rem; }
+  .demo-category { color: #4a9eff; font-size: 0.875rem; margin-bottom: 1.5rem; }
+  .demo-description { color: #888; line-height: 1.6; margin-bottom: 2rem; max-width: 50ch; margin-left: auto; margin-right: auto; }
+  .demo-tags { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+  .demo-tags span { padding: 0.25rem 0.75rem; border: 1px solid #1a2433; border-radius: 4px; font-size: 0.8125rem; color: #666; }
+  .demo-cta-button { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.875rem 2rem; background: #4a9eff; color: #111418; border-radius: 8px; font-weight: 600; font-size: 0.9375rem; text-decoration: none; transition: background 0.2s, transform 0.2s; }
+  .demo-cta-button:hover { background: #6aafff; transform: translateY(-2px); }
+</style>

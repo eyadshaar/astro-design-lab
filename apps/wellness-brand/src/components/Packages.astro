@@ -1,0 +1,270 @@
+---
+// Packages — 3 equal cards with sage accent
+const packages = [
+  {
+    name: 'Explore',
+    tagline: 'A gentle beginning',
+    price: '£120',
+    period: 'per month',
+    description: 'Ideal for newcomers. Two 1:1 sessions per month to explore which practice resonates with you.',
+    features: [
+      '2 × 60-min private sessions',
+      'Choose your discipline each month',
+      'Session notes & personalised home practice',
+      'Email support between sessions',
+    ],
+    cta: 'Start Exploring',
+    highlight: false,
+  },
+  {
+    name: 'Deepen',
+    tagline: 'For the committed practitioner',
+    price: '£280',
+    period: 'per month',
+    description: 'Our most popular offering. A structured path of consistent practice with one primary practitioner.',
+    features: [
+      '4 × 75-min private sessions',
+      'One primary discipline focus',
+      'Personalised practice plan',
+      'Monthly 90-min integration session',
+      'Access to group sitting on Tuesdays',
+    ],
+    cta: 'Begin Deepening',
+    highlight: true,
+  },
+  {
+    name: 'Transform',
+    tagline: 'A complete wellness immersion',
+    price: '£580',
+    period: 'per month',
+    description: 'Full-spectrum monthly support for deep transformation across all three practice areas.',
+    features: [
+      '8 × 60-min private sessions (any discipline)',
+      'Priority booking & flexible scheduling',
+      'Dedicated lead practitioner',
+      'Unlimited group sessions',
+      'Quarterly full-day retreat inclusion',
+      'WhatsApp wellness support',
+    ],
+    cta: 'Start Transforming',
+    highlight: false,
+  },
+];
+---
+
+<section id="packages" class="section">
+  <div class="container">
+    <div class="section__header">
+      <p class="eyebrow">Invest in Your Wellbeing</p>
+      <h2 class="reveal">Choose Your Path</h2>
+      <p>
+        Transparent, simple pricing. Every package includes access to a warm,
+        supportive community and the knowledge that you are held.
+      </p>
+    </div>
+
+    <div class="packages stagger">
+      {packages.map((pkg) => (
+        <div class:list={['package', 'reveal', pkg.highlight && 'package--highlight']}>
+          {pkg.highlight && <div class="package__badge">Most Popular</div>}
+          <div class="package__header">
+            <p class="package__name">{pkg.name}</p>
+            <p class="package__tagline">{pkg.tagline}</p>
+            <div class="package__price">
+              <span class="package__amount">{pkg.price}</span>
+              <span class="package__period">{pkg.period}</span>
+            </div>
+          </div>
+          <p class="package__desc">{pkg.description}</p>
+          <ul class="package__features">
+            {pkg.features.map(f => (
+              <li class="package__feature">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <circle cx="8" cy="8" r="7" stroke={pkg.highlight ? '#fff' : '#9DB4A0'} stroke-width="1.1"/>
+                  <path d="M5 8.5l2 2 4-4" stroke={pkg.highlight ? '#fff' : '#9DB4A0'} stroke-width="1.3"
+                        stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                {f}
+              </li>
+            ))}
+          </ul>
+          <a
+            href="#booking"
+            class:list={['btn', pkg.highlight ? 'btn--primary-inv' : 'btn--outline', 'package__cta']}
+          >
+            {pkg.cta}
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .packages {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-7);
+    align-items: start;
+  }
+
+  .package {
+    position: relative;
+    background: #fff;
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    border: 1.5px solid rgba(157, 180, 160, 0.25);
+    display: flex;
+    flex-direction: column;
+    transition: all 0.4s var(--ease-spring);
+  }
+
+  .package:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-card);
+  }
+
+  .package--highlight {
+    background: var(--color-sage);
+    border-color: var(--color-sage);
+    color: #fff;
+  }
+
+  .package--highlight:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-card);
+  }
+
+  .package__badge {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-blush);
+    color: var(--color-text);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: var(--space-1) var(--space-4);
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  .package__header {
+    margin-bottom: var(--space-5);
+    padding-bottom: var(--space-5);
+    border-bottom: 1px solid rgba(157, 180, 160, 0.2);
+  }
+
+  .package--highlight .package__header {
+    border-bottom-color: rgba(255,255,255,0.25);
+  }
+
+  .package__name {
+    font-family: var(--font-display);
+    font-size: 1.875rem;
+    margin-bottom: var(--space-1);
+  }
+
+  .package__tagline {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    font-weight: 500;
+  }
+
+  .package--highlight .package__tagline {
+    color: rgba(255,255,255,0.7);
+  }
+
+  .package__price {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+  }
+
+  .package__amount {
+    font-family: var(--font-display);
+    font-size: 2.875rem;
+    line-height: 1;
+  }
+
+  .package__period {
+    font-size: 0.875rem;
+    font-weight: 500;
+    opacity: 0.7;
+  }
+
+  .package__desc {
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    line-height: 1.7;
+    margin-bottom: var(--space-6);
+  }
+
+  .package--highlight .package__desc {
+    color: rgba(255,255,255,0.8);
+  }
+
+  .package__features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-bottom: var(--space-8);
+    flex: 1;
+  }
+
+  .package__feature {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  .package__feature svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .package__cta {
+    width: 100%;
+    text-align: center;
+    margin-top: auto;
+  }
+
+  .btn--primary-inv {
+    background: #fff;
+    color: var(--color-sage);
+    padding: var(--space-3) var(--space-6);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: all 0.4s var(--ease-spring);
+  }
+
+  .btn--primary-inv:hover {
+    background: var(--color-amber);
+    color: #fff;
+  }
+
+  .package--highlight .btn--outline {
+    background: transparent;
+    color: #fff;
+    border: 1.5px solid rgba(255,255,255,0.6);
+  }
+
+  .package--highlight .btn--outline:hover {
+    background: rgba(255,255,255,0.15);
+    border-color: #fff;
+  }
+
+  @media (max-width: 960px) {
+    .packages { grid-template-columns: 1fr; max-width: 440px; margin-inline: auto; }
+    .package--highlight { transform: none; }
+  }
+</style>

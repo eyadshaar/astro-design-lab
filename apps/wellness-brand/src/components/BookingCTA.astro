@@ -1,0 +1,115 @@
+---
+// BookingCTA — full-width sage background call to action
+---
+
+<section id="booking" class="cta-section">
+  <div class="cta-section__bg mask-fade-bottom" aria-hidden="true">
+    <div class="kenburns cta-section__media">
+      <img
+        src="/images/practitioner-warm.jpg"
+        alt=""
+        loading="lazy"
+      />
+    </div>
+    <div class="cta-section__overlay"></div>
+  </div>
+
+  <div class="container cta-section__inner">
+    <div class="cta-content">
+      <p class="eyebrow" style="color: rgba(255,255,255,0.75);">Take the First Step</p>
+      <h2 class="cta-content__headline reveal">
+        Your practice<br />starts with one breath.
+      </h2>
+      <p class="cta-content__sub">
+        Book a free 15-minute discovery call to find out which of our paths
+        is right for you. No obligation, no pressure — just a conversation.
+      </p>
+      <div class="cta-content__actions">
+        <a href="mailto:hello@solacewellness.example.com" class="btn btn--primary cta-content__btn">
+          Book a Discovery Call
+        </a>
+        <a href="#packages" class="btn cta-content__btn-outline">
+          View Packages
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-section {
+    position: relative;
+    padding-block: var(--space-24);
+    overflow: hidden;
+  }
+
+  .cta-section__bg {
+    position: absolute;
+    inset: 0;
+  }
+
+  .cta-section__media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .cta-section__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+  }
+
+  .cta-section__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      rgba(58, 53, 51, 0.78) 0%,
+      rgba(157, 180, 160, 0.72) 100%
+    );
+  }
+
+  .cta-section__inner {
+    position: relative;
+    z-index: 2;
+  }
+
+  .cta-content {
+    max-width: 600px;
+  }
+
+  .cta-content__headline {
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    color: #fff;
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-6);
+    line-height: 1.1;
+  }
+
+  .cta-content__sub {
+    color: rgba(255,255,255,0.85);
+    font-size: 1.0625rem;
+    line-height: 1.8;
+    margin-bottom: var(--space-10);
+    max-width: 480px;
+  }
+
+  .cta-content__actions {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .cta-content__btn-outline {
+    background: transparent;
+    border: 1.5px solid rgba(255,255,255,0.6);
+    color: #fff;
+    transition: all 0.4s var(--ease-spring);
+  }
+
+  .cta-content__btn-outline:hover {
+    background: rgba(255,255,255,0.15);
+    border-color: #fff;
+  }
+</style>

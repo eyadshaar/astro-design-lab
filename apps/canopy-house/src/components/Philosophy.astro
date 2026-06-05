@@ -1,0 +1,64 @@
+---
+---
+<section class="philosophy reveal" id="philosophy">
+  <div class="philosophy__inner">
+    <span class="eyebrow philosophy__eyebrow">Our Philosophy</span>
+    <blockquote class="philosophy__quote">
+      <p>"We built this place for people who need the forest to slow them down.
+      No TVs in the rooms. No conference calls in the garden.
+      Just the Pacific Northwest, doing what it does best."</p>
+    </blockquote>
+    <p class="philosophy__attribution">— The MacLeod Family, Owners</p>
+  </div>
+</section>
+
+<style>
+  .philosophy {
+    background: var(--forest);
+    padding: var(--space-3xl) var(--space-lg);
+  }
+
+  .philosophy__inner {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xl);
+  }
+
+  .philosophy__eyebrow {
+    color: var(--amber);
+  }
+
+  .philosophy__quote {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--cream);
+    line-height: 1.35;
+    max-width: 28ch;
+    border-top: 2px solid var(--amber);
+    padding-top: var(--space-xl);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .philosophy__quote:hover {
+    transform: translateY(-3px);
+  }
+
+  .philosophy__quote p {
+    color: var(--cream);
+  }
+
+  .philosophy__attribution {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--amber);
+    letter-spacing: 0.08em;
+  }
+</style>

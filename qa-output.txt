@@ -1,0 +1,16 @@
+
+══════════════════════════════════════════════
+ ODNT-SOL Demo Sites — QA Verification
+ 2026-05-28 21:25:20
+══════════════════════════════════════════════
+
+──────────────────────────────────────────────
+ canopy-house
+ https://canopy-house.pages.dev
+──────────────────────────────────────────────
+  homepage 200: https://canopy-house.pages.dev ... [0;32m[PASS][0m canopy-house: homepage → HTTP 200
+  navbar links: canopy-house ... [0;32m[PASS][0m canopy-house: found 16 nav section links
+  mobile menu button: canopy-house ... [0;32m[PASS][0m canopy-house: mobile menu button found
+  mobile drawer: canopy-house ... [0;32m[PASS][0m canopy-house: mobile drawer/nav-menu markup found
+  buttons present: canopy-house ... [0;32m[PASS][0m canopy-house: found 5 button elements
+  button backgrounds: canopy-house ... 

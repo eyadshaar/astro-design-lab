@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import Services from '../components/Services.astro';
+import ResponseTimeline from '../components/ResponseTimeline.astro';
+import Systems from '../components/Systems.astro';
+import ClientTypes from '../components/ClientTypes.astro';
+import TrustMetrics from '../components/TrustMetrics.astro';
+import MaintenancePlans from '../components/MaintenancePlans.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout>
+  <Navbar />
+  <main>
+    <Hero />
+    <div class="amber-divider"></div>
+    <Services />
+    <div class="amber-divider"></div>
+    <ResponseTimeline />
+    <div class="amber-divider"></div>
+    <Systems />
+    <div class="amber-divider"></div>
+    <ClientTypes />
+    <div class="amber-divider"></div>
+    <TrustMetrics />
+    <div class="amber-divider"></div>
+    <MaintenancePlans />
+    <div class="amber-divider"></div>
+    <Contact />
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style is:global>
+  /* Scroll offset for fixed navbar */
+  [id] {
+    scroll-margin-top: 80px;
+  }
+</style>

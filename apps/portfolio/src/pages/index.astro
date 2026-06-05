@@ -1,0 +1,672 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/nav/Navbar.astro';
+import '../styles/global.css';
+
+const demos = [
+  {
+    id: 'boutique-hotel',
+    name: 'The Canopy House',
+    category: 'Boutique Hotel',
+    description: 'A forest-journal aesthetic for a Pacific Northwest boutique hotel. Cinematic photography, editorial layout, local guide.',
+    tags: ['Hospitality', 'Luxury', 'Editorial'],
+    status: 'Built',
+    href: '/demos/boutique-hotel',
+  },
+  {
+    id: 'ai-automation-agency',
+    name: 'Meridian Security',
+    category: 'AI Automation Agency',
+    description: 'An operations-center visual language for a cybersecurity automation firm. Dark terminal aesthetic, real dashboard patterns.',
+    tags: ['SaaS', 'Developer Tools', 'Dark Mode'],
+    status: 'Planned',
+    href: '/demos/ai-automation-agency',
+  },
+  {
+    id: 'local-it',
+    name: 'Fieldstone IT',
+    category: 'Local IT / Cybersecurity',
+    description: 'A control-room aesthetic for a local managed IT provider. Professional, grounded, with prominent phone CTA.',
+    tags: ['Local Business', 'Trust-First', 'Service'],
+    status: 'Planned',
+    href: '/demos/local-it',
+  },
+  {
+    id: 'food-truck',
+    name: 'Copper Kitchen',
+    category: 'Food Truck / POS Platform',
+    description: 'Receipt-ticket visual motif for a food truck ordering and operator platform. Energetic but grounded.',
+    tags: ['Product', 'Dashboard', 'Mobile'],
+    status: 'Planned',
+    href: '/demos/food-truck',
+  },
+  {
+    id: 'wellness',
+    name: 'Solace Wellness',
+    category: 'Premium Wellness Brand',
+    description: 'Calm, credible, editorial warmth for a burnout recovery practice. Sage green and soft serif typography.',
+    tags: ['Wellness', 'Editorial', 'Soft'],
+    status: 'Planned',
+    href: '/demos/wellness',
+  },
+];
+
+const patternCategories = [
+  {
+    name: 'Hero Patterns',
+    description: '10 patterns that break the centered hero default',
+    href: '/research/patterns/hero-patterns.md',
+    count: 10,
+  },
+  {
+    name: 'Navbar Patterns',
+    description: '10 navigation patterns for different contexts',
+    href: '/research/patterns/navbar-patterns.md',
+    count: 10,
+  },
+  {
+    name: 'CTA Patterns',
+    description: '10 call-to-action patterns that convert',
+    href: '/research/patterns/cta-patterns.md',
+    count: 10,
+  },
+  {
+    name: 'Section Patterns',
+    description: '20 section patterns for complete pages',
+    href: '/research/patterns/section-patterns.md',
+    count: 20,
+  },
+  {
+    name: 'Motion Patterns',
+    description: '10 animation patterns with accessibility fallbacks',
+    href: '/research/patterns/motion-patterns.md',
+    count: 10,
+  },
+  {
+    name: 'Visual Identity',
+    description: '12 brand directions for original websites',
+    href: '/research/patterns/visual-identity-patterns.md',
+    count: 12,
+  },
+];
+---
+
+<BaseLayout 
+  title="Astro Design Lab — Anti-Boilerplate Website Portfolio"
+  description="A design research system and Astro website portfolio built from studying premium design resources — not generic AI output."
+>
+  <Navbar />
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-grid"></div>
+    </div>
+    <div class="container hero-content stagger">
+      <div class="reveal">
+        <span class="label">Design Research → Astro Builds</span>
+      </div>
+      <h1 class="display-xl hero-headline reveal">
+        Websites that<br /><em class="gradient-text">do not look</em><br />AI-generated.
+      </h1>
+      <p class="body-lg text-muted reveal">
+        A design intelligence system built from studying premium resources — Navbar Gallery, CTA Gallery, Landing.love, Mobbin, and more. Extract patterns. Abstract principles. Build websites with a point of view.
+      </p>
+      <div class="hero-cta reveal">
+        <a href="#demos" class="btn-primary">See the demos</a>
+        <a href="#methodology" class="btn-ghost">Our methodology</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Research Catalog -->
+  <section class="section-research" id="research">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="label">Research catalog</span>
+        <h2 class="display-lg">Studied from the <span class="gradient-text">best design resources</span> on the web</h2>
+      </div>
+      
+      <div class="resource-grid stagger">
+        <div class="resource-card reveal">
+          <div class="resource-icon">⬡</div>
+          <h3>Navbar Gallery</h3>
+          <p>10 navbar types: minimal editorial, conversion-first SaaS, mega menu, sticky transparent, mobile bottom nav, command palette, utility-heavy business, split-brand, local service, portfolio showcase.</p>
+          <a href="https://navbar.gallery/" target="_blank" rel="noopener" class="resource-link">navbar.gallery →</a>
+        </div>
+        
+        <div class="resource-card reveal">
+          <div class="resource-icon">◉</div>
+          <h3>CTA Gallery</h3>
+          <p>10 CTA patterns: final conviction, calculator, book consultation, audit start, see demo, compare plans, walkthrough schedule, claim local offer, join waitlist, send project brief.</p>
+          <a href="https://cta.gallery/" target="_blank" rel="noopener" class="resource-link">cta.gallery →</a>
+        </div>
+        
+        <div class="resource-card reveal">
+          <div class="resource-icon">◈</div>
+          <h3>Landing.love</h3>
+          <p>2,049 animation and landing page examples. Horizontal scroll, WebGL, GSAP showcases, minimal editorial, dark mode, SaaS, AI product patterns.</p>
+          <a href="https://landing.love/" target="_blank" rel="noopener" class="resource-link">landing.love →</a>
+        </div>
+        
+        <div class="resource-card reveal">
+          <div class="resource-icon">◇</div>
+          <h3>Mobbin</h3>
+          <p>1,704 mobile apps, 588,100 screens. iOS and Android design patterns, onboarding flows, dashboard layouts, settings trees, gesture-based navigation.</p>
+          <a href="https://mobbin.com/" target="_blank" rel="noopener" class="resource-link">mobbin.com →</a>
+        </div>
+        
+        <div class="resource-card reveal">
+          <div class="resource-icon">⬢</div>
+          <h3>Component.gallery</h3>
+          <p>60 components, 95 design systems, 2,672 examples. Component naming, design tokens, accessibility guidance, state documentation.</p>
+          <a href="https://component.gallery/" target="_blank" rel="noopener" class="resource-link">component.gallery →</a>
+        </div>
+        
+        <div class="resource-card reveal">
+          <div class="resource-icon">◫</div>
+          <h3>Rebrand.gallery</h3>
+          <p>Brand identity reveals, visual identity systems, before/after redesigns, color palette showcases, typography specimens, logo system presentations.</p>
+          <a href="https://rebrand.gallery/" target="_blank" rel="noopener" class="resource-link">rebrand.gallery →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Anti-Boilerplate Manifesto -->
+  <section class="section-manifesto" id="methodology">
+    <div class="container container-sm">
+      <div class="manifesto reveal">
+        <span class="label">The problem</span>
+        <blockquote class="manifesto-quote">
+          "Most AI-generated websites look the same because they rely on the same shallow patterns: centered hero, gradient blob, three feature cards, basic navbar, generic CTA, fake testimonials, and repeated SaaS language."
+        </blockquote>
+        <p class="body-lg text-muted">
+          We studied the resources above. We extracted what makes premium design work. We built a system that forces genuine design decisions — not defaults.
+        </p>
+        <p class="body-lg text-muted">
+          Every site we build starts with 10 questions: What is the visual metaphor? What should this FEEL like? What would an AI generate by default — and how do we avoid that?
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pattern Library Preview -->
+  <section class="section-patterns" id="patterns">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="label">Pattern library</span>
+        <h2 class="display-lg">Reusable patterns for original websites</h2>
+      </div>
+      
+      <div class="pattern-grid">
+        {patternCategories.map(cat => (
+          <a href={cat.href} class="pattern-card reveal" target="_blank">
+            <div class="pattern-count">{cat.count}</div>
+            <h3 class="heading-md">{cat.name}</h3>
+            <p class="text-muted">{cat.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Demo Sites -->
+  <section class="section-demos" id="demos">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="label">Demo sites</span>
+        <h2 class="display-lg">Five original Astro websites, built from the research</h2>
+        <p class="body-lg text-muted" style="margin-top: var(--space-4)">
+          Each demo is a complete, deployable Astro site with original brand direction, custom copy, and a point of view.
+        </p>
+      </div>
+      
+      <div class="demo-grid">
+        {demos.map(demo => (
+          <a href={demo.href} class={`demo-card reveal ${demo.status === 'Planned' ? 'demo-card-locked' : ''}`}>
+            <div class="demo-category label">{demo.category}</div>
+            <h3 class="heading-lg">{demo.name}</h3>
+            <p class="text-muted">{demo.description}</p>
+            <div class="demo-tags">
+              {demo.tags.map(tag => <span class="demo-tag">{tag}</span>)}
+            </div>
+            {demo.status === 'Planned' && (
+              <div class="demo-locked">
+                <span>◈</span> In progress
+              </div>
+            )}
+            {demo.status === 'Built' && (
+              <div class="demo-built">
+                <span>◉</span> Live demo
+              </div>
+            )}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="section-final-cta" id="contact">
+    <div class="container container-sm">
+      <div class="final-cta-content reveal">
+        <h2 class="display-lg">Need a website that <span class="gradient-text">doesn't look like everyone else's?</span></h2>
+        <p class="body-lg text-muted">
+          We apply this research-driven system to client projects. Fast Astro builds, custom brand direction, no generic templates.
+        </p>
+        <a href="mailto:hello@astrodesignlab.dev" class="btn-primary btn-lg">Start a conversation</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="logo-mark">⬡</span>
+          <span class="logo-text">Astro Design Lab</span>
+        </div>
+        <p class="text-muted footer-note">
+          Built with Astro. Design research from Navbar Gallery, CTA Gallery, Landing.love, Mobbin, Component.gallery, Rebrand.gallery, Curated.design, Hugeicons, SaaS Po, and AppMotion.
+        </p>
+      </div>
+    </div>
+  </footer>
+</BaseLayout>
+
+<style>
+/* Hero */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: var(--space-10) 0 var(--space-9);
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(200, 169, 126, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200, 169, 126, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-headline {
+  margin: var(--space-5) 0 var(--space-6);
+  max-width: 14ch;
+}
+
+.hero-headline em {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+/* Buttons */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-3) var(--space-6);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-bg);
+  background: var(--color-accent);
+  border-radius: var(--radius-md);
+  transition: all 0.4s var(--ease-spring), opacity var(--transition-fast);
+}
+
+.btn-primary:hover {
+  opacity: 0.85;
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-3) var(--space-6);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.btn-ghost:hover {
+  border-color: var(--color-text-muted);
+  color: var(--color-text);
+}
+
+.btn-lg {
+  padding: var(--space-4) var(--space-8);
+  font-size: 1rem;
+}
+
+/* Section Headers */
+.section-header {
+  margin-bottom: var(--space-8);
+}
+
+.section-header .label {
+  display: block;
+  margin-bottom: var(--space-3);
+}
+
+/* Research Section */
+.section-research {
+  padding: var(--space-10) 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.resource-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+
+@media (min-width: 768px) {
+  .resource-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .resource-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.resource-card {
+  padding: var(--space-6);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  transition: all 0.4s var(--ease-spring), border-color var(--transition-base);
+}
+
+.resource-card:hover {
+  border-color: var(--color-accent);
+}
+
+.resource-icon {
+  font-size: 1.5rem;
+  color: var(--color-accent);
+  margin-bottom: var(--space-4);
+}
+
+.resource-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 400;
+  margin-bottom: var(--space-3);
+}
+
+.resource-card p {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin-bottom: var(--space-4);
+}
+
+.resource-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-accent);
+}
+
+/* Manifesto */
+.section-manifesto {
+  padding: var(--space-10) 0;
+  background: var(--color-surface);
+}
+
+.manifesto {
+  max-width: 65ch;
+}
+
+.manifesto .label {
+  display: block;
+  margin-bottom: var(--space-6);
+}
+
+.manifesto-quote {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--color-text);
+  border-left: 3px solid var(--color-accent);
+  padding-left: var(--space-6);
+  margin-bottom: var(--space-7);
+}
+
+.manifesto p {
+  margin-bottom: var(--space-5);
+}
+
+/* Pattern Grid */
+.section-patterns {
+  padding: var(--space-10) 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.pattern-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+@media (min-width: 640px) {
+  .pattern-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .pattern-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.pattern-card {
+  display: block;
+  padding: var(--space-6);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  transition: all 0.4s var(--ease-spring), border-color var(--transition-base), transform var(--transition-base);
+}
+
+.pattern-card:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+}
+
+.pattern-count {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--color-accent);
+  margin-bottom: var(--space-3);
+}
+
+.pattern-card h3 {
+  margin-bottom: var(--space-2);
+}
+
+.pattern-card p {
+  font-size: 0.875rem;
+}
+
+/* Demo Grid */
+.section-demos {
+  padding: var(--space-10) 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.demo-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+
+@media (min-width: 768px) {
+  .demo-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .demo-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.demo-card {
+  display: block;
+  padding: var(--space-6);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  transition: all 0.4s var(--ease-spring), border-color var(--transition-base), transform var(--transition-base);
+}
+
+.demo-card:not(.demo-card-locked):hover {
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+}
+
+.demo-card-locked {
+  opacity: 0.6;
+}
+
+.demo-category {
+  display: block;
+  margin-bottom: var(--space-3);
+}
+
+.demo-card h3 {
+  margin-bottom: var(--space-3);
+}
+
+.demo-card p {
+  font-size: 0.875rem;
+  margin-bottom: var(--space-4);
+}
+
+.demo-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.demo-tag {
+  padding: var(--space-1) var(--space-3);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+}
+
+.demo-locked,
+.demo-built {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.demo-locked {
+  color: var(--color-text-muted);
+}
+
+.demo-built {
+  color: var(--color-accent);
+}
+
+/* Final CTA */
+.section-final-cta {
+  padding: var(--space-10) 0;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  text-align: center;
+}
+
+.final-cta-content .display-lg {
+  margin-bottom: var(--space-5);
+}
+
+.final-cta-content p {
+  margin-bottom: var(--space-7);
+  max-width: 50ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Footer */
+.footer {
+  padding: var(--space-8) 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.footer-inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .footer-inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.footer-brand .logo-mark {
+  font-size: 1.25rem;
+  color: var(--color-accent);
+}
+
+.footer-brand .logo-text {
+  font-family: var(--font-display);
+  font-size: 1rem;
+}
+
+.footer-note {
+  font-size: 0.75rem;
+  max-width: 60ch;
+}
+</style>

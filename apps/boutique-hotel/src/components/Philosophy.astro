@@ -1,0 +1,150 @@
+---
+// Philosophy.astro — Forest journal editorial section
+---
+<section class="philosophy" id="philosophy">
+  <div class="philosophy__inner">
+
+    <div class="philosophy__sidebar">
+      <span class="label">Our Philosophy</span>
+      <div class="divider"></div>
+      <p class="philosophy__sidebar-text">
+        We believe luxury is measured in stillness, not in things.
+      </p>
+    </div>
+
+    <div class="philosophy__body">
+      <div class="philosophy__col philosophy__col--narrow">
+        <p class="philosophy__lead">
+          The Canopy House began not as a hotel, but as a question:
+          What if a building could belong to the forest as much as it occupied it?
+        </p>
+      </div>
+
+      <div class="philosophy__col philosophy__col--wide">
+        <p class="philosophy__copy">
+          Sited on twelve acres of second-growth Sitka spruce and Douglas fir, our twelve rooms were designed
+          with the rhythms of the natural world as the primary blueprint. We work with local craftspeople
+          using timber felled by last winter's storms — wood with history. Our kitchen gardens sit where
+          logging roads once scarred the earth, now healed and productive.
+        </p>
+        <p class="philosophy__copy">
+          There is no check-in desk. No uniformed concierge. There is a lending library of field guides.
+          A fire pit that is never cold between October and April. A breakfast that changes with what the
+          forager brings through the door. We think of ourselves as stewards of a place that was beautiful
+          long before we arrived and will remain so long after.
+        </p>
+      </div>
+    </div>
+
+    <div class="philosophy__pull">
+      <blockquote class="philosophy__quote">
+        "We measure prosperity in the return of songbirds to the canopy."
+      </blockquote>
+    </div>
+
+  </div>
+</section>
+
+<style>
+.philosophy {
+  padding: var(--space-2xl) 0;
+  background: var(--cream);
+  position: relative;
+}
+
+.philosophy::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--amber), transparent);
+  opacity: 0.4;
+}
+
+.philosophy__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.philosophy__sidebar {
+  margin-bottom: var(--space-lg);
+}
+
+.philosophy__sidebar-text {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--green-mid);
+  line-height: 1.5;
+}
+
+.philosophy__body {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-lg);
+  align-items: start;
+}
+
+.philosophy__col {
+  padding-top: 0.5rem;
+}
+
+.philosophy__lead {
+  font-family: var(--serif);
+  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+.philosophy__copy {
+  font-size: 0.95rem;
+  color: var(--ink-light);
+  margin-bottom: 1.2rem;
+  line-height: 1.8;
+}
+
+.philosophy__copy:last-child {
+  margin-bottom: 0;
+}
+
+.philosophy__pull {
+  border-top: 1px solid rgba(74,93,74,0.15);
+  padding-top: var(--space-md);
+}
+
+.philosophy__quote {
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--green);
+  text-align: center;
+  padding: 0 var(--space-md);
+}
+
+.philosophy__quote::before {
+  content: '\201C';
+  color: var(--amber);
+}
+
+.philosophy__quote::after {
+  content: '\201D';
+  color: var(--amber);
+}
+
+@media (max-width: 768px) {
+  .philosophy__body {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  .philosophy {
+    padding: var(--space-xl) 0;
+  }
+}
+</style>

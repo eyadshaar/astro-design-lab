@@ -1,0 +1,163 @@
+---
+// Hero — full-viewport emotional DM Serif Display italic
+---
+
+<div class="hero" aria-label="Hero">
+  <div class="hero__media kenburns">
+    <img
+      src="/images/hero-mountain-calm.jpg"
+      alt="Misty mountain sunrise — a calm morning practice in nature"
+      class="hero__img"
+      loading="eager"
+    />
+    <div class="hero__overlay"></div>
+  </div>
+
+  <div class="hero__content">
+    <div class="hero__rule" aria-hidden="true"></div>
+    <p class="eyebrow hero__eyebrow">Welcome to Solace</p>
+    <h1 class="hero__headline">
+      Find stillness.<br />
+      Come home to yourself.
+    </h1>
+    <p class="hero__sub">
+      Holistic wellness for the mind, body &amp; breath —
+      in a sanctuary designed for those who seek a gentler way of being.
+    </p>
+    <div class="hero__actions">
+      <a href="#booking" class="btn btn--primary">Begin Your Journey</a>
+      <a href="#philosophy" class="btn btn--outline hero__btn-outline">Our Philosophy</a>
+    </div>
+  </div>
+
+  <div class="hero__scroll" aria-hidden="true">
+    <span></span>
+  </div>
+</div>
+
+<style>
+  .hero {
+    position: relative;
+    height: 100svh;
+    min-height: 640px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero__media {
+    position: absolute;
+    inset: 0;
+    background-attachment: fixed;
+  }
+
+  .hero__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 60%;
+  }
+
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(30, 28, 27, 0.08) 0%,
+      rgba(30, 28, 27, 0.25) 50%,
+      rgba(30, 28, 27, 0.45) 100%
+    );
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: #fff;
+    padding: 0 var(--space-6);
+    max-width: 760px;
+  }
+
+  .hero__rule {
+    width: 48px;
+    height: 3px;
+    background: var(--color-amber);
+    margin: 0 auto var(--space-5);
+    border-radius: 2px;
+  }
+
+  .hero__eyebrow {
+    color: var(--color-amber);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-4);
+  }
+
+  .hero__headline {
+    font-family: var(--font-display);
+    font-size: clamp(3.25rem, 7vw, 5.5rem);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.08;
+    color: #fff;
+    margin-bottom: var(--space-6);
+    text-shadow: 0 2px 24px rgba(0,0,0,0.12);
+  }
+
+  .hero__headline .gradient-text {
+    background: linear-gradient(135deg, var(--color-amber) 0%, var(--color-blush) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero__sub {
+    font-size: clamp(1rem, 1.8vw, 1.2rem);
+    color: rgba(255,255,255,0.85);
+    max-width: 44ch;
+    margin-inline: auto;
+    margin-bottom: var(--space-8);
+    line-height: 1.8;
+    font-weight: 400;
+  }
+
+  .hero__actions {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .hero__btn-outline {
+    border-color: rgba(255,255,255,0.65);
+    color: #fff;
+  }
+  .hero__btn-outline:hover {
+    background: rgba(255,255,255,0.14);
+    border-color: #fff;
+  }
+
+  .hero__scroll {
+    position: absolute;
+    bottom: var(--space-8);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+  }
+
+  .hero__scroll span {
+    display: block;
+    width: 1.5px;
+    height: 52px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.75), transparent);
+    animation: scrollBounce 2.2s ease-in-out infinite;
+  }
+
+  @keyframes scrollBounce {
+    0%, 100% { transform: scaleY(1); opacity: 1; }
+    50% { transform: scaleY(0.55); opacity: 0.4; }
+  }
+</style>
