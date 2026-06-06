@@ -1,0 +1,119 @@
+---
+const reviews = [
+  {
+    name: "Michael R.",
+    city: "Columbus, OH",
+    quote: "After my house was hit by a storm, Great Lakes had my claim processed in 9 days. Other companies I dealt with before took 6 weeks and still gave me grief. These guys actually cared.",
+    rating: 5,
+    product: "Home Insurance"
+  },
+  {
+    name: "Sandra T.",
+    city: "Cleveland, OH",
+    quote: "I've been with Great Lakes for 8 years. They saved me over $1,200 a year when I bundled home and auto. My agent remembers my name and actually returns calls.",
+    rating: 5,
+    product: "Bundled Coverage"
+  },
+  {
+    name: "Jake M.",
+    city: "Cincinnati, OH",
+    quote: "As a small business owner, I didn't know what coverage I needed. They walked me through everything, didn't oversell, and my workers' comp rate is lower than anyone else's.",
+    rating: 5,
+    product: "Business Insurance"
+  }
+];
+---
+
+<section class="reviews section" id="reviews">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="tag">Reviews</span>
+      <h2><span class="gradient-text">What Ohioans Are Saying</span></h2>
+      <p>Over 12,000 Ohio families trust us with their coverage. Here's what a few of them have to say.</p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="reviews-grid stagger">
+      {reviews.map(review => (
+        <div class="review-card card reveal">
+          <div class="review-stars">
+            {Array.from({length: review.rating}).map(() => (
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--gold)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            ))}
+          </div>
+          <p class="review-quote">"{review.quote}"</p>
+          <div class="review-meta">
+            <span class="review-name">{review.name}</span>
+            <span class="review-city">{review.city}</span>
+            <span class="review-product">{review.product}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .reviews {
+    background: var(--stone-light);
+  }
+
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .review-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .review-stars {
+    display: flex;
+    gap: 3px;
+  }
+
+  .review-quote {
+    font-size: 1rem;
+    color: var(--charcoal);
+    line-height: 1.7;
+    font-style: italic;
+    flex-grow: 1;
+  }
+
+  .review-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--border);
+  }
+
+  .review-name {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--navy);
+  }
+
+  .review-city {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .review-product {
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gold);
+    margin-top: 4px;
+  }
+
+  @media (max-width: 900px) {
+    .reviews-grid { grid-template-columns: 1fr; }
+  }
+</style>

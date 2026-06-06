@@ -1,0 +1,157 @@
+---
+const services = [
+  {
+    icon: `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+    title: "Home Insurance",
+    desc: "Protection for your home, personal property, and liability. Coverage that adjusts as your life changes — no surprises at renewal.",
+    tags: ["Dwelling", "Contents", "Liability"]
+  },
+  {
+    icon: `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>`,
+    title: "Auto Insurance",
+    desc: "Competitive rates on coverage that actually covers you. Bundling with home saves an average of $847 a year — we make it easy.",
+    tags: ["Liability", "Collision", "Full Coverage"]
+  },
+  {
+    icon: `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>`,
+    title: "Business Insurance",
+    desc: "General liability, commercial property, workers' comp, and more. Ohio businesses trust us to protect what they've built.",
+    tags: ["General Liability", "Workers' Comp", "Commercial Auto"]
+  },
+  {
+    icon: `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+    title: "Life Insurance",
+    desc: "Term, whole, and universal policies — we'll find the right fit for your family and your budget. No commission-driven pressure.",
+    tags: ["Term Life", "Whole Life", "Universal Life"]
+  },
+  {
+    icon: `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`,
+    title: "Health Insurance",
+    desc: "Individual and family plans through Ohio's top carriers. We help you navigate your options and find the coverage you can afford.",
+    tags: ["Individual", "Family", "ACA Plans"]
+  },
+  {
+    icon: `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>`,
+    title: "Umbrella Coverage",
+    desc: "Extra liability protection when the unexpected happens. $1M+ coverage for not much more than a cup of coffee per month.",
+    tags: ["Excess Liability", "Personal Umbrella", "Business Umbrella"]
+  }
+];
+
+const phoneNumber = "(614) 555-0199";
+const phoneHref = "tel:+161****0199";
+---
+
+<section class="services section" id="products">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="tag">Our Products</span>
+      <h2><span class="gradient-text">Coverage for Every Part of Your Life</span></h2>
+      <p>Whether it's your home, your car, or your business — we have the policies to protect it, at rates that make sense.</p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="services-grid stagger">
+      {services.map(service => (
+        <div class="service-card card reveal">
+          <div class="service-icon" set:html={service.icon} />
+          <h3 class="service-title">{service.title}</h3>
+          <p class="service-desc">{service.desc}</p>
+          <div class="service-tags">
+            {service.tags.map(tag => <span class="service-tag">{tag}</span>)}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="services-cta">
+      <p>Not sure what coverage you need? Free consultation — no obligation.</p>
+      <a href={phoneHref} class="btn btn-primary">
+        Call (614) 555-0199
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .services {
+    background: var(--stone-light);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    transition: all 0.4s var(--ease-spring);
+  }
+
+  .service-card.reveal:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(196, 154, 44, 0.18);
+  }
+
+  .service-icon {
+    color: var(--gold);
+    width: 36px;
+    height: 36px;
+  }
+
+  .service-title {
+    font-size: 1.3rem;
+    color: var(--navy-dark);
+  }
+
+  .service-desc {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    flex-grow: 1;
+  }
+
+  .service-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: auto;
+  }
+
+  .service-tag {
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--navy);
+    background: var(--stone-warm);
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .services-cta {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .services-cta p {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+  }
+
+  @media (max-width: 900px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 600px) {
+    .services-grid { grid-template-columns: 1fr; }
+  }
+</style>

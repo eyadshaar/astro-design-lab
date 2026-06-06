@@ -1,0 +1,120 @@
+---
+const metrics = [
+  { value: "99.97%", label: "Average Uptime", sub: "Across all managed clients, trailing 12 months" },
+  { value: "<4hr",   label: "Avg Response Time", sub: "Critical tickets acknowledged and triaged" },
+  { value: "847",   label: "Endpoints Protected", sub: "Actively monitored across Portland clients" },
+  { value: "12+",   label: "Years in Portland", sub: "Locally owned, locally accountable" },
+  { value: "94%",   label: "Client Retention", sub: "We earn it every single month" },
+  { value: "0",     label: "Ransomware Payoffs", sub: "Clients with active EDR + backup never pay" }
+];
+
+const phoneNumber = "(503) 555-0142";
+---
+
+<section class="metrics section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="tag">By The Numbers</span>
+      <h2><span class="gradient-text">Proof, Not Promises</span></h2>
+      <p>Numbers don't lie — and neither do the SLA credits we pay when we miss them.</p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="metrics-grid stagger">
+      {metrics.map(metric => (
+        <div class="metric-card reveal">
+          <div class="metric-value">{metric.value}</div>
+          <div class="metric-label">{metric.label}</div>
+          <div class="metric-sub">{metric.sub}</div>
+        </div>
+      ))}
+    </div>
+
+    <div class="metrics-cta">
+      <p>See how Fieldstone IT can transform your IT operations.</p>
+      <div class="cta-buttons">
+        <a href="tel:+150****0142" class="btn btn-primary">Call (503) 555-0142</a>
+        <a href="#plans" class="btn btn-outline">View Plans</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .metrics {
+    background: var(--white);
+  }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .metric-card {
+    text-align: center;
+    padding: var(--space-xl) var(--space-lg);
+    border: 2px solid var(--stone-warm);
+    border-left: 2px solid var(--amber);
+    border-radius: var(--radius-lg);
+    transition: all 0.4s var(--ease-spring);
+  }
+
+  .metric-card:hover {
+    border-color: var(--amber);
+    box-shadow: 0 8px 32px rgba(184, 122, 58, 0.1);
+  }
+
+  .metric-value {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+    color: var(--amber);
+    line-height: 1;
+    margin-bottom: var(--space-sm);
+  }
+
+  .metric-label {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--slate);
+    margin-bottom: var(--space-xs);
+  }
+
+  .metric-sub {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .metrics-cta {
+    text-align: center;
+  }
+
+  .metrics-cta p {
+    color: var(--text-muted);
+    margin-bottom: var(--space-lg);
+    font-size: 1.05rem;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 900px) {
+    .metrics-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 500px) {
+    .metrics-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

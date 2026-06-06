@@ -1,0 +1,257 @@
+---
+const phases = [
+  {
+    step: "01",
+    label: "CONNECT",
+    title: "Discover & Onboard",
+    desc: "We map your entire IT environment — every endpoint, user, cloud resource, and dependency. No surprises, no blind spots.",
+    detail: "Asset inventory · Network diagram · Access audit · Compliance gap scan"
+  },
+  {
+    step: "02",
+    label: "CONFIGURE",
+    title: "Secure & Standardize",
+    desc: "We implement your security stack, harden configurations, and establish runbooks — all built around how your team actually works.",
+    detail: "Policy configuration · EDR deployment · Backup verification · MFA enforcement"
+  },
+  {
+    step: "03",
+    label: "DEPLOY",
+    title: "Go Live & Validate",
+    desc: "Phased rollout with validation at each stage. Your team gets training; your systems get 24/7 monitoring before we flip the switch.",
+    detail: "Staged rollout · User training · Monitoring activation · SLA negotiation"
+  },
+  {
+    step: "04",
+    label: "MONITOR",
+    title: "Watch & Respond 24/7",
+    desc: "Our SIEM never sleeps. Threats are caught and contained automatically. Your dedicated team handles everything — endlessly.",
+    detail: "SIEM 24/7 · Active EDR · Automated response · Monthly reporting"
+  }
+];
+
+const phoneNumber = "(503) 555-0142";
+---
+
+<section class="process section" id="process">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="tag">How We Work</span>
+      <h2>From Kickoff to<br /><span class="gradient-text">24/7 Protection in 4 Steps</span></h2>
+      <p>A proven ops runbook — not a sales pitch. Every client follows the same four-phase process.</p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="runbook stagger">
+      {phases.map((phase, i) => (
+        <div class="runbook-step">
+          <div class="step-glow"></div>
+          <div class="step-connector">
+            <div class="step-node">
+              <span class="step-num">{phase.step}</span>
+            </div>
+            {i < phases.length - 1 && <div class="step-line"></div>}
+          </div>
+          <div class="step-card reveal">
+            <div class="step-label">{phase.label}</div>
+            <h3 class="step-title">{phase.title}</h3>
+            <p class="step-desc">{phase.desc}</p>
+            <div class="step-detail">{phase.detail}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="process-cta">
+      <div class="process-note">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="1.5">
+          <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
+        </svg>
+        <p>Most clients are fully onboarded and monitored within <strong>2 weeks</strong> of kickoff.</p>
+      </div>
+      <a href="tel:+150****0142" class="btn btn-primary">Start the Conversation — (503) 555-0142</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .process {
+    background: var(--slate-dark);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .process::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(184, 122, 58, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(184, 122, 58, 0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+            mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .process .tag { color: var(--amber); border-color: var(--amber); }
+  .process h2 { color: var(--white); }
+  .process .section-header p { color: rgba(255,255,255,0.6); }
+
+  .runbook {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    position: relative;
+    z-index: 1;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .runbook-step {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .step-glow {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle, rgba(184, 122, 58, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .step-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: var(--space-md);
+    margin-bottom: var(--space-md);
+  }
+
+  .step-node {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--amber);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(184, 122, 58, 0.5), 0 0 40px rgba(184, 122, 58, 0.2);
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+  }
+
+  .step-num {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 900;
+    color: var(--white);
+    letter-spacing: 0.05em;
+  }
+
+  .step-line {
+    width: 3px;
+    flex: 1;
+    min-height: 40px;
+    background: linear-gradient(to bottom, var(--amber), rgba(184, 122, 58, 0.3));
+    margin-top: -2px;
+  }
+
+  .step-card {
+    background: var(--slate);
+    border: 1px solid rgba(184, 122, 58, 0.2);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    height: 100%;
+    transition: all 0.4s var(--ease-spring);
+  }
+
+  .step-label {
+    font-family: var(--font-display);
+    font-size: 0.65rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--amber);
+  }
+
+  .step-title {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--white);
+  }
+
+  .step-desc {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.6;
+    flex-grow: 1;
+  }
+
+  .step-detail {
+    font-family: var(--font-display);
+    font-size: 0.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(184, 122, 58, 0.7);
+    padding-top: var(--space-sm);
+    border-top: 1px dashed rgba(184, 122, 58, 0.2);
+    line-height: 1.8;
+  }
+
+  /* CTA */
+  .process-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-xl);
+    padding: var(--space-xl);
+    background: rgba(184, 122, 58, 0.06);
+    border: 1px solid rgba(184, 122, 58, 0.2);
+    border-radius: var(--radius-lg);
+    position: relative;
+    z-index: 1;
+  }
+
+  .process-note {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+
+  .process-note svg { flex-shrink: 0; margin-top: 2px; }
+
+  .process-note p {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.7);
+    max-width: 50ch;
+  }
+
+  .process-note strong { color: var(--amber); }
+
+  @media (max-width: 900px) {
+    .runbook {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+
+    .step-connector { flex-direction: row; padding-top: 0; margin-bottom: 0; }
+    .step-line { width: auto; flex: 1; min-height: 3px; height: 3px; margin: 0; background: linear-gradient(to right, var(--amber), rgba(184, 122, 58, 0.3)); }
+
+    .process-cta {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>

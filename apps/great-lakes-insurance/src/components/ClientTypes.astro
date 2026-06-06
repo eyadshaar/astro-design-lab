@@ -1,0 +1,132 @@
+---
+const clients = [
+  {
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/></svg>`,
+    label: "Healthcare",
+    detail: "HIPAA-compliant IT for clinics, dental, and specialty practices"
+  },
+  {
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>`,
+    label: "Manufacturing",
+    detail: "OT/IT network security and production-critical uptime"
+  },
+  {
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+    label: "Real Estate",
+    detail: "Multi-office networking, transaction IT, and broker compliance"
+  },
+  {
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>`,
+    label: "Professional Services",
+    detail: "Legal, accounting, and consulting firms with strict data requirements"
+  },
+  {
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>`,
+    label: "Non-Profit",
+    detail: "Affordable, secure infrastructure for mission-driven organizations"
+  },
+  {
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg>`,
+    label: "Local Government",
+    detail: "CJIS-compliant, FISMA-ready IT for municipalities and agencies"
+  }
+];
+
+const phoneNumber = "(503) 555-0142";
+---
+
+<section class="clients section" id="clients">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="tag">Industries We Serve</span>
+      <h2><span class="gradient-text">Built for Portland Businesses</span></h2>
+      <p>From three-person clinics to 200-seat professional firms — we scale our services to match your complexity, not ours.</p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="clients-grid stagger">
+      {clients.map(client => (
+        <div class="client-card card reveal">
+          <div class="client-icon" set:html={client.icon} />
+          <div class="client-label">{client.label}</div>
+          <p class="client-detail">{client.detail}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="clients-cta">
+      <p>Don't see your industry? We probably support it. Ask us.</p>
+      <a href="tel:+150****0142" class="btn btn-outline">(503) 555-0142</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .clients {
+    background: var(--warm-gray);
+  }
+
+  .clients-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .client-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    align-items: flex-start;
+    transition: all 0.4s var(--ease-spring);
+  }
+
+  .client-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(61, 90, 76, 0.12);
+  }
+
+  .client-icon {
+    color: var(--amber);
+    padding: var(--space-sm);
+    background: rgba(184, 122, 58, 0.08);
+    border-radius: var(--radius-md);
+  }
+
+  .client-label {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--slate);
+  }
+
+  .client-detail {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .clients-cta {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .clients-cta p {
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 900px) {
+    .clients-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .clients-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
