@@ -1,0 +1,184 @@
+---
+const phoneNumber = "(614) 555-0199";
+const phoneHref = "tel:+161****0199";
+---
+
+<section class="about section" id="about">
+  <div class="container">
+    <div class="about-layout">
+      <div class="about-content">
+        <div class="section-header reveal" style="text-align:left">
+          <span class="tag">About Great Lakes</span>
+          <h2><span class="gradient-text">Independent. Local. Accountable.</span></h2>
+          <div class="divider" style="margin:1rem 0 1.5rem"></div>
+        </div>
+
+        <p class="about-body reveal">
+          Great Lakes Insurance was founded by Ohio natives who saw a problem: big insurance companies treating customers like policy numbers. We built something different — an independent agency that works for you, not the carrier.
+        </p>
+
+        <p class="about-body reveal">
+          We represent over 20 top-rated insurance carriers, which means we can shop around for the best coverage at the best price — without pushing a single product just because it pays better.
+        </p>
+
+        <div class="about-stats stagger">
+          <div class="stat-item reveal">
+            <span class="stat-num">20+</span>
+            <span class="stat-label">Carrier Partners</span>
+          </div>
+          <div class="stat-item reveal">
+            <span class="stat-num">12K+</span>
+            <span class="stat-label">Ohio Families Protected</span>
+          </div>
+          <div class="stat-item reveal">
+            <span class="stat-num">98%</span>
+            <span class="stat-label">Claims Satisfaction</span>
+          </div>
+          <div class="stat-item reveal">
+            <span class="stat-num">16</span>
+            <span class="stat-label">Years in Business</span>
+          </div>
+        </div>
+
+        <div class="about-ctas reveal">
+          <a href={phoneHref} class="btn btn-primary">Talk to an Agent</a>
+          <a href="#products" class="btn btn-outline">View Our Products</a>
+        </div>
+      </div>
+
+      <div class="about-visual reveal">
+        <div class="about-card">
+          <div class="about-card-header">
+            <span class="card-badge">Why Independent?</span>
+          </div>
+          <ul class="about-benefits">
+            <li>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>We work for YOU, not the insurance company</span>
+            </li>
+            <li>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Access to 20+ carriers — not just one</span>
+            </li>
+            <li>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Average savings of $847/yr with bundling</span>
+            </li>
+            <li>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Local agents who answer the phone</span>
+            </li>
+            <li>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Claims handled by real people in Ohio</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    background: var(--stone-warm);
+  }
+
+  .about-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3xl);
+    align-items: center;
+  }
+
+  .about-body {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: var(--space-md);
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-md);
+    margin: var(--space-xl) 0;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: var(--space-md);
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 2rem;
+    color: var(--navy);
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .about-ctas {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .about-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--gold);
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(196, 154, 44, 0.12);
+  }
+
+  .about-card-header {
+    background: var(--navy);
+    padding: var(--space-md) var(--space-lg);
+  }
+
+  .card-badge {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .about-benefits {
+    list-style: none;
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .about-benefits li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    font-size: 0.95rem;
+    color: var(--charcoal);
+    line-height: 1.5;
+  }
+
+  .about-benefits svg { flex-shrink: 0; margin-top: 2px; }
+
+  @media (max-width: 900px) {
+    .about-layout { grid-template-columns: 1fr; }
+    .about-stats { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>

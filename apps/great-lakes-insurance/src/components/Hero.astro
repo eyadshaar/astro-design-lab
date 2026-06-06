@@ -1,0 +1,363 @@
+---
+const phoneNumber = "(614) 555-0199";
+const phoneHref = "tel:+16145550199";
+---
+
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hero-diagonal" aria-hidden="true"></div>
+
+  <div class="container hero-inner">
+    <!-- Left: headline + CTA -->
+    <div class="hero-content stagger">
+      <div class="badge-bar reveal">
+        <span class="badge-dot"></span>
+        <span class="badge-text">Proudly Serving Ohio Families</span>
+      </div>
+
+      <h1 class="hero-headline reveal">
+        Insurance That<br />
+        <span class="headline-accent gradient-text">Protects What's Yours.</span>
+      </h1>
+
+      <p class="hero-sub reveal">
+        Great Lakes Insurance provides personalized coverage for homes, autos, and businesses
+        across Ohio — with rates you can afford and claims service that actually picks up the phone.
+      </p>
+
+      <div class="hero-ctas reveal">
+        <a href={phoneHref} class="btn btn-primary hero-phone-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+          </svg>
+          Get a Free Quote
+        </a>
+        <a href="#products" class="btn btn-ghost-white">View Products</a>
+      </div>
+
+      <div class="hero-trust reveal">
+        <span class="trust-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--gold)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          A.M. Best Rated
+        </span>
+        <span class="trust-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--gold)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Ohio-Based
+        </span>
+        <span class="trust-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--gold)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Local Agents
+        </span>
+      </div>
+    </div>
+
+    <!-- Right: quote calculator card -->
+    <div class="hero-visual reveal">
+      <div class="quote-card">
+        <div class="quote-header">
+          <span class="quote-title">QUICK QUOTE</span>
+          <span class="quote-sub">Get started in 60 seconds</span>
+        </div>
+
+        <div class="quote-body">
+          <div class="quote-step">
+            <span class="step-num">1</span>
+            <span class="step-label">Home, Auto, or Business?</span>
+          </div>
+          <div class="quote-divider"></div>
+
+          <div class="quote-kpis">
+            <div class="kpi-row">
+              <span class="kpi-label">Average Home Savings</span>
+              <span class="kpi-val">$847<span class="kpi-unit">/yr</span></span>
+            </div>
+            <div class="kpi-row">
+              <span class="kpi-label">Auto Discount Programs</span>
+              <span class="kpi-val">Up to <span class="kpi-high">30%</span></span>
+            </div>
+            <div class="kpi-row">
+              <span class="kpi-label">Claims Satisfaction</span>
+              <span class="kpi-val ok">98%</span>
+            </div>
+            <div class="kpi-row">
+              <span class="kpi-label">Local Offices</span>
+              <span class="kpi-val">24<span class="kpi-unit"> in OH</span></span>
+            </div>
+          </div>
+
+          <div class="quote-cta">
+            <a href={phoneHref} class="btn btn-primary quote-btn">Start Your Quote →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    background: var(--navy-dark);
+    padding: 140px 0 80px;
+    overflow: hidden;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Background grid */
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(196, 154, 44, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(196, 154, 44, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  .hero-diagonal {
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 20px,
+      rgba(196, 154, 44, 0.02) 20px,
+      rgba(196, 154, 44, 0.02) 21px
+    );
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3xl);
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Badge bar */
+  .badge-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    color: var(--gold);
+    background: rgba(196, 154, 44, 0.08);
+    border: 1px solid rgba(196, 154, 44, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    width: fit-content;
+  }
+
+  .badge-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+    animation: pulse-dot 2s infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .badge-text { color: rgba(255,255,255,0.7); font-weight: 500; }
+
+  /* Headline */
+  .hero-headline {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: var(--space-lg);
+    letter-spacing: -0.03em;
+  }
+
+  .headline-accent { color: var(--gold); }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.7);
+    max-width: 50ch;
+    margin-bottom: var(--space-xl);
+    line-height: 1.7;
+  }
+
+  /* CTAs */
+  .hero-ctas {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-xl);
+  }
+
+  .hero-phone-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 1.05rem;
+    padding: 1rem 2rem;
+    box-shadow: 0 0 30px rgba(196, 154, 44, 0.35);
+  }
+
+  /* Trust badges */
+  .hero-trust {
+    display: flex;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Quote card */
+  .hero-visual { display: flex; justify-content: center; }
+
+  .quote-card {
+    width: 100%;
+    max-width: 460px;
+    border-radius: var(--radius-lg);
+    border: 2px solid rgba(196, 154, 44, 0.4);
+    background: var(--navy);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 50px rgba(196, 154, 44, 0.08);
+    overflow: hidden;
+  }
+
+  .quote-header {
+    background: var(--gold);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  .quote-title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 1rem;
+    color: var(--navy-dark);
+    letter-spacing: 0.1em;
+  }
+
+  .quote-sub {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--navy-dark);
+    opacity: 0.7;
+  }
+
+  .quote-body {
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .quote-step {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .step-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--navy-dark);
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .step-label {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .quote-divider {
+    height: 1px;
+    background: rgba(196, 154, 44, 0.15);
+  }
+
+  .quote-kpis {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .kpi-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    background: rgba(255,255,255,0.04);
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(196, 154, 44, 0.1);
+  }
+
+  .kpi-label {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .kpi-val {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--gold);
+  }
+
+  .kpi-val.ok { color: var(--green-ok); }
+
+  .kpi-unit {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .kpi-high {
+    color: var(--gold-light);
+    font-size: 1.3rem;
+  }
+
+  .quote-cta { margin-top: var(--space-sm); }
+
+  .quote-btn {
+    width: 100%;
+    justify-content: center;
+    font-size: 1rem;
+    padding: 1rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+    }
+    .hero-visual { display: none; }
+  }
+</style>
