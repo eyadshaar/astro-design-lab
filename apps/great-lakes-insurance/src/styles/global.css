@@ -7,9 +7,9 @@
 
 :root {
   /* Colors — Professional Navy / Gold Palette */
-  --navy:         #1A2B4A;    /* Primary — deep navy */
-  --navy-light:    #2D4A7A;    /* Secondary navy */
-  --navy-dark:     #0F1A2E;    /* Dark navy for contrast */
+  --navy:         #00A8E8;    /* Primary — fresh sky blue */
+    --navy-light:    #33BBF5;    /* Secondary sky blue */
+    --navy-dark:     #0077B6;    /* Darker sky blue for contrast */
   --gold:          #C49A2C;    /* Gold accent — trustworthy, established */
   --gold-dim:      #A88420;    /* Darker gold for hover */
   --gold-light:    #E8C56A;    /* Light gold for highlights */
