@@ -1,25 +1,38 @@
 /* ================================
-   Great Lakes Insurance — Trust / Navy / Gold
+   Great Lakes Insurance — Silver / Gray / Navy 3D Professional Theme
    Global Stylesheet
    ================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Source+Sans+3:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* Colors — Professional Navy / Gold Palette */
-  --navy:         #00A8E8;    /* Primary — fresh sky blue */
-    --navy-light:    #33BBF5;    /* Secondary sky blue */
-    --navy-dark:     #0077B6;    /* Darker sky blue for contrast */
-  --gold:          #C49A2C;    /* Gold accent — trustworthy, established */
-  --gold-dim:      #A88420;    /* Darker gold for hover */
-  --gold-light:    #E8C56A;    /* Light gold for highlights */
-  --stone-warm:    #F5F2ED;    /* Warm off-white background */
-  --stone-light:   #FAF9F6;    /* Light warm stone */
-  --charcoal:      #2C2C2C;    /* Body text */
-  --white:         #FFFFFF;
-  --text-muted:    #6B7280;
-  --green-ok:      #2E7D4F;    /* Muted green — status OK */
-  --border:        #E2DDD5;    /* Warm border */
+  /* Colors — Silver / Gray / Navy Palette */
+  --silver-bright:  #E8ECEF;   /* Lightest silver — backgrounds */
+  --silver-light:   #D4D8DC;   /* Light silver — cards */
+  --silver:         #B8BFC6;   /* Mid silver — borders */
+  --silver-dark:    #8A9199;   /* Dark silver — muted text */
+  --silver-dim:     #6B7280;   /* Dim silver */
+
+  --gray-light:     #9CA3AF;   /* Light gray — subtle elements */
+  --gray:           #6B7280;   /* Mid gray — muted */
+  --gray-dark:      #4B5563;   /* Dark gray */
+  --charcoal:       #374151;   /* Body text — dark charcoal */
+
+  --navy:           #1E3A6E;   /* Primary navy */
+  --navy-mid:       #1A2F52;   /* Mid navy — navbar */
+  --navy-dark:      #0F1E3A;   /* Dark navy — headings, footer */
+  --navy-deep:      #0A1628;   /* Deepest navy — hero, dark sections */
+
+  --white:          #FFFFFF;
+  --off-white:      #F8F9FA;   /* Page background */
+  --text-muted:     #6B7280;
+
+  /* 3D Metallic Accents */
+  --silver-shine:   linear-gradient(135deg, #F0F3F6 0%, #D4D8DC 40%, #B8BFC6 60%, #D4D8DC 80%, #F0F3F6 100%);
+  --silver-panel:   linear-gradient(180deg, #F5F7FA 0%, #E8ECEF 30%, #D4D8DC 70%, #C8CDD3 100%);
+  --navy-shine:    linear-gradient(135deg, #2A4A82 0%, #1E3A6E 40%, #152C54 60%, #1E3A6E 80%, #2A4A82 100%);
+  --btn-3d-top:    #2A4A82;
+  --btn-3d-bottom: #152C54;
 
   /* Typography */
   --font-display: 'Barlow', sans-serif;
@@ -54,9 +67,10 @@ body {
   font-family: var(--font-body);
   font-weight: 400;
   color: var(--charcoal);
-  background-color: var(--stone-warm);
+  background-color: var(--off-white);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -64,6 +78,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 800;
   line-height: 1.2;
   color: var(--navy-dark);
+  text-shadow: 0 1px 2px rgba(15, 30, 58, 0.15);
 }
 
 h1 { font-size: clamp(2.2rem, 5vw, 3.5rem); }
@@ -73,8 +88,8 @@ h4 { font-size: 1.25rem; }
 
 p { font-size: 1rem; max-width: 65ch; }
 
-a { color: var(--gold); text-decoration: none; transition: color 0.2s; }
-a:hover { color: var(--gold-dim); }
+a { color: var(--navy); text-decoration: none; transition: color 0.2s; }
+a:hover { color: var(--navy-dark); }
 
 .container {
   width: 100%;
@@ -88,12 +103,12 @@ a:hover { color: var(--gold-dim); }
 .section-header { text-align: center; margin-bottom: var(--space-2xl); }
 .section-header p {
   margin: var(--space-sm) auto 0;
-  color: var(--text-muted);
+  color: var(--gray-dark);
   max-width: 60ch;
   font-size: 1.125rem;
 }
 
-/* Tag / Badge */
+/* Tag / Badge — 3D metallic pill */
 .tag {
   display: inline-block;
   font-family: var(--font-display);
@@ -101,13 +116,16 @@ a:hover { color: var(--gold-dim); }
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--gold);
-  border: 2px solid var(--gold);
+  color: var(--white);
+  background: var(--silver-shine);
+  border: 1px solid var(--silver);
   padding: 0.25rem 0.75rem;
   border-radius: var(--radius-sm);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.6);
+  text-shadow: 0 1px 1px rgba(0,0,0,0.2);
 }
 
-/* Buttons — premium spring transitions */
+/* Buttons — 3D navy metallic */
 .btn {
   display: inline-block;
   font-family: var(--font-display);
@@ -119,34 +137,65 @@ a:hover { color: var(--gold-dim); }
   cursor: pointer;
   text-align: center;
   text-decoration: none;
-  transition: all 0.4s var(--ease-spring);
+  transition: all 0.3s var(--ease-spring);
   line-height: 1;
+  position: relative;
 }
 
 .btn-primary {
-  background: var(--gold);
-  color: var(--navy-dark);
+  background: var(--navy-shine);
+  color: var(--white);
+  box-shadow:
+    0 4px 6px rgba(30, 58, 110, 0.3),
+    0 1px 0 rgba(255,255,255,0.1) inset,
+    0 -2px 0 rgba(10, 22, 40, 0.3) inset;
+  border: 1px solid rgba(255,255,255,0.1);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  letter-spacing: 0.02em;
 }
 .btn-primary:hover {
-  background: var(--gold-dim);
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 20px rgba(30, 58, 110, 0.4),
+    0 1px 0 rgba(255,255,255,0.15) inset,
+    0 -2px 0 rgba(10, 22, 40, 0.3) inset;
   color: var(--white);
-  transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(196, 154, 44, 0.4), 0 0 40px rgba(196, 154, 44, 0.2);
+}
+.btn-primary:active {
+  transform: translateY(1px);
+  box-shadow:
+    0 2px 4px rgba(30, 58, 110, 0.3),
+    0 1px 0 rgba(255,255,255,0.1) inset,
+    0 -1px 0 rgba(10, 22, 40, 0.2) inset;
 }
 
 .btn-outline {
   background: transparent;
   color: var(--navy);
   border: 2px solid var(--navy);
+  box-shadow: 0 2px 4px rgba(30, 58, 110, 0.1);
 }
-.btn-outline:hover { background: var(--navy); color: var(--white); }
+.btn-outline:hover {
+  background: var(--navy);
+  color: var(--white);
+  box-shadow: 0 4px 12px rgba(30, 58, 110, 0.25);
+  transform: translateY(-1px);
+}
 
 .btn-ghost-white {
-  background: transparent;
+  background: rgba(255,255,255,0.08);
   color: var(--white);
-  border: 2px solid rgba(255,255,255,0.5);
+  border: 2px solid rgba(255,255,255,0.25);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  backdrop-filter: blur(4px);
 }
-.btn-ghost-white:hover { background: rgba(255,255,255,0.1); border-color: var(--white); color: var(--white); }
+.btn-ghost-white:hover {
+  background: rgba(255,255,255,0.15);
+  border-color: rgba(255,255,255,0.5);
+  color: var(--white);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
 
 /* Phone link */
 .phone-link {
@@ -155,27 +204,40 @@ a:hover { color: var(--gold-dim); }
   color: inherit;
   white-space: nowrap;
   transition: color 0.4s var(--ease-spring);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
-.phone-link:hover { color: var(--gold); }
+.phone-link:hover { color: var(--navy); }
 
-/* Card */
+/* Cards — 3D silver panel effect */
 .card {
-  background: var(--white);
+  background: var(--silver-panel);
   border-radius: var(--radius-lg);
   padding: var(--space-xl);
-  box-shadow: 0 2px 12px rgba(26, 43, 74, 0.08);
-  border: 1px solid var(--border);
-  transition: box-shadow 0.4s var(--ease-spring), transform 0.4s var(--ease-spring);
+  border: 1px solid var(--silver);
+  box-shadow:
+    0 1px 3px rgba(0,0,0,0.06),
+    0 4px 16px rgba(0,0,0,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.8),
+    inset 0 -1px 0 rgba(0,0,0,0.04);
+  transition: all 0.4s var(--ease-spring);
 }
-.card:hover { box-shadow: 0 8px 32px rgba(26,43,74,0.14); transform: translateY(-2px); }
+.card:hover {
+  box-shadow:
+    0 4px 8px rgba(0,0,0,0.08),
+    0 12px 32px rgba(0,0,0,0.1),
+    inset 0 1px 0 rgba(255,255,255,0.9),
+    inset 0 -1px 0 rgba(0,0,0,0.04);
+  transform: translateY(-3px);
+}
 
-/* Divider */
+/* Divider — navy 3D bar */
 .divider {
   width: 60px;
   height: 4px;
-  background: var(--gold);
+  background: linear-gradient(180deg, #2A4A82 0%, #1E3A6E 50%, #152C54 100%);
   border-radius: 2px;
   margin: var(--space-md) auto 0;
+  box-shadow: 0 1px 2px rgba(30, 58, 110, 0.3);
 }
 
 /* Status dot */
@@ -184,32 +246,40 @@ a:hover { color: var(--gold-dim); }
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--green-ok);
+  background: #22C55E;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
   animation: pulse-dot 2s infinite;
 }
 @keyframes pulse-dot {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  0%, 100% { box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2); }
+  50% { box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.1); }
 }
 
-/* Monitor frame */
+/* Monitor frame — navy metallic */
 .monitor-frame {
   border: 3px solid var(--navy);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  background: var(--navy-dark);
+  background: var(--navy-deep);
+  box-shadow:
+    0 8px 32px rgba(15, 30, 58, 0.4),
+    inset 0 1px 0 rgba(255,255,255,0.1);
 }
 
 /* ================================
    Premium design pattern utilities
    ================================ */
 
-/* Custom gold scrollbar */
-::-webkit-scrollbar { width: 2px; height: 2px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 1px; }
-* { scrollbar-width: thin; scrollbar-color: var(--gold) transparent; }
-::selection { background: var(--gold); color: var(--navy-dark); }
+/* Custom silver scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--silver-bright); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #C8CDD3, #B8BFC6);
+  border-radius: 3px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+}
+* { scrollbar-width: thin; scrollbar-color: #B8BFC6 var(--silver-bright); }
+::selection { background: rgba(30, 58, 110, 0.15); color: var(--navy-dark); }
 
 /* Scroll reveal */
 .reveal {
@@ -243,9 +313,9 @@ a:hover { color: var(--gold-dim); }
           mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%, #000 88%);
 }
 
-/* Gradient text (gold → gold-dim) */
+/* Gradient text (navy) */
 .gradient-text {
-  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dim) 100%);
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -260,11 +330,44 @@ a:hover { color: var(--gold-dim); }
 }
 .kenburns:hover img { transform: scale(1.06); }
 
-/* Signature gold divider */
-.amber-divider {
+/* Silver divider */
+.silver-divider {
   width: 40px;
   height: 2px;
-  background: var(--gold);
+  background: var(--silver-shine);
   border-radius: 2px;
   margin: 0 auto;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* 3D Panel — raised silver surface */
+.panel-3d {
+  background: var(--silver-panel);
+  border: 1px solid var(--silver);
+  border-radius: var(--radius-md);
+  box-shadow:
+    0 2px 4px rgba(0,0,0,0.05),
+    0 8px 24px rgba(0,0,0,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.9),
+    inset 0 -1px 0 rgba(0,0,0,0.05);
+}
+
+/* Text shadow utilities */
+.text-shadow-sm { text-shadow: 0 1px 2px rgba(15, 30, 58, 0.15); }
+.text-shadow-md { text-shadow: 0 2px 4px rgba(15, 30, 58, 0.2); }
+.text-shadow-lg { text-shadow: 0 4px 8px rgba(15, 30, 58, 0.3); }
+.text-shadow-white { text-shadow: 0 1px 2px rgba(255,255,255,0.8); }
+
+/* Box shadow utilities */
+.shadow-3d {
+  box-shadow:
+    0 1px 3px rgba(0,0,0,0.08),
+    0 4px 16px rgba(0,0,0,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+}
+.shadow-3d-hover:hover {
+  box-shadow:
+    0 4px 8px rgba(0,0,0,0.1),
+    0 12px 32px rgba(0,0,0,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.7);
 }

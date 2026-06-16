@@ -1,5 +1,5 @@
 ---
-const phoneNumber = "(419) 345-7778";
+const phoneNumber = "419 345 7778";
 const phoneHref = "tel:+141****7778";
 ---
 
@@ -42,13 +42,13 @@ const phoneHref = "tel:+141****7778";
       <div class="claims-cta reveal">
         <div class="cta-box">
           <div class="cta-icon">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.5">
               <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
             </svg>
           </div>
           <h3>Need to File a Claim?</h3>
           <p>Call us 24/7 — we're here to help you through it.</p>
-          <a href={phoneHref} class="btn btn-primary">Call (419) 345-7778</a>
+          <a href={phoneHref} class="btn btn-primary">Call 419 345 7778</a>
         </div>
       </div>
     </div>
@@ -57,8 +57,8 @@ const phoneHref = "tel:+141****7778";
 
 <style>
   .claims {
-    background: var(--navy-dark);
-    color: var(--white);
+    background: var(--silver-body);
+    color: var(--charcoal);
   }
 
   .claims-layout {
@@ -79,23 +79,25 @@ const phoneHref = "tel:+141****7778";
     align-items: flex-start;
     gap: var(--space-lg);
     padding: var(--space-lg);
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(196, 154, 44, 0.15);
+    background: var(--silver-panel);
+    border: 1px solid rgba(30, 58, 110, 0.1);
     border-radius: var(--radius-lg);
     transition: all 0.4s var(--ease-spring);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   }
 
   .step-card:hover {
-    background: rgba(196, 154, 44, 0.08);
-    border-color: rgba(196, 154, 44, 0.3);
+    background: var(--silver-bright);
+    border-color: var(--navy);
+    box-shadow: 0 4px 16px rgba(30, 58, 110, 0.12);
   }
 
   .step-num {
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: var(--gold);
-    color: var(--navy-dark);
+    background: var(--navy);
+    color: var(--white);
     font-family: var(--font-display);
     font-weight: 900;
     font-size: 1.2rem;
@@ -106,13 +108,13 @@ const phoneHref = "tel:+141****7778";
   }
 
   .step-content h3 {
-    color: var(--white);
+    color: var(--navy-dark);
     font-size: 1.15rem;
     margin-bottom: var(--space-xs);
   }
 
   .step-content p {
-    color: rgba(255,255,255,0.6);
+    color: var(--charcoal);
     font-size: 0.9rem;
     line-height: 1.6;
     max-width: none;
@@ -120,7 +122,7 @@ const phoneHref = "tel:+141****7778";
 
   .cta-box {
     background: var(--navy);
-    border: 2px solid rgba(196, 154, 44, 0.4);
+    border: 2px solid var(--navy);
     border-radius: var(--radius-lg);
     padding: var(--space-2xl);
     text-align: center;
@@ -128,6 +130,7 @@ const phoneHref = "tel:+141****7778";
     flex-direction: column;
     align-items: center;
     gap: var(--space-md);
+    box-shadow: 0 4px 16px rgba(30, 58, 110, 0.2);
   }
 
   .cta-icon { margin-bottom: var(--space-sm); }
@@ -138,7 +141,7 @@ const phoneHref = "tel:+141****7778";
   }
 
   .cta-box p {
-    color: rgba(255,255,255,0.6);
+    color: rgba(255,255,255,0.7);
     max-width: 32ch;
   }
 

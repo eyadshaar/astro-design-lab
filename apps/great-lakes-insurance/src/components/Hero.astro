@@ -1,5 +1,5 @@
 ---
-const phoneNumber = "(419) 345-7778";
+const phoneNumber = "419 345 7778";
 const phoneHref = "tel:+141****7778";
 ---
 
@@ -37,15 +37,15 @@ const phoneHref = "tel:+141****7778";
 
       <div class="hero-trust reveal">
         <span class="trust-item">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--gold)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--navy)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           A.M. Best Rated
         </span>
         <span class="trust-item">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--gold)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--navy)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           Ohio-Based
         </span>
         <span class="trust-item">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--gold)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--navy)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           Local Agents
         </span>
       </div>
@@ -97,7 +97,7 @@ const phoneHref = "tel:+141****7778";
 <style>
   .hero {
     position: relative;
-    background: var(--navy-dark);
+    background: var(--silver-bright);
     padding: 140px 0 80px;
     overflow: hidden;
     min-height: 90vh;
@@ -110,8 +110,8 @@ const phoneHref = "tel:+141****7778";
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(196, 154, 44, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(196, 154, 44, 0.05) 1px, transparent 1px);
+      linear-gradient(rgba(30, 58, 110, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(30, 58, 110, 0.04) 1px, transparent 1px);
     background-size: 40px 40px;
     pointer-events: none;
   }
@@ -123,8 +123,8 @@ const phoneHref = "tel:+141****7778";
       -45deg,
       transparent,
       transparent 20px,
-      rgba(196, 154, 44, 0.02) 20px,
-      rgba(196, 154, 44, 0.02) 21px
+      rgba(30, 58, 110, 0.02) 20px,
+      rgba(30, 58, 110, 0.02) 21px
     );
     pointer-events: none;
   }
@@ -146,9 +146,9 @@ const phoneHref = "tel:+141****7778";
     margin-bottom: var(--space-lg);
     font-family: var(--font-display);
     font-size: 0.8rem;
-    color: var(--gold);
-    background: rgba(196, 154, 44, 0.08);
-    border: 1px solid rgba(196, 154, 44, 0.2);
+    color: var(--navy);
+    background: rgba(30, 58, 110, 0.08);
+    border: 1px solid rgba(30, 58, 110, 0.2);
     padding: 0.5rem 1rem;
     border-radius: var(--radius-sm);
     width: fit-content;
@@ -159,7 +159,7 @@ const phoneHref = "tel:+141****7778";
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: var(--gold);
+    background: var(--navy);
     flex-shrink: 0;
     animation: pulse-dot 2s infinite;
   }
@@ -169,23 +169,23 @@ const phoneHref = "tel:+141****7778";
     50% { opacity: 0.4; }
   }
 
-  .badge-text { color: rgba(255,255,255,0.7); font-weight: 500; }
+  .badge-text { color: var(--navy-dark); font-weight: 600; }
 
   /* Headline */
   .hero-headline {
     font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 900;
-    color: var(--white);
+    color: var(--navy-dark);
     line-height: 1.1;
     margin-bottom: var(--space-lg);
     letter-spacing: -0.03em;
   }
 
-  .headline-accent { color: var(--gold); }
+  .headline-accent { color: var(--navy); }
 
   .hero-sub {
     font-size: 1.1rem;
-    color: rgba(255,255,255,0.7);
+    color: var(--charcoal);
     max-width: 50ch;
     margin-bottom: var(--space-xl);
     line-height: 1.7;
@@ -205,7 +205,6 @@ const phoneHref = "tel:+141****7778";
     gap: var(--space-sm);
     font-size: 1.05rem;
     padding: 1rem 2rem;
-    box-shadow: 0 0 30px rgba(196, 154, 44, 0.35);
   }
 
   /* Trust badges */
@@ -222,7 +221,7 @@ const phoneHref = "tel:+141****7778";
     font-family: var(--font-display);
     font-size: 0.75rem;
     font-weight: 600;
-    color: rgba(255,255,255,0.5);
+    color: var(--gray-dark);
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
@@ -234,14 +233,17 @@ const phoneHref = "tel:+141****7778";
     width: 100%;
     max-width: 460px;
     border-radius: var(--radius-lg);
-    border: 2px solid rgba(196, 154, 44, 0.4);
-    background: var(--navy);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 50px rgba(196, 154, 44, 0.08);
+    border: 2px solid var(--navy);
+    background: var(--silver-panel);
+    box-shadow:
+      0 4px 8px rgba(0,0,0,0.08),
+      0 16px 40px rgba(30, 58, 110, 0.12),
+      inset 0 1px 0 rgba(255,255,255,0.9);
     overflow: hidden;
   }
 
   .quote-header {
-    background: var(--gold);
+    background: var(--navy);
     padding: 1rem 1.5rem;
     display: flex;
     align-items: baseline;
@@ -252,15 +254,14 @@ const phoneHref = "tel:+141****7778";
     font-family: var(--font-display);
     font-weight: 900;
     font-size: 1rem;
-    color: var(--navy-dark);
+    color: var(--white);
     letter-spacing: 0.1em;
   }
 
   .quote-sub {
     font-family: var(--font-body);
     font-size: 0.75rem;
-    color: var(--navy-dark);
-    opacity: 0.7;
+    color: rgba(255,255,255,0.7);
   }
 
   .quote-body {
@@ -280,8 +281,8 @@ const phoneHref = "tel:+141****7778";
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    background: var(--gold);
-    color: var(--navy-dark);
+    background: var(--navy);
+    color: var(--white);
     font-family: var(--font-display);
     font-weight: 900;
     font-size: 0.85rem;
@@ -294,12 +295,12 @@ const phoneHref = "tel:+141****7778";
   .step-label {
     font-family: var(--font-body);
     font-size: 0.9rem;
-    color: rgba(255,255,255,0.7);
+    color: var(--charcoal);
   }
 
   .quote-divider {
     height: 1px;
-    background: rgba(196, 154, 44, 0.15);
+    background: rgba(30, 58, 110, 0.15);
   }
 
   .quote-kpis {
@@ -313,33 +314,33 @@ const phoneHref = "tel:+141****7778";
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem 0.75rem;
-    background: rgba(255,255,255,0.04);
+    background: rgba(30, 58, 110, 0.05);
     border-radius: var(--radius-sm);
-    border: 1px solid rgba(196, 154, 44, 0.1);
+    border: 1px solid rgba(30, 58, 110, 0.1);
   }
 
   .kpi-label {
     font-family: var(--font-body);
     font-size: 0.8rem;
-    color: rgba(255,255,255,0.5);
+    color: var(--gray-dark);
   }
 
   .kpi-val {
     font-family: var(--font-display);
     font-weight: 800;
     font-size: 1.1rem;
-    color: var(--gold);
+    color: var(--navy);
   }
 
   .kpi-val.ok { color: var(--green-ok); }
 
   .kpi-unit {
     font-size: 0.7rem;
-    color: rgba(255,255,255,0.4);
+    color: var(--gray);
   }
 
   .kpi-high {
-    color: var(--gold-light);
+    color: var(--navy);
     font-size: 1.3rem;
   }
 
