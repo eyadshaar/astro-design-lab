@@ -7,96 +7,86 @@ let products: any[] = [];
 let categories: any[] = [];
 let settings: any = {};
 try {
-  const [prodResult, catResult, settingsResult] = await Promise.all([
-    env.DB.prepare("SELECT p.*, c.name as category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id ORDER BY p.name").all(),
+  const [pr, cr, sr] = await Promise.all([
+    env.DB.prepare("SELECT p.*, c.name as cn FROM products p LEFT JOIN categories c ON p.category_id=c.id ORDER BY p.name").all(),
     env.DB.prepare("SELECT * FROM categories ORDER BY name").all(),
     env.DB.prepare("SELECT key, value FROM settings").all(),
   ]);
-  products = prodResult.results || [];
-  categories = catResult.results || [];
-  for (const s of (settingsResult.results || [])) { settings[s.key] = s.value; }
+  products = pr.results || [];
+  categories = cr.results || [];
+  for (const s of (sr.results||[])) settings[s.key] = s.value;
 } catch(e) {}
-const shopName = settings.shop_name || "eTouch Computers";
-const categoryFilter = new URL(Astro.request.url).searchParams.get("category") || "";
-const searchFilter = new URL(Astro.request.url).searchParams.get("search") || "";
-const stockFilter = new URL(Astro.request.url).searchParams.get("stock") || "";
-const filtered = products.filter((p: any) => {
-  if (categoryFilter && String(p.category_id || "") !== categoryFilter) return false;
-  if (searchFilter && !p.name.toLowerCase().includes(searchFilter.toLowerCase())) return false;
-  if (stockFilter === "low" && !((p.stock_qty||0) <= (p.low_stock_threshold||5))) return false;
-  if (stockFilter === "out" && p.stock_qty !== 0) return false;
+const cf = new URL(Astro.request.url).searchParams.get("category") || "";
+const sf = new URL(Astro.request.url).searchParams.get("search") || "";
+const stf = new URL(Astro.request.url).searchParams.get("stock") || "";
+const filtered = products.filter((p) => {
+  if (cf && String(p.category_id||"") !== cf) return false;
+  if (sf && !p.name.toLowerCase().includes(sf.toLowerCase())) return false;
+  if (stf==="low" && !((p.stock_qty||0) <= (p.low_stock_threshold||5))) return false;
+  if (stf==="out" && p.stock_qty !== 0) return false;
   return true;
 });
-const fmt = (n: number) => "$"+Number(n||0).toFixed(2);
-const success = new URL(Astro.request.url).searchParams.get("created") === "1";
-const updated = new URL(Astro.request.url).searchParams.get("updated") === "1";
-const deleted = new URL(Astro.request.url).searchParams.get("deleted") === "1";
-const lowStockCount = products.filter((p: any) => (p.stock_qty||0) <= (p.low_stock_threshold||5)).length;
-const outStockCount = products.filter((p: any) => p.stock_qty === 0).length;
+const fmt = (n) => "$"+Number(n||0).toFixed(2);
+const created = Astro.request.url.includes("created=1");
+const updated = Astro.request.url.includes("updated=1");
+const deleted = Astro.request.url.includes("deleted=1");
+const lowStock = products.filter((p) => (p.stock_qty||0) <= (p.low_stock_threshold||5)).length;
+const outStock = products.filter((p) => p.stock_qty === 0).length;
+const totalVal = products.reduce((s, p) => s+(p.sell_price||0)*(p.stock_qty||0), 0);
+const marginFn = (sell, cost) => sell>0 ? ((sell-cost)/sell*100) : 0;
+const stockClass = (qty, threshold) => qty===0 ? "badge-out" : qty <= (threshold||5) ? "badge-low" : "badge-ok";
 ---
-<BaseLayout title={"Inventory — " + shopName} activeNav="inventory">
-  {success && <div class="alert alert-success">Product created successfully!</div>}
-  {updated && <div class="alert alert-success">Product updated successfully!</div>}
-  {deleted && <div class="alert alert-success">Product deleted successfully.</div>}
-  <div class="page-header">
-    <h2>Inventory</h2>
-    <div class="flex gap-1">
-      <a href="/inventory/new" class="btn btn-primary">+ New Product</a>
-    </div>
+<BaseLayout title="Inventory — eTouchPOS" activeNav="inventory">
+  {created && <div class="alert alert-success">Product added!</div>}
+  {updated && <div class="alert alert-success">Product updated!</div>}
+  {deleted && <div class="alert alert-success">Product deleted.</div>}
+  {lowStock > 0 && <div class="alert alert-warning">WARNING: {lowStock} product{lowStock!==1?"s":""} low on stock{outStock>0?" ("+outStock+" out of stock)":""}</div>}
+  <div class="page-header"><h2>Inventory</h2><a href="/inventory/new" class="btn btn-primary">+ Add Product</a></div>
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-label">Total Products</div><div class="stat-value">{products.length}</div></div>
+    <div class="stat-card"><div class="stat-label">Total Value</div><div class="stat-value">{fmt(totalVal)}</div><div class="stat-sub">At sell price</div></div>
+    <div class="stat-card"><div class="stat-label">Low Stock</div><div class="stat-value" style={lowStock>0?"color:var(--warning)":"color:var(--success)"}>{lowStock}</div></div>
+    <div class="stat-card"><div class="stat-label">Out of Stock</div><div class="stat-value" style={outStock>0?"color:var(--danger)":"color:var(--success)"}>{outStock}</div></div>
   </div>
-  {lowStockCount > 0 && <div class="alert alert-low">WARNING {lowStockCount} product{lowStockCount!==1?"s":""} low on stock{outStockCount>0 ? " ("+outStockCount+" out of stock)":""}</div>}
   <div class="card">
-    <div class="card-header flex-between">
-      <span>{filtered.length} product{filtered.length!==1?"s":""}{products.length!==filtered.length?" of "+products.length:""}</span>
-      <form method="GET" class="flex gap-1 align-center">
-        <input class="form-control" name="search" value={searchFilter} placeholder="Search products..." style="max-width:200px" />
-        <select class="form-control" name="category" style="max-width:160px">
+    <div class="card-header">
+      <span>{filtered.length} product{filtered.length!==1?"s":""}{filtered.length!==products.length?" of "+products.length:""}</span>
+      <form method="GET" class="flex gap-1 align-center" style="flex-wrap:wrap">
+        <input class="form-control" name="search" value={sf} placeholder="Search..." style="max-width:180px;height:34px;padding:0 .75rem" />
+        <select class="form-control" name="category" style="max-width:150px;height:34px;padding:0 2rem 0 .75rem">
           <option value="">All Categories</option>
-          {categories.map((c: any) => <option value={c.id} selected={categoryFilter===String(c.id)}>{c.name}</option>)}
+          {categories.map((c) => <option value={c.id} selected={cf===String(c.id)}>{c.name}</option>)}
         </select>
-        <select class="form-control" name="stock" style="max-width:140px">
+        <select class="form-control" name="stock" style="max-width:130px;height:34px;padding:0 2rem 0 .75rem">
           <option value="">Any Stock</option>
-          <option value="low" selected={stockFilter==="low"}>Low Stock</option>
-          <option value="out" selected={stockFilter==="out"}>Out of Stock</option>
+          <option value="low" selected={stf==="low"}>Low Stock</option>
+          <option value="out" selected={stf==="out"}>Out of Stock</option>
         </select>
         <button type="submit" class="btn btn-secondary btn-sm">Filter</button>
         {filtered.length !== products.length && <a href="/inventory" class="btn btn-secondary btn-sm">Clear</a>}
       </form>
     </div>
     {filtered.length === 0 ? (
-      <div class="card-body">
-        <div class="empty-state">
-          {products.length === 0 ? (
-            <div>
-              <div style="font-size:2rem;margin-bottom:0.5rem">BOX</div>
-              <div style="font-weight:600;margin-bottom:0.25rem">No products yet</div>
-              <div style="color:var(--text-muted);font-size:0.875rem;margin-bottom:1rem">Add your first product to get started</div>
-              <a href="/inventory/new" class="btn btn-primary">+ Add First Product</a>
-            </div>
-          ) : (
-            <div>No products match your filters. <a href="/inventory">Clear filters</a></div>
-          )}
-        </div>
-      </div>
+      <div class="card-body"><div class="empty-state"><div class="empty-icon">E</div><div style="font-weight:700;margin-bottom:.5rem">{products.length===0?"No products yet":"No matches"}</div><div style="margin-bottom:1rem">{products.length===0?"Add your first product to get started":"Try different filters"}</div>{products.length===0 ? <a href="/inventory/new" class="btn btn-primary">+ Add First Product</a> : <a href="/inventory" class="btn btn-secondary">Clear Filters</a>}</div></div>
     ) : (
       <div style="overflow-x:auto">
         <table class="data-table">
-          <thead>
-            <tr><th>SKU</th><th>Product</th><th>Category</th><th class="text-right">Cost</th><th class="text-right">Sell</th><th class="text-right">Margin</th><th class="text-right">Stock</th><th></th></tr>
-          </thead>
+          <thead><tr><th>SKU</th><th>Product</th><th>Category</th><th class="text-right">Cost</th><th class="text-right">Sell</th><th class="text-right">Margin</th><th class="text-right">Stock</th><th></th></tr></thead>
           <tbody>
-            {filtered.map((p: any) => (
-              <tr>
-                <td style="font-family:monospace;font-size:0.8rem;color:var(--text-muted)">{p.sku||"—"}</td>
-                <td><a href={"/inventory/"+p.id} style="font-weight:600;color:var(--navy)">{p.name}</a></td>
-                <td class="text-muted">{p.category_name||"—"}</td>
+            {filtered.map((p) => {
+              const m = marginFn(p.sell_price||0, p.cost_price||0);
+              const sc = stockClass(p.stock_qty||0, p.low_stock_threshold);
+              return <tr>
+                <td style="font-family:monospace;font-size:.8rem;color:var(--muted)">{p.sku||"—"}</td>
+                <td><a href={"/inventory/"+p.id} style="font-weight:600;color:var(--navy);text-decoration:none">{p.name}</a></td>
+                <td class="text-muted">{p.cn||"—"}</td>
                 <td class="text-right">{fmt(p.cost_price)}</td>
                 <td class="text-right font-bold">{fmt(p.sell_price)}</td>
-                <td class="text-right"><span class={p.sell_price>0&&((p.sell_price-p.cost_price)/p.sell_price*100)<10?"text-danger":"text-success"}>{(p.sell_price>0?((p.sell_price-p.cost_price)/p.sell_price*100):0).toFixed(1)}%</span></td>
-                <td class="text-right"><span class={"badge "+((p.stock_qty||0)<=(p.low_stock_threshold||5)?"badge-low":"badge-ok")}>{p.stock_qty}</span></td>
+                <td class="text-right"><span class={m<10?"text-danger":"text-success"} style="font-weight:600">{m.toFixed(1)}%</span></td>
+                <td class="text-right"><span class={"badge "+sc}>{p.stock_qty}</span></td>
                 <td><a href={"/inventory/"+p.id} class="btn btn-secondary btn-sm">Edit</a></td>
-              </tr>
-            ))}
+              </tr>;
+            })}
           </tbody>
         </table>
       </div>

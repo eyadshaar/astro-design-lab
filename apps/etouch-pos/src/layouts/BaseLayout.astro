@@ -1,32 +1,49 @@
 ---
-export interface Props { title: string; activeNav?: string; }
-const { title, activeNav = '' } = Astro.props;
+interface Props { title: string; activeNav?: string; }
+const { title, activeNav = "" } = Astro.props;
+const nav = [
+  { href: "/invoices",  label: "Invoices",  icon: "F" },
+  { href: "/inventory", label: "Inventory",  icon: "E" },
+];
 ---
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{title} | eTouchPOS</title>
+  <title>{title}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/styles/global.css" />
 </head>
 <body>
-  <header class="site-header">
-    <span class="shop-badge">eTouch Computers</span>
-    <h1>Point of Sale</h1>
-    <nav>
-      <a href="/invoices" class={activeNav === 'invoices' ? 'active' : ''}>Invoices</a>
-      <a href="/inventory" class={activeNav === 'inventory' ? 'active' : ''}>Inventory</a>
+  <div class="app-shell">
+    <nav class="navbar">
+      <div class="navbar-inner">
+        <a href="/" class="navbar-brand">
+          <div class="navbar-logo">C</div>
+          <div class="navbar-name">
+            <div>eTouch Computers</div>
+            <div class="navbar-sub">Point of Sale</div>
+          </div>
+        </a>
+        <ul class="navbar-nav">
+          {nav.map(item => (
+            <li>
+              <a href={item.href} class={activeNav === item.href.split("/")[1] ? "active" : ""}>
+                <span class="nav-icon">{item.icon}</span>
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </nav>
-    <div class="header-spacer"></div>
-  </header>
-
-  <main class="page-container">
-    <slot />
-  </main>
-
-  <footer class="site-footer">
-    &copy; 2025 eTouch Computers &mdash; Internal Use Only
-  </footer>
+    <main class="main-wrap"><slot /></main>
+    <footer style="text-align:center;padding:1.5rem;color:var(--muted);font-size:.78rem;border-top:1px solid var(--border);background:var(--white)">
+      2024 eTouch Computers &mdash; eTouchPOS
+    </footer>
+  </div>
 </body>
 </html>

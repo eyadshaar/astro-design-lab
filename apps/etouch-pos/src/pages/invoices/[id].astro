@@ -1,129 +1,110 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import type { D1Database } from '@cloudflare/workers-types';
-
-interface Props { env: { DB: D1Database }; params: { id: string } }
-const { env, params } = Astro.props;
-const id = parseInt(params.id);
-
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import type { D1Database } from "@cloudflare/workers-types";
+interface Props { env: { DB: D1Database } }
+const { env } = Astro.props as Props;
+const id = new URL(Astro.request.url).pathname.split("/").pop();
 let invoice: any = null;
 let items: any[] = [];
-let settings: Record<string,string> = {};
-const created = new URL(Astro.request.url).searchParams.get('created') === '1';
-
+let settings: any = {};
 try {
-  const [invResult, settingsResult] = await Promise.all([
-    env.DB.prepare(`
-      SELECT i.*, c.name as customer_name, c.phone as customer_phone,
-             c.email as customer_email, c.address as customer_address
-      FROM invoices i LEFT JOIN customers c ON i.customer_id=c.id
-      WHERE i.id=?
-    `).bind(id).first(),
-    env.DB.prepare("SELECT key, value FROM settings").all(),
-  ]);
-  invoice = invResult;
+  const inv = await env.DB.prepare("SELECT i.*, c.name as cn, c.phone as cp, c.email as ce FROM invoices i LEFT JOIN customers c ON i.customer_id=c.id WHERE i.id=?").bind(id).first();
+  invoice = inv;
   if (invoice) {
-    items = (await env.DB.prepare('SELECT * FROM invoice_items WHERE invoice_id=?').bind(id).all()).results || [];
+    const it = await env.DB.prepare("SELECT * FROM invoice_items WHERE invoice_id=?").bind(id).all();
+    items = it.results || [];
   }
-  for (const s of (settingsResult.results || [])) {
-    settings[s.key] = s.value;
-  }
-} catch (e) { /* dev */ }
-
-if (!invoice) return Astro.redirect('/invoices');
-
-const shop = {
-  name:    settings['shop_name']    || 'eTouch Computers',
-  address: settings['shop_address'] || '',
-  phone:   settings['shop_phone']   || '',
-  email:   settings['shop_email']   || '',
-};
-const fmt = (n: number) => '$' + Number(n || 0).toFixed(2);
-const dateStr = invoice.created_at ? new Date(invoice.created_at * 1000).toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' }) : '';
-const dueStr  = invoice.due_date  ? new Date(invoice.due_date  * 1000).toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' }) : '';
+  const sr = await env.DB.prepare("SELECT key, value FROM settings").all();
+  for (const s of (sr.results||[])) settings[s.key] = s.value;
+} catch(e) {}
+if (!invoice) return Astro.redirect("/invoices");
+const shopName = settings.shop_name||"eTouch Computers";
+const fmt = (n: number) => "$"+Number(n||0).toFixed(2);
+const fmtD = (ts: number) => ts ? new Date(ts*1000).toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"}) : "—";
+const pill: Record<string,string> = { draft:"pill-draft", sent:"pill-sent", paid:"pill-paid", cancelled:"pill-cancelled" };
+const taxRate = parseFloat(settings.tax_rate||"6.25");
+const updated = Astro.request.url.includes("updated=1");
 ---
-<BaseLayout title={`Invoice ${invoice.invoice_no}`} activeNav="invoices">
-  {created && <div style="background:#d1fae5;color:#065f46;padding:0.75rem 1rem;border-radius:8px;margin-bottom:1rem;font-weight:600">Invoice created successfully!</div>}
-
-  <div class="page-header no-print">
-    <h2>Invoice {invoice.invoice_no}</h2>
-    <div class="flex gap-1">
-      <button class="btn btn-secondary" onclick="window.print()">Print / PDF</button>
-      <a href="/invoices" class="btn btn-secondary">Back</a>
+<BaseLayout title={"Invoice "+invoice.invoice_no+" — eTouchPOS"} activeNav="invoices">
+  {updated && <div class="alert alert-success">Invoice updated!</div>}
+  <div class="page-header">
+    <h2>Invoice <span style="font-family:monospace;font-size:1.2rem">{invoice.invoice_no}</span></h2>
+    <div style="display:flex;gap:.75rem;align-items:center;flex-wrap:wrap">
+      <span class={"status-pill "+pill[invoice.status]} style="font-size:.875rem;padding:.5rem 1rem">{invoice.status.toUpperCase()}</span>
+      <button onclick="window.print()" class="btn btn-secondary no-print">Print</button>
     </div>
   </div>
 
-  <div class="card" id="invoice-paper">
-    <div style="padding:2rem">
-      <div class="flex-between" style="margin-bottom:2rem">
-        <div>
-          <h1 style="font-size:1.5rem;color:var(--navy);margin-bottom:0.25rem">{shop.name}</h1>
-          <p style="color:var(--text-muted);font-size:0.85rem">{shop.address}<br/>{shop.phone} &middot; {shop.email}</p>
+  <div class="invoice-view">
+    <div class="card" style="margin-bottom:1.5rem">
+      <div class="card-body">
+        <div class="invoice-header-grid">
+          <div>
+            <div class="invoice-shop-name">{shopName}</div>
+            <div class="text-muted" style="font-size:.875rem;margin-bottom:.75rem">{settings.shop_address||""}</div>
+            <div class="text-muted" style="font-size:.875rem">{settings.shop_phone||""} | {settings.shop_email||""}</div>
+          </div>
+          <div>
+            <table class="invoice-meta-table">
+              <tr><td>Invoice No.</td><td style="font-family:monospace;font-weight:700">{invoice.invoice_no}</td></tr>
+              <tr><td>Date</td><td>{fmtD(invoice.created_at)}</td></tr>
+              {invoice.due_date ? <tr><td>Due</td><td>{fmtD(invoice.due_date)}</td></tr> : null}
+              <tr><td>Customer</td><td>{invoice.cn || "Walk-in Customer"}</td></tr>
+              {invoice.cp ? <tr><td>Phone</td><td>{invoice.cp}</td></tr> : null}
+              {invoice.ce ? <tr><td>Email</td><td>{invoice.ce}</td></tr> : null}
+            </table>
+            {invoice.status === "draft" && (
+              <form method="POST" action={"/api/invoices?action=status&id="+invoice.id} style="margin-top:1rem">
+                <input type="hidden" name="status" value="sent" />
+                <button type="submit" class="btn btn-primary btn-sm">Mark as Sent</button>
+              </form>
+            )}
+            {invoice.status === "sent" && (
+              <form method="POST" action={"/api/invoices?action=status&id="+invoice.id} style="margin-top:1rem">
+                <input type="hidden" name="status" value="paid" />
+                <button type="submit" class="btn btn-success btn-sm">Mark as Paid</button>
+              </form>
+            )}
+          </div>
         </div>
-        <div style="text-align:right">
-          <div style="font-size:2rem;font-weight:700;color:var(--navy);letter-spacing:-0.02em">INVOICE</div>
-          <div style="font-size:1rem;font-weight:600;color:var(--navy)">{invoice.invoice_no}</div>
+
+        <table class="data-table">
+          <thead><tr><th>Description</th><th class="text-right">Qty</th><th class="text-right">Unit Price</th><th class="text-right">Total</th></tr></thead>
+          <tbody>
+            {items.map((item: any) => (
+              <tr>
+                <td>{item.description}</td>
+                <td class="text-right">{item.qty}</td>
+                <td class="text-right">{fmt(item.unit_price)}</td>
+                <td class="text-right font-bold">{fmt(item.total)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <div class="invoice-totals">
+          <div class="invoice-total-row"><span class="text-muted">Subtotal</span><span>{fmt(invoice.subtotal)}</span></div>
+          <div class="invoice-total-row"><span class="text-muted">Tax ({taxRate.toFixed(2)}%)</span><span>{fmt(invoice.tax_amount)}</span></div>
+          <div class="invoice-total-row final"><span>Total</span><span>{fmt(invoice.total)}</span></div>
         </div>
+
+        {invoice.notes && (
+          <div style="margin-top:2rem;padding-top:1rem;border-top:1px solid var(--border)">
+            <div style="font-size:.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.4rem">Notes</div>
+            <div style="font-size:.9rem">{invoice.notes}</div>
+          </div>
+        )}
       </div>
-
-      <div class="form-row" style="margin-bottom:2rem;background:var(--silver);padding:1rem;border-radius:8px">
-        <div>
-          <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);font-weight:600;margin-bottom:0.25rem">Bill To</div>
-          <div style="font-weight:600">{invoice.customer_name || 'Walk-in Customer'}</div>
-          {invoice.customer_phone && <div style="font-size:0.85rem;color:var(--text-muted)">{invoice.customer_phone}</div>}
-          {invoice.customer_email && <div style="font-size:0.85rem;color:var(--text-muted)">{invoice.customer_email}</div>}
-          {invoice.customer_address && <div style="font-size:0.85rem;color:var(--text-muted)">{invoice.customer_address}</div>}
-        </div>
-        <div style="text-align:right">
-          <div><span style="font-weight:600">Date:</span> {dateStr}</div>
-          {dueStr && <div><span style="font-weight:600">Due:</span> {dueStr}</div>}
-          <div style="margin-top:0.5rem"><span class={`badge badge-${invoice.status}`}>{invoice.status}</span></div>
-        </div>
-      </div>
-
-      <table class="data-table" style="margin-bottom:1.5rem">
-        <thead><tr><th>Description</th><th style="width:80px;text-align:center">Qty</th><th style="width:130px;text-align:right">Unit Price</th><th style="width:130px;text-align:right">Total</th></tr></thead>
-        <tbody>
-          {items.map((item: any) => (
-            <tr>
-              <td>{item.description}</td>
-              <td style="text-align:center">{item.qty}</td>
-              <td style="text-align:right">{fmt(item.unit_price)}</td>
-              <td style="text-align:right;font-weight:600">{fmt(item.total)}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      <div class="totals-bar" style="justify-content:flex-end">
-        <div class="total-row"><div class="total-label">Subtotal</div><div class="total-value">{fmt(invoice.subtotal)}</div></div>
-        {invoice.tax_rate > 0 && <div class="total-row"><div class="total-label">Tax ({invoice.tax_rate}%)</div><div class="total-value">{fmt(invoice.tax_amount)}</div></div>}
-        <div class="total-row grand"><div class="total-label">Total Due</div><div class="total-value">{fmt(invoice.total)}</div></div>
-      </div>
-
-      {invoice.notes && <div style="margin-top:1.5rem;padding:1rem;background:var(--silver);border-radius:8px;font-size:0.9rem"><strong>Notes:</strong> {invoice.notes}</div>}
-      <div style="margin-top:2rem;text-align:center;font-size:0.8rem;color:var(--text-muted)">Thank you for your business!</div>
     </div>
-  </div>
 
-  <div class="no-print" style="margin-top:1rem">
-    <form method="POST" action={`/api/invoices?id=${id}&action=update_status`} style="display:inline">
-      <input type="hidden" name="action" value="update_status" />
-      <div class="flex gap-1 align-center">
-        <span style="font-size:0.9rem;font-weight:600">Mark as:</span>
-        {['draft','sent','paid','cancelled'].map((s: string) => (
-          <button type="submit" name="status" value={s} class={`btn btn-sm ${invoice.status===s?'btn-primary':'btn-secondary'}`}>{s}</button>
-        ))}
-      </div>
-    </form>
+    <div class="no-print" style="display:flex;gap:1rem">
+      <a href={"/invoices?status="+invoice.status} class="btn btn-secondary">+ Back</a>
+      {invoice.status !== "paid" && invoice.status !== "cancelled" && (
+        <form method="POST" action={"/api/invoices?action=status&id="+invoice.id} onsubmit="return confirm('Cancel this invoice?')">
+          <input type="hidden" name="status" value="cancelled" />
+          <button type="submit" class="btn btn-danger">Cancel Invoice</button>
+        </form>
+      )}
+    </div>
   </div>
 </BaseLayout>
-
-<style>
-@media print {
-  .site-header, .site-footer, .no-print { display: none !important; }
-  body { background: white; }
-  .page-container { padding: 0; max-width: 100%; }
-  #invoice-paper { box-shadow: none; border: none; }
-}
-</style>

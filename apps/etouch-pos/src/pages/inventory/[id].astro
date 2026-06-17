@@ -1,64 +1,145 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import type { D1Database } from "@cloudflare/workers-types";
-interface Props { env: { DB: D1Database }; params: { id: string } }
-const { env, params } = Astro.props;
-const id = parseInt(params.id);
-let product: any = null; let categories: any[] = []; let stockLog: any[] = [];
+interface Props { env: { DB: D1Database } }
+const { env } = Astro.props as Props;
+const id = new URL(Astro.request.url).pathname.split("/").pop();
+let product: any = null;
+let categories: any[] = [];
+let stockLog: any[] = [];
 try {
-  const [p, c, l] = await Promise.all([
-    env.DB.prepare("SELECT * FROM products WHERE id=?").bind(id).first(),
+  const [pr, cr, lr] = await Promise.all([
+    env.DB.prepare("SELECT p.*, c.name as cn FROM products p LEFT JOIN categories c ON p.category_id=c.id WHERE p.id=?").bind(id).first(),
     env.DB.prepare("SELECT * FROM categories ORDER BY name").all(),
     env.DB.prepare("SELECT * FROM stock_log WHERE product_id=? ORDER BY created_at DESC LIMIT 20").bind(id).all(),
   ]);
-  product = p; categories = c.results||[]; stockLog = l.results||[];
+  product = pr;
+  categories = cr.results || [];
+  stockLog = lr.results || [];
 } catch(e) {}
 if (!product) return Astro.redirect("/inventory");
-const fmtDate = (ts: number) => new Date(ts*1000).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric",hour:"2-digit",minute:"2-digit"});
 const fmt = (n: number) => "$"+Number(n||0).toFixed(2);
+const fmtD = (ts: number) => ts ? new Date(ts*1000).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric",hour:"2-digit",minute:"2-digit"}) : "—";
 const margin = product.sell_price>0 ? ((product.sell_price-product.cost_price)/product.sell_price*100) : 0;
 const isLow = (product.stock_qty||0) <= (product.low_stock_threshold||5);
-const deleted = new URL(Astro.request.url).searchParams.get("deleted") === "1";
+const stockClass = product.stock_qty===0 ? "badge-out" : isLow ? "badge-low" : "badge-ok";
 ---
-<BaseLayout title={"Edit: "+product.name} activeNav="inventory">
-  {deleted && <div style="background:#d1fae5;color:#065f46;padding:0.75rem 1rem;border-radius:8px;margin-bottom:1rem;font-weight:600">Product deleted. <a href="/inventory" style="color:#065f46;text-decoration:underline">Back to inventory</a></div>}
-  <div class="page-header"><h2>{product.name}</h2><a href="/inventory" class="btn btn-secondary">Back</a></div>
-  <div style="display:grid;grid-template-columns:1fr 320px;gap:1rem;align-items:start">
-    <div>
-      <form method="POST" action={"/api/inventory?id="+id}>
-        <input type="hidden" name="action" value="update" />
-        <div class="card mb-2"><div class="card-header">Edit Product</div><div class="card-body">
-          <div class="form-row"><div class="form-group"><label class="form-label">Product Name *</label><input class="form-control" name="name" value={product.name} required /></div><div class="form-group"><label class="form-label">SKU</label><input class="form-control" name="sku" value={product.sku||""} /></div></div>
-          <div class="form-row"><div class="form-group"><label class="form-label">Category</label><select class="form-control" name="category_id"><option value="">— None —</option>{categories.map((c:any) => <option value={c.id} selected={product.category_id==c.id}>{c.name}</option>)}</select></div><div class="form-group"><label class="form-label">Description</label><input class="form-control" name="description" value={product.description||""} /></div></div>
-          <div class="form-row form-row-3"><div class="form-group"><label class="form-label">Cost Price ($)</label><input class="form-control" name="cost_price" type="number" step="0.01" min="0" value={product.cost_price} /></div><div class="form-group"><label class="form-label">Sell Price ($)</label><input class="form-control" name="sell_price" type="number" step="0.01" min="0" value={product.sell_price} /></div><div class="form-group"><label class="form-label">Margin</label><div style="padding:0.6rem 0.85rem;background:var(--silver);border-radius:6px;font-weight:700;color:var(--navy)">{margin.toFixed(1)}%</div></div></div>
-          <div class="form-group"><label class="form-label">Low Stock Threshold</label><input class="form-control" name="low_stock_threshold" type="number" min="0" value={product.low_stock_threshold||5} style="max-width:120px" /></div>
-        </div></div>
-        <button type="submit" class="btn btn-primary">Save Changes</button>
+<BaseLayout title={"Edit "+product.name+" — eTouchPOS"} activeNav="inventory">
+  <div class="page-header">
+    <h2>{product.name}</h2>
+    <div style="display:flex;gap:.75rem">
+      <a href="/inventory" class="btn btn-secondary">+ Back</a>
+      <form method="POST" action={"/api/inventory?action=delete&id="+product.id} onsubmit="return confirm('Delete this product? Cannot be undone.')">
+        <button type="submit" class="btn btn-danger">Delete</button>
       </form>
-      <div class="card mt-2"><div class="card-header">Adjust Stock</div><div class="card-body">
-        <div style="margin-bottom:1rem"><div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);font-weight:600">Current Stock</div><div style="font-size:2rem;font-weight:700;color:var(--navy)">{product.stock_qty} <span class={"badge "+(isLow?"badge-low":"badge-ok")} style="font-size:0.7rem">{isLow?"LOW":"OK"}</span></div></div>
-        <form method="POST" action={"/api/inventory?id="+id} class="flex gap-1 align-center">
-          <input type="hidden" name="action" value="adjust_stock" />
-          <div class="form-group" style="margin-bottom:0"><label class="form-label">Delta (+/-)</label><input class="form-control" name="delta" type="number" value="0" style="max-width:100px" /></div>
-          <div class="form-group" style="margin-bottom:0;flex:1"><label class="form-label">Reason</label><input class="form-control" name="reason" placeholder="New shipment, return..." /></div>
-          <button type="submit" class="btn btn-primary" style="margin-bottom:0">Apply</button>
-        </form>
-      </div></div>
-    </div>
-    <div>
-      <div class="card"><div class="card-header">Stock History</div><div class="card-body" style="padding:0">
-        {stockLog.length === 0 ? <div class="empty-state" style="padding:2rem">No history yet.</div> : (
-          <table class="data-table"><thead><tr><th>Date</th><th class="text-right">Delta</th><th>Reason</th></tr></thead><tbody>
-            {stockLog.map((log:any) => (<tr><td style="font-size:0.75rem;color:var(--text-muted)">{fmtDate(log.created_at)}</td><td class={"text-right font-bold "+(log.delta>=0?"text-success":"text-danger")}>{log.delta>0?"+":""}{log.delta}</td><td style="font-size:0.8rem;color:var(--text-muted)">{log.reason||"—"}</td></tr>))}
-          </tbody></table>
-        )}
-      </div></div>
     </div>
   </div>
-  <div class="card mt-2" style="border:1px solid var(--danger)"><div class="card-header" style="background:var(--danger)">Danger Zone</div><div class="card-body">
-    <form method="POST" action={"/api/inventory?id="+id} onsubmit="return confirm('Delete this product? Cannot be undone.')">
-      <input type="hidden" name="action" value="delete" />
-      <div class="flex-between"><div><div style="font-weight:600">Delete Product</div><div style="font-size:0.85rem;color:var(--text-muted)">Permanently remove this product.</div></div><button type="submit" class="btn btn-danger">Delete</button></div>
-    </form>
-  </div></div>
+
+  <div style="display:grid;grid-template-columns:1fr 320px;gap:1.5rem;align-items:start">
+    <div>
+      <div class="card" style="margin-bottom:1.5rem">
+        <div class="card-header">Edit Product</div>
+        <div class="card-body">
+          <form method="POST" action={"/api/inventory?action=update&id="+product.id}>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem">
+              <div class="form-group" style="grid-column:1/-1">
+                <label class="form-label">Product Name *</label>
+                <input class="form-control" name="name" value={product.name||""} required />
+              </div>
+              <div class="form-group">
+                <label class="form-label">SKU</label>
+                <input class="form-control" name="sku" value={product.sku||""} />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Category</label>
+                <select class="form-control" name="category_id">
+                  <option value="">+ None</option>
+                  {categories.map((c: any) => <option value={c.id} selected={product.category_id===c.id}>{c.name}</option>)}
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Cost Price ($)</label>
+                <input class="form-control" name="cost_price" type="number" step="0.01" value={product.cost_price||0} />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Sell Price ($)</label>
+                <input class="form-control" name="sell_price" type="number" step="0.01" value={product.sell_price||0} />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Stock Quantity</label>
+                <input class="form-control" name="stock_qty" type="number" value={product.stock_qty||0} />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Low Stock Threshold</label>
+                <input class="form-control" name="low_stock_threshold" type="number" value={product.low_stock_threshold||5} />
+              </div>
+              <div class="form-group" style="grid-column:1/-1">
+                <label class="form-label">Description</label>
+                <textarea class="form-control" name="description" rows="2">{product.description||""}</textarea>
+              </div>
+            </div>
+            <div style="margin-top:1.5rem">
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">Stock Adjustment</div>
+        <div class="card-body">
+          <form method="POST" action={"/api/inventory?action=adjust&id="+product.id}>
+            <div style="display:grid;grid-template-columns:1fr 1fr 2fr;gap:1rem;align-items:end">
+              <div class="form-group" style="margin-bottom:0">
+                <label class="form-label">Delta (+/-)</label>
+                <input class="form-control" name="delta" type="number" value="0" placeholder="e.g. -2 or +10" style="font-weight:700;font-size:1.1rem" />
+              </div>
+              <div class="form-group" style="margin-bottom:0">
+                <label class="form-label">Reason</label>
+                <input class="form-control" name="reason" placeholder="e.g. Received shipment" />
+              </div>
+              <div>
+                <button type="submit" class="btn btn-primary" style="width:100%">Apply Adjustment</button>
+              </div>
+            </div>
+          </form>
+          {stockLog.length > 0 && (
+            <div style="margin-top:1.25rem">
+              <div style="font-size:.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.75rem">Recent History</div>
+              <div style="max-height:200px;overflow-y:auto">
+                {stockLog.map((log: any) => (
+                  <div style="display:flex;justify-content:space-between;padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.85rem">
+                    <div>
+                      <span style={"font-weight:700;color:"+(log.delta>0?"var(--success)":log.delta<0?"var(--danger)":"var(--muted)")}>{log.delta>0?"+":""}{log.delta}</span>
+                      <span class="text-muted" style="margin-left:.5rem">{log.reason||"—"}</span>
+                    </div>
+                    <span class="text-muted">{fmtD(log.created_at)}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card">
+        <div class="card-header">At a Glance</div>
+        <div class="card-body">
+          <div style="margin-bottom:1rem">
+            <div class="stat-label">Current Stock</div>
+            <div style="display:flex;align-items:center;gap:.75rem">
+              <span class={"badge "+stockClass} style="font-size:1.2rem;padding:.5rem 1rem">{product.stock_qty||0}</span>
+              {isLow && <span class="text-muted" style="font-size:.8rem">Low stock</span>}
+            </div>
+          </div>
+          <div style="margin-bottom:1rem"><div class="stat-label">Sell Price</div><div style="font-size:1.3rem;font-weight:800;color:var(--navy)">{fmt(product.sell_price)}</div></div>
+          <div style="margin-bottom:1rem"><div class="stat-label">Cost Price</div><div style="font-size:1rem;font-weight:600;color:var(--muted)">{fmt(product.cost_price)}</div></div>
+          <div style="margin-bottom:1rem"><div class="stat-label">Margin</div><div style={"font-size:1rem;font-weight:700;color:"+(margin<10?"var(--danger)":"var(--success)")}>{margin.toFixed(1)}%</div></div>
+          <div><div class="stat-label">Inventory Value</div><div style="font-size:1.1rem;font-weight:700;color:var(--navy)">{fmt((product.sell_price||0)*(product.stock_qty||0))}</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </BaseLayout>
