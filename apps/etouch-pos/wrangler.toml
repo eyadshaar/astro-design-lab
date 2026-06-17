@@ -1,8 +1,8 @@
 name = "etouch-pos"
+main = "dist/_worker.js/index.js"
 compatibility_date = "2024-09-23"
-pages_build_output_dir = "./dist/client"
 
 [[d1_databases]]
 binding = "DB"
 database_name = "etouch-pos-db"
-database_id = "ETOUCH_POS_DB_ID_PLACEHOLDER"
+database_id = "74df62b3-e3ff-4ec5-a726-a8112563b2f6"

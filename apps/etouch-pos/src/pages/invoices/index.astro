@@ -1,111 +1,77 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import type { D1Database } from '@cloudflare/workers-types';
-
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import type { D1Database } from "@cloudflare/workers-types";
 interface Props { env: { DB: D1Database } }
-
 const { env } = Astro.props as Props;
 let invoices: any[] = [];
-let stats: any = {};
-
+let settings: any = {};
 try {
-  const today = Math.floor(Date.now() / 1000);
-  const thirty_days_ago = today - (30 * 86400);
-
-  const [invResult, statsResult] = await Promise.all([
+  const [invResult, settingsResult] = await Promise.all([
     env.DB.prepare(`
       SELECT i.*, c.name as customer_name
       FROM invoices i
       LEFT JOIN customers c ON i.customer_id = c.id
-      ORDER BY i.created_at DESC LIMIT 50
+      ORDER BY i.created_at DESC
+      LIMIT 100
     `).all(),
-    env.DB.prepare(`
-      SELECT
-        COUNT(*) as total_invoices,
-        SUM(CASE WHEN status='paid' THEN total ELSE 0 END) as total_revenue,
-        SUM(CASE WHEN status IN ('draft','sent') THEN total ELSE 0 END) as total_outstanding,
-        (SELECT COUNT(*) FROM products WHERE stock_qty <= low_stock_threshold) as low_stock_count
-      FROM invoices
-    `).all(),
+    env.DB.prepare("SELECT key, value FROM settings").all(),
   ]);
-
   invoices = invResult.results || [];
-  stats = statsResult.results?.[0] || {};
-} catch (e) {
-  // dev fallback — schema not created yet
-}
-
-const fmt = (n: number) => n ? '$' + Number(n).toFixed(2) : '$0.00';
+  for (const s of (settingsResult.results || [])) { settings[s.key] = s.value; }
+} catch(e) {}
+const shopName = settings.shop_name || "eTouch Computers";
+const statusFilter = new URL(Astro.request.url).searchParams.get("status") || "";
+const filtered = invoices.filter((i: any) => !statusFilter || i.status === statusFilter);
+const fmtDate = (ts: number) => ts ? new Date(ts*1000).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}) : "—";
+const fmt = (n: number) => "$"+Number(n||0).toFixed(2);
+const counts = { draft: 0, sent: 0, paid: 0, cancelled: 0 };
+for (const i of invoices) { if (i.status in counts) counts[i.status as keyof typeof counts]++; }
+const statusColors: Record<string,string> = { draft: "#6b7280", sent: "#2563eb", paid: "#16a34a", cancelled: "#dc2626" };
 ---
-<BaseLayout title="Invoices" activeNav="invoices">
+<BaseLayout title={"Invoices — " + shopName} activeNav="invoices">
   <div class="page-header">
     <h2>Invoices</h2>
-    <a href="/invoices/new" class="btn btn-primary">+ New Invoice</a>
-  </div>
-
-  <div class="stats-grid">
-    <div class="stat-card">
-      <div class="stat-label">Total Revenue (Paid)</div>
-      <div class="stat-value">{fmt(Number(stats.total_revenue))}</div>
-      <div class="stat-sub">All time</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Outstanding</div>
-      <div class="stat-value" style="color:var(--warning)">{fmt(Number(stats.total_outstanding))}</div>
-      <div class="stat-sub">Draft + Sent</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Total Invoices</div>
-      <div class="stat-value">{stats.total_invoices || 0}</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Low Stock Alerts</div>
-      <div class="stat-value" style={Number(stats.low_stock_count) > 0 ? 'color:var(--danger)' : ''}>{stats.low_stock_count || 0}</div>
-      <div class="stat-sub"><a href="/inventory" style="color:var(--navy)">View Inventory</a></div>
+    <div class="flex gap-1">
+      <a href="/invoices/new" class="btn btn-primary">+ New Invoice</a>
     </div>
   </div>
-
+  <div class="status-tabs">
+    <a href="/invoices" class={"tab-btn" + (statusFilter==="" ? " active" : "")}>All ({invoices.length})</a>
+    <a href="/invoices?status=draft" class={"tab-btn" + (statusFilter==="draft" ? " active" : "")} style={statusFilter==="draft"?"background:#6b7280":""}>Draft ({counts.draft})</a>
+    <a href="/invoices?status=sent" class={"tab-btn" + (statusFilter==="sent" ? " active" : "")} style={statusFilter==="sent"?"background:#2563eb":""}>Sent ({counts.sent})</a>
+    <a href="/invoices?status=paid" class={"tab-btn" + (statusFilter==="paid" ? " active" : "")} style={statusFilter==="paid"?"background:#16a34a":""}>Paid ({counts.paid})</a>
+    <a href="/invoices?status=cancelled" class={"tab-btn" + (statusFilter==="cancelled" ? " active" : "")} style={statusFilter==="cancelled"?"background:#dc2626":""}>Cancelled ({counts.cancelled})</a>
+  </div>
   <div class="card">
-    <div class="card-header">Recent Invoices</div>
-    <div class="card-body" style="padding:0">
-      {invoices.length === 0 ? (
+    {filtered.length === 0 ? (
+      <div class="card-body">
         <div class="empty-state">
-          <p>No invoices yet. <a href="/invoices/new">Create your first invoice</a></p>
+          <div style="font-size:2rem;margin-bottom:0.5rem">INVOICE</div>
+          <div style="font-weight:600;margin-bottom:0.25rem">No invoices yet</div>
+          <div style="color:var(--text-muted);font-size:0.875rem;margin-bottom:1rem">Create your first invoice</div>
+          <a href="/invoices/new" class="btn btn-primary">+ Create Invoice</a>
         </div>
-      ) : (
-        <div style="overflow-x:auto">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Invoice #</th>
-                <th>Customer</th>
-                <th>Status</th>
-                <th>Date</th>
-                <th class="text-right">Total</th>
-                <th class="col-actions">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {invoices.map((inv: any) => {
-                const d = new Date((inv.created_at || 0) * 1000);
-                const dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-                return (
-                  <tr>
-                    <td><a href={`/invoices/${inv.id}`} style="font-weight:600;color:var(--navy)">{inv.invoice_no}</a></td>
-                    <td>{inv.customer_name || 'Walk-in'}</td>
-                    <td><span class={`badge badge-${inv.status}`}>{inv.status}</span></td>
-                    <td class="text-muted">{dateStr}</td>
-                    <td class="text-right font-bold">{fmt(inv.total)}</td>
-                    <td class="col-actions">
-                      <a href={`/invoices/${inv.id}`} class="btn btn-secondary btn-sm">View</a>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </div>
+      </div>
+    ) : (
+      <div style="overflow-x:auto">
+        <table class="data-table">
+          <thead>
+            <tr><th>Invoice #</th><th>Customer</th><th class="text-right">Total</th><th class="text-right">Tax</th><th>Status</th><th>Date</th><th>Due</th><th></th></tr>
+          </thead>
+          <tbody>
+            {filtered.map((inv: any) => <tr>
+              <td><a href={"/invoices/"+inv.id} style="font-weight:600;color:var(--navy);font-family:monospace">{inv.invoice_no}</a></td>
+              <td>{inv.customer_name || "—"}</td>
+              <td class="text-right font-bold">{fmt(inv.total)}</td>
+              <td class="text-right text-muted">{fmt(inv.tax_amount)}</td>
+              <td><span class="badge" style={"background:"+(statusColors[inv.status]||"#6b7280")+";color:#fff;font-size:0.7rem;padding:0.25rem 0.6rem;border-radius:20px"}>{inv.status}</span></td>
+              <td class="text-muted" style="font-size:0.85rem">{fmtDate(inv.created_at)}</td>
+              <td class="text-muted" style="font-size:0.85rem">{fmtDate(inv.due_date)}</td>
+              <td><a href={"/invoices/"+inv.id} class="btn btn-secondary btn-sm">View</a></td>
+            </tr>)}
+          </tbody>
+        </table>
+      </div>
+    )}
   </div>
 </BaseLayout>
