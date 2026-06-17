@@ -1,0 +1,105 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import type { D1Database } from "@cloudflare/workers-types";
+interface Props { env: { DB: D1Database } }
+const { env } = Astro.props as Props;
+let products: any[] = [];
+let settings: any = {};
+let nextNo = "1001";
+try {
+  const [prodResult, settingsResult] = await Promise.all([
+    env.DB.prepare("SELECT id, name, sell_price, stock_qty FROM products ORDER BY name").all(),
+    env.DB.prepare("SELECT key, value FROM settings WHERE key IN ('tax_rate','invoice_prefix','next_invoice_no','shop_name')").all(),
+  ]);
+  products = prodResult.results || [];
+  for (const s of (settingsResult.results || [])) { settings[s.key] = s.value; }
+  nextNo = settings.next_invoice_no || "1001";
+} catch(e) {}
+const today = new Date().toISOString().split("T")[0];
+const defaultTax = settings.tax_rate || "6.25";
+const prefix = settings.invoice_prefix || "INV-";
+---
+<BaseLayout title="New Invoice" activeNav="invoices">
+  <div class="page-header no-print"><h2>New Invoice</h2><a href="/invoices" class="btn btn-secondary">Cancel</a></div>
+  <form id="invoice-form" method="POST" action="/api/invoices">
+    <input type="hidden" name="action" value="create" />
+    <div class="card mb-2 no-print">
+      <div class="card-header">Invoice Details</div>
+      <div class="card-body">
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Invoice Number</label><input class="form-control" name="invoice_no" value={prefix + nextNo} readonly /></div>
+          <div class="form-group"><label class="form-label">Date</label><input class="form-control" type="date" name="date" value={today} required /></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Customer Name</label><input class="form-control" name="customer_name" placeholder="Walk-in or customer name" /></div>
+          <div class="form-group"><label class="form-label">Due Date (optional)</label><input class="form-control" type="date" name="due_date" /></div>
+        </div>
+      </div>
+    </div>
+    <div class="card mb-2">
+      <div class="card-header">Line Items</div>
+      <div class="card-body" style="padding:0">
+        <table class="data-table" id="items-table">
+          <thead><tr><th>Description</th><th style="width:80px">Qty</th><th style="width:130px">Unit Price</th><th style="width:130px">Total</th><th style="width:40px" class="no-print"></th></tr></thead>
+          <tbody id="items-body">
+            <tr class="item-row">
+              <td><input class="form-control" name="item_desc[]" placeholder="Item description" required /></td>
+              <td><input class="form-control" name="item_qty[]" type="number" min="1" value="1" onchange="calcRow(this)" /></td>
+              <td><input class="form-control" name="item_price[]" type="number" step="0.01" min="0" value="0" onchange="calcRow(this)" /></td>
+              <td><span class="row-total">$0.00</span></td>
+              <td class="no-print"><button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">X</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="padding:0.75rem 1rem" class="no-print"><button type="button" class="btn btn-secondary btn-sm" onclick="addRow()">+ Add Item</button></div>
+        <div class="totals-bar">
+          <div class="total-row"><div class="total-label">Subtotal</div><div class="total-value" id="subtotal">$0.00</div></div>
+          <div class="total-row"><div class="total-label">Tax %</div><input class="form-control" name="tax_rate" type="number" step="0.01" value={defaultTax} style="width:80px;text-align:right" onchange="calcTotals()" /></div>
+          <div class="total-row"><div class="total-label">Tax</div><div class="total-value" id="tax-amount">$0.00</div></div>
+          <div class="total-row grand"><div class="total-label">Grand Total</div><div class="total-value" id="grand-total">$0.00</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="card mb-2 no-print">
+      <div class="card-header">Notes</div>
+      <div class="card-body"><textarea class="form-control" name="notes" rows="2" placeholder="Thank you for your business!"></textarea></div>
+    </div>
+    <div class="flex gap-1 mb-2 no-print">
+      <button type="submit" name="status" value="draft" class="btn btn-secondary">Save as Draft</button>
+      <button type="submit" name="status" value="sent" class="btn btn-primary">Create &amp; Mark Sent</button>
+      <button type="submit" name="status" value="paid" class="btn btn-primary">Create &amp; Mark Paid</button>
+    </div>
+  </form>
+</BaseLayout>
+<script>
+function calcRow(el) {
+  const r = el.closest("tr");
+  const q = parseFloat(r.querySelector('[name="item_qty[]"]').value) || 0;
+  const p = parseFloat(r.querySelector('[name="item_price[]"]').value) || 0;
+  r.querySelector(".row-total").textContent = "$" + (q * p).toFixed(2);
+  calcTotals();
+}
+function calcTotals() {
+  let s = 0;
+  document.querySelectorAll(".item-row").forEach(r => {
+    const q = parseFloat(r.querySelector('[name="item_qty[]"]').value) || 0;
+    const p = parseFloat(r.querySelector('[name="item_price[]"]').value) || 0;
+    s += q * p;
+  });
+  const t = parseFloat(document.querySelector('[name="tax_rate"]').value) || 0;
+  document.getElementById("subtotal").textContent = "$" + s.toFixed(2);
+  document.getElementById("tax-amount").textContent = "$" + (s * t / 100).toFixed(2);
+  document.getElementById("grand-total").textContent = "$" + (s * (1 + t / 100)).toFixed(2);
+}
+function addRow() {
+  const tb = document.getElementById("items-body");
+  const tr = document.createElement("tr");
+  tr.className = "item-row";
+  tr.innerHTML = '<td><input class="form-control" name="item_desc[]" placeholder="Item" required /></td><td><input class="form-control" name="item_qty[]" type="number" min="1" value="1" onchange="calcRow(this)" /></td><td><input class="form-control" name="item_price[]" type="number" step="0.01" min="0" value="0" onchange="calcRow(this)" /></td><td><span class="row-total">$0.00</span></td><td class="no-print"><button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">X</button></td>';
+  tb.appendChild(tr);
+}
+function removeRow(btn) {
+  if (document.querySelectorAll(".item-row").length > 1) { btn.closest("tr").remove(); calcTotals(); }
+}
+calcTotals();
+</script>

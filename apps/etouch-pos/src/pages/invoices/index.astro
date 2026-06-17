@@ -1,0 +1,111 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import type { D1Database } from '@cloudflare/workers-types';
+
+interface Props { env: { DB: D1Database } }
+
+const { env } = Astro.props as Props;
+let invoices: any[] = [];
+let stats: any = {};
+
+try {
+  const today = Math.floor(Date.now() / 1000);
+  const thirty_days_ago = today - (30 * 86400);
+
+  const [invResult, statsResult] = await Promise.all([
+    env.DB.prepare(`
+      SELECT i.*, c.name as customer_name
+      FROM invoices i
+      LEFT JOIN customers c ON i.customer_id = c.id
+      ORDER BY i.created_at DESC LIMIT 50
+    `).all(),
+    env.DB.prepare(`
+      SELECT
+        COUNT(*) as total_invoices,
+        SUM(CASE WHEN status='paid' THEN total ELSE 0 END) as total_revenue,
+        SUM(CASE WHEN status IN ('draft','sent') THEN total ELSE 0 END) as total_outstanding,
+        (SELECT COUNT(*) FROM products WHERE stock_qty <= low_stock_threshold) as low_stock_count
+      FROM invoices
+    `).all(),
+  ]);
+
+  invoices = invResult.results || [];
+  stats = statsResult.results?.[0] || {};
+} catch (e) {
+  // dev fallback — schema not created yet
+}
+
+const fmt = (n: number) => n ? '$' + Number(n).toFixed(2) : '$0.00';
+---
+<BaseLayout title="Invoices" activeNav="invoices">
+  <div class="page-header">
+    <h2>Invoices</h2>
+    <a href="/invoices/new" class="btn btn-primary">+ New Invoice</a>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-label">Total Revenue (Paid)</div>
+      <div class="stat-value">{fmt(Number(stats.total_revenue))}</div>
+      <div class="stat-sub">All time</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Outstanding</div>
+      <div class="stat-value" style="color:var(--warning)">{fmt(Number(stats.total_outstanding))}</div>
+      <div class="stat-sub">Draft + Sent</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Total Invoices</div>
+      <div class="stat-value">{stats.total_invoices || 0}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Low Stock Alerts</div>
+      <div class="stat-value" style={Number(stats.low_stock_count) > 0 ? 'color:var(--danger)' : ''}>{stats.low_stock_count || 0}</div>
+      <div class="stat-sub"><a href="/inventory" style="color:var(--navy)">View Inventory</a></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Recent Invoices</div>
+    <div class="card-body" style="padding:0">
+      {invoices.length === 0 ? (
+        <div class="empty-state">
+          <p>No invoices yet. <a href="/invoices/new">Create your first invoice</a></p>
+        </div>
+      ) : (
+        <div style="overflow-x:auto">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Invoice #</th>
+                <th>Customer</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th class="text-right">Total</th>
+                <th class="col-actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {invoices.map((inv: any) => {
+                const d = new Date((inv.created_at || 0) * 1000);
+                const dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                return (
+                  <tr>
+                    <td><a href={`/invoices/${inv.id}`} style="font-weight:600;color:var(--navy)">{inv.invoice_no}</a></td>
+                    <td>{inv.customer_name || 'Walk-in'}</td>
+                    <td><span class={`badge badge-${inv.status}`}>{inv.status}</span></td>
+                    <td class="text-muted">{dateStr}</td>
+                    <td class="text-right font-bold">{fmt(inv.total)}</td>
+                    <td class="col-actions">
+                      <a href={`/invoices/${inv.id}`} class="btn btn-secondary btn-sm">View</a>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  </div>
+</BaseLayout>

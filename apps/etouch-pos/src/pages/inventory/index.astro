@@ -1,0 +1,84 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import type { D1Database } from "@cloudflare/workers-types";
+interface Props { env: { DB: D1Database } }
+const { env } = Astro.props as Props;
+let products: any[] = [];
+let categories: any[] = [];
+const search = new URL(Astro.request.url).searchParams.get("q") || "";
+const catFilter = new URL(Astro.request.url).searchParams.get("cat") || "";
+const lowStock = new URL(Astro.request.url).searchParams.get("low") === "1";
+try {
+  let query = "SELECT p.*, c.name as category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id WHERE 1=1";
+  const binds: any[] = [];
+  if (search) { query += " AND (p.name LIKE ? OR p.sku LIKE ?)"; binds.push("%"+search+"%", "%"+search+"%"); }
+  if (catFilter) { query += " AND p.category_id = ?"; binds.push(parseInt(catFilter)); }
+  if (lowStock) { query += " AND p.stock_qty <= p.low_stock_threshold"; }
+  query += " ORDER BY p.name ASC LIMIT 100";
+  const [prodResult, catResult] = await Promise.all([
+    binds.length ? env.DB.prepare(query).bind(...binds).all() : env.DB.prepare(query).all(),
+    env.DB.prepare("SELECT * FROM categories ORDER BY name").all(),
+  ]);
+  products = prodResult.results || [];
+  categories = catResult.results || [];
+} catch(e) {}
+const fmt = (n: number) => "$" + Number(n||0).toFixed(2);
+const totalValue = products.reduce((s: number, p: any) => s + (p.stock_qty||0)*(p.sell_price||0), 0);
+const totalCost  = products.reduce((s: number, p: any) => s + (p.stock_qty||0)*(p.cost_price||0), 0);
+const lowCount   = products.filter((p: any) => (p.stock_qty||0) <= (p.low_stock_threshold||5)).length;
+---
+<BaseLayout title="Inventory" activeNav="inventory">
+  <div class="page-header">
+    <h2>Inventory</h2>
+    <a href="/inventory/new" class="btn btn-primary">+ Add Product</a>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-label">Total Products</div><div class="stat-value">{products.length}</div></div>
+    <div class="stat-card"><div class="stat-label">Inventory Value</div><div class="stat-value">{fmt(totalValue)}</div></div>
+    <div class="stat-card"><div class="stat-label">Low Stock</div><div class="stat-value" style={lowCount>0?"color:var(--danger)":""}>{lowCount}</div></div>
+    <div class="stat-card"><div class="stat-label">Potential Profit</div><div class="stat-value">{fmt(totalValue-totalCost)}</div></div>
+  </div>
+  <div class="card">
+    <div class="card-header no-print">
+      <form class="search-bar" style="margin:0;flex-wrap:wrap">
+        <input class="form-control" name="q" value={search} placeholder="Search..." />
+        <select class="form-control" name="cat" style="max-width:200px">
+          <option value="">All Categories</option>
+          {categories.map((c: any) => <option value={c.id} selected={catFilter==String(c.id)}>{c.name}</option>)}
+        </select>
+        <button type="submit" class="btn btn-secondary btn-sm">Filter</button>
+        <a href="/inventory?low=1" class="btn btn-danger btn-sm">Low Stock</a>
+        {lowStock && <a href="/inventory" class="btn btn-secondary btn-sm">Clear</a>}
+      </form>
+    </div>
+    <div class="card-body" style="padding:0">
+      {products.length === 0 ? (
+        <div class="empty-state"><p>No products. <a href="/inventory/new">Add first product</a></p></div>
+      ) : (
+        <div style="overflow-x:auto">
+          <table class="data-table">
+            <thead><tr><th>SKU</th><th>Product</th><th>Category</th><th class="text-right">Cost</th><th class="text-right">Sell</th><th class="text-right">Margin</th><th class="text-right">Stock</th><th></th></tr></thead>
+            <tbody>
+              {products.map((p: any) => {
+                const margin = p.sell_price > 0 ? ((p.sell_price - p.cost_price) / p.sell_price * 100) : 0;
+                const isLow = (p.stock_qty||0) <= (p.low_stock_threshold||5);
+                return (
+                  <tr>
+                    <td style="font-family:monospace;font-size:0.8rem;color:var(--text-muted)">{p.sku||"—"}</td>
+                    <td><a href={"/inventory/"+p.id} style="font-weight:600;color:var(--navy)">{p.name}</a></td>
+                    <td class="text-muted">{p.category_name||"—"}</td>
+                    <td class="text-right">{fmt(p.cost_price)}</td>
+                    <td class="text-right font-bold">{fmt(p.sell_price)}</td>
+                    <td class="text-right"><span class={margin<10?"text-danger":"text-success"}>{margin.toFixed(1)}%</span></td>
+                    <td class="text-right"><span class={"badge "+(isLow?"badge-low":"badge-ok")}>{p.stock_qty}</span></td>
+                    <td><a href={"/inventory/"+p.id} class="btn btn-secondary btn-sm">Edit</a></td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  </div>
+</BaseLayout>

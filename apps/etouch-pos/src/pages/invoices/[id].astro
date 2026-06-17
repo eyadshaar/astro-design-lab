@@ -1,0 +1,129 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import type { D1Database } from '@cloudflare/workers-types';
+
+interface Props { env: { DB: D1Database }; params: { id: string } }
+const { env, params } = Astro.props;
+const id = parseInt(params.id);
+
+let invoice: any = null;
+let items: any[] = [];
+let settings: Record<string,string> = {};
+const created = new URL(Astro.request.url).searchParams.get('created') === '1';
+
+try {
+  const [invResult, settingsResult] = await Promise.all([
+    env.DB.prepare(`
+      SELECT i.*, c.name as customer_name, c.phone as customer_phone,
+             c.email as customer_email, c.address as customer_address
+      FROM invoices i LEFT JOIN customers c ON i.customer_id=c.id
+      WHERE i.id=?
+    `).bind(id).first(),
+    env.DB.prepare("SELECT key, value FROM settings").all(),
+  ]);
+  invoice = invResult;
+  if (invoice) {
+    items = (await env.DB.prepare('SELECT * FROM invoice_items WHERE invoice_id=?').bind(id).all()).results || [];
+  }
+  for (const s of (settingsResult.results || [])) {
+    settings[s.key] = s.value;
+  }
+} catch (e) { /* dev */ }
+
+if (!invoice) return Astro.redirect('/invoices');
+
+const shop = {
+  name:    settings['shop_name']    || 'eTouch Computers',
+  address: settings['shop_address'] || '',
+  phone:   settings['shop_phone']   || '',
+  email:   settings['shop_email']   || '',
+};
+const fmt = (n: number) => '$' + Number(n || 0).toFixed(2);
+const dateStr = invoice.created_at ? new Date(invoice.created_at * 1000).toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' }) : '';
+const dueStr  = invoice.due_date  ? new Date(invoice.due_date  * 1000).toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' }) : '';
+---
+<BaseLayout title={`Invoice ${invoice.invoice_no}`} activeNav="invoices">
+  {created && <div style="background:#d1fae5;color:#065f46;padding:0.75rem 1rem;border-radius:8px;margin-bottom:1rem;font-weight:600">Invoice created successfully!</div>}
+
+  <div class="page-header no-print">
+    <h2>Invoice {invoice.invoice_no}</h2>
+    <div class="flex gap-1">
+      <button class="btn btn-secondary" onclick="window.print()">Print / PDF</button>
+      <a href="/invoices" class="btn btn-secondary">Back</a>
+    </div>
+  </div>
+
+  <div class="card" id="invoice-paper">
+    <div style="padding:2rem">
+      <div class="flex-between" style="margin-bottom:2rem">
+        <div>
+          <h1 style="font-size:1.5rem;color:var(--navy);margin-bottom:0.25rem">{shop.name}</h1>
+          <p style="color:var(--text-muted);font-size:0.85rem">{shop.address}<br/>{shop.phone} &middot; {shop.email}</p>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:2rem;font-weight:700;color:var(--navy);letter-spacing:-0.02em">INVOICE</div>
+          <div style="font-size:1rem;font-weight:600;color:var(--navy)">{invoice.invoice_no}</div>
+        </div>
+      </div>
+
+      <div class="form-row" style="margin-bottom:2rem;background:var(--silver);padding:1rem;border-radius:8px">
+        <div>
+          <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);font-weight:600;margin-bottom:0.25rem">Bill To</div>
+          <div style="font-weight:600">{invoice.customer_name || 'Walk-in Customer'}</div>
+          {invoice.customer_phone && <div style="font-size:0.85rem;color:var(--text-muted)">{invoice.customer_phone}</div>}
+          {invoice.customer_email && <div style="font-size:0.85rem;color:var(--text-muted)">{invoice.customer_email}</div>}
+          {invoice.customer_address && <div style="font-size:0.85rem;color:var(--text-muted)">{invoice.customer_address}</div>}
+        </div>
+        <div style="text-align:right">
+          <div><span style="font-weight:600">Date:</span> {dateStr}</div>
+          {dueStr && <div><span style="font-weight:600">Due:</span> {dueStr}</div>}
+          <div style="margin-top:0.5rem"><span class={`badge badge-${invoice.status}`}>{invoice.status}</span></div>
+        </div>
+      </div>
+
+      <table class="data-table" style="margin-bottom:1.5rem">
+        <thead><tr><th>Description</th><th style="width:80px;text-align:center">Qty</th><th style="width:130px;text-align:right">Unit Price</th><th style="width:130px;text-align:right">Total</th></tr></thead>
+        <tbody>
+          {items.map((item: any) => (
+            <tr>
+              <td>{item.description}</td>
+              <td style="text-align:center">{item.qty}</td>
+              <td style="text-align:right">{fmt(item.unit_price)}</td>
+              <td style="text-align:right;font-weight:600">{fmt(item.total)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <div class="totals-bar" style="justify-content:flex-end">
+        <div class="total-row"><div class="total-label">Subtotal</div><div class="total-value">{fmt(invoice.subtotal)}</div></div>
+        {invoice.tax_rate > 0 && <div class="total-row"><div class="total-label">Tax ({invoice.tax_rate}%)</div><div class="total-value">{fmt(invoice.tax_amount)}</div></div>}
+        <div class="total-row grand"><div class="total-label">Total Due</div><div class="total-value">{fmt(invoice.total)}</div></div>
+      </div>
+
+      {invoice.notes && <div style="margin-top:1.5rem;padding:1rem;background:var(--silver);border-radius:8px;font-size:0.9rem"><strong>Notes:</strong> {invoice.notes}</div>}
+      <div style="margin-top:2rem;text-align:center;font-size:0.8rem;color:var(--text-muted)">Thank you for your business!</div>
+    </div>
+  </div>
+
+  <div class="no-print" style="margin-top:1rem">
+    <form method="POST" action={`/api/invoices?id=${id}&action=update_status`} style="display:inline">
+      <input type="hidden" name="action" value="update_status" />
+      <div class="flex gap-1 align-center">
+        <span style="font-size:0.9rem;font-weight:600">Mark as:</span>
+        {['draft','sent','paid','cancelled'].map((s: string) => (
+          <button type="submit" name="status" value={s} class={`btn btn-sm ${invoice.status===s?'btn-primary':'btn-secondary'}`}>{s}</button>
+        ))}
+      </div>
+    </form>
+  </div>
+</BaseLayout>
+
+<style>
+@media print {
+  .site-header, .site-footer, .no-print { display: none !important; }
+  body { background: white; }
+  .page-container { padding: 0; max-width: 100%; }
+  #invoice-paper { box-shadow: none; border: none; }
+}
+</style>

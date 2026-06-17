@@ -1,0 +1,32 @@
+---
+export interface Props { title: string; activeNav?: string; }
+const { title, activeNav = '' } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title} | eTouchPOS</title>
+  <link rel="stylesheet" href="/styles/global.css" />
+</head>
+<body>
+  <header class="site-header">
+    <span class="shop-badge">eTouch Computers</span>
+    <h1>Point of Sale</h1>
+    <nav>
+      <a href="/invoices" class={activeNav === 'invoices' ? 'active' : ''}>Invoices</a>
+      <a href="/inventory" class={activeNav === 'inventory' ? 'active' : ''}>Inventory</a>
+    </nav>
+    <div class="header-spacer"></div>
+  </header>
+
+  <main class="page-container">
+    <slot />
+  </main>
+
+  <footer class="site-footer">
+    &copy; 2025 eTouch Computers &mdash; Internal Use Only
+  </footer>
+</body>
+</html>
