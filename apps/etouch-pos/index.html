@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>eTouch POS — Invoicing & Inventory</title>
+<style>
+:root{--navy:#1E3A6E;--navy-dark:#152a52;--silver:#E8ECEF;--silver-dark:#c8cdd2;--white:#fff;--green:#2e7d32;--red:#c62828;--orange:#e65100;--shadow:0 4px 12px rgba(0,0,0,.18);--radius:10px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--silver);min-height:100vh}
+header{background:var(--navy);color:var(--white);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,.25);position:sticky;top:0;z-index:100}
+.logo{font-size:1.2rem;font-weight:700;letter-spacing:.5px}
+.logo span{color:#7fb3e0}
+nav{display:flex;gap:4px;flex-wrap:wrap}
+nav button{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.85);padding:7px 14px;border-radius:6px;cursor:pointer;font-size:.85rem;font-weight:500;transition:all .15s}
+nav button:hover,nav button.active{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.5);color:#fff}
+.logout-btn{background:rgba(198,40,40,.55)!important;border-color:rgba(198,40,40,.8)!important}
+.logout-btn:hover{background:rgba(198,40,40,.85)!important}
+.page{display:none;padding:24px;max-width:1200px;margin:0 auto}
+.page.active{display:block}
+.card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin-bottom:20px}
+.card-title{font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--silver)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:8px;border:none;cursor:pointer;font-size:.88rem;font-weight:600;transition:all .15s}
+.btn-primary{background:linear-gradient(145deg,#2a4a8a,var(--navy));color:#fff;box-shadow:0 4px 10px rgba(30,58,110,.4),inset 0 1px 0 rgba(255,255,255,.15);border:1px solid #0d2347}
+.btn-primary:hover{background:linear-gradient(145deg,#3a5a9a,#1a3a6e);transform:translateY(-1px)}
+.btn-success{background:linear-gradient(145deg,#3a9a3a,var(--green));color:#fff;box-shadow:0 4px 10px rgba(46,125,50,.4),inset 0 1px 0 rgba(255,255,255,.15);border:1px solid #1b5e20}
+.btn-success:hover{background:linear-gradient(145deg,#4aba4a,#2e7d32);transform:translateY(-1px)}
+.btn-danger{background:linear-gradient(145deg,#d63030,var(--red));color:#fff;box-shadow:0 4px 10px rgba(198,40,40,.4),inset 0 1px 0 rgba(255,255,255,.15);border:1px solid #8e0000}
+.btn-danger:hover{background:linear-gradient(145deg,#e64040,#c62828);transform:translateY(-1px)}
+.btn-secondary{background:linear-gradient(145deg,#dde3e8,var(--silver-dark));color:var(--navy);box-shadow:0 4px 10px rgba(0,0,0,.1),inset 0 1px 0 rgba(255,255,255,.8);border:1px solid #aab4bc}
+.btn-secondary:hover{background:linear-gradient(145deg,#eef1f4,#c8cdd2);transform:translateY(-1px)}
+.btn-sm{padding:5px 12px;font-size:.8rem}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:.78rem;font-weight:600;color:#555;margin-bottom:5px;text-transform:uppercase;letter-spacing:.4px}
+input,select,textarea{width:100%;padding:10px 13px;border:2px solid #d0d8e0;border-radius:8px;font-size:.93rem;background:#fafbfc;transition:border-color .15s,box-shadow .15s;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(30,58,110,.1);background:#fff}
+input[type=number]{-moz-appearance:textfield}
+input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+table{width:100%;border-collapse:collapse}
+th{background:var(--navy);color:#fff;padding:10px 12px;text-align:left;font-size:.76rem;font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+td{padding:10px 12px;border-bottom:1px solid var(--silver);font-size:.88rem}
+tr:hover td{background:#f4f7fb}
+tr:last-child td{border-bottom:none}
+.text-right{text-align:right}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:700;text-transform:uppercase}
+.badge-green{background:#e8f5e9;color:var(--green)}
+.badge-red{background:#ffebee;color:var(--red)}
+.badge-orange{background:#fff3e0;color:var(--orange)}
+.badge-blue{background:#e3f2fd;color:#1565c0}
+.actions{display:flex;gap:5px;justify-content:flex-end}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin-bottom:24px}
+.stat-card{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);border-top:4px solid var(--navy)}
+.stat-card.g{border-top-color:var(--green)}.stat-card.o{border-top-color:var(--orange)}.stat-card.r{border-top-color:var(--red)}
+.stat-label{font-size:.72rem;font-weight:700;text-transform:uppercase;color:#777;letter-spacing:.5px;margin-bottom:6px}
+.stat-value{font-size:1.75rem;font-weight:700;color:var(--navy)}
+.stat-card.g .stat-value{color:var(--green)}.stat-card.o .stat-value{color:var(--orange)}.stat-card.r .stat-value{color:var(--red)}
+#login-page{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,var(--navy) 0%,#0d1f3c 100%)}
+.login-box{background:var(--white);border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.4);padding:40px 34px;width:100%;max-width:380px}
+.login-logo{text-align:center;font-size:1.5rem;font-weight:800;color:var(--navy);margin-bottom:4px}
+.login-sub{text-align:center;color:#888;font-size:.82rem;margin-bottom:26px}
+.login-error{background:#ffebee;color:var(--red);padding:10px 14px;border-radius:8px;font-size:.86rem;margin-bottom:14px;display:none;border-left:4px solid var(--red)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--white);border-radius:12px;padding:26px;width:90%;max-width:620px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.modal-title{font-size:1.05rem;font-weight:700;color:var(--navy)}
+.modal-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:#888;padding:4px 8px;border-radius:6px}
+.modal-close:hover{background:var(--silver);color:var(--navy)}
+.line-item-row{display:grid;grid-template-columns:2fr 80px 100px 90px auto;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--silver)}
+.line-item-row:last-child{border-bottom:none}
+.remove-item{background:#ffebee;color:var(--red);border:none;border-radius:6px;padding:6px 10px;cursor:pointer;font-size:1rem}
+.remove-item:hover{background:#ffcdd2}
+.alert{padding:11px 15px;border-radius:8px;font-size:.86rem;margin-bottom:14px;border-left:4px solid}
+.alert-info{background:#e3f2fd;border-color:#1565c0;color:#1565c0}
+.alert-warning{background:#fff3e0;border-color:var(--orange);color:var(--orange)}
+.alert-success{background:#e8f5e9;border-color:var(--green);color:var(--green)}
+.search-bar{display:flex;gap:10px;margin-bottom:14px}
+.search-bar input{flex:1}
+.modal-overlay.open #invoice-view-content,
+.modal-overlay.open #invoice-modal,
+.modal-overlay.open #product-modal{display:block}
+.invoice-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
+.invoice-shop{font-size:1.1rem;font-weight:700;color:var(--navy)}
+.invoice-meta{text-align:right;font-size:.86rem;color:#555}
+.invoice-meta strong{display:block;font-size:.98rem;color:var(--navy)}
+.invoice-total-row{display:flex;justify-content:flex-end;margin-top:14px}
+.invoice-total-box{background:var(--navy);color:#fff;padding:14px 22px;border-radius:8px;min-width:200px}
+.invoice-total-label{font-size:.75rem;opacity:.8;text-transform:uppercase;letter-spacing:.4px}
+.invoice-total-value{font-size:1.45rem;font-weight:700}
+.invoice-summary{background:#f4f7fb;padding:12px;border-radius:8px;margin-top:14px;text-align:right;font-size:.9rem;color:#555}
+.invoice-summary strong{color:var(--navy);font-size:1.05rem}
+@media print{header,nav,.no-print,.btn,.actions,.modal-overlay{display:none!important}
+body{background:#fff}.page{padding:0;max-width:100%}.card{box-shadow:none;border:1px solid #ccc;padding:12px}
+th{background:#333!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.invoice-total-box{background:#333!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+#invoice-view-modal{display:block!important}}
+.page-footer{text-align:center;color:#999;font-size:.76rem;padding:20px;margin-top:30px}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-page">
+  <div class="login-box">
+    <div class="login-logo">eTouch Computers</div>
+    <div class="login-sub">Point of Sale &amp; Inventory System</div>
+    <div class="login-error" id="login-error">Incorrect password. Please try again.</div>
+    <form id="login-form">
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="login-password" placeholder="Enter your password" required autofocus>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:12px;">Sign In</button>
+    </form>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app" style="display:none">
+  <header>
+    <div class="logo">eTouch <span>Computers</span> POS</div>
+    <nav>
+      <button class="active" data-page="dashboard" onclick="showPage('dashboard')">📊 Dashboard</button>
+      <button data-page="invoices" onclick="showPage('invoices')">🧾 Invoices</button>
+      <button data-page="inventory" onclick="showPage('inventory')">📦 Inventory</button>
+      <button data-page="settings" onclick="showPage('settings')">⚙️ Settings</button>
+      <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+    </nav>
+  </header>
+
+  <!-- DASHBOARD -->
+  <div id="page-dashboard" class="page active">
+    <div class="stats" id="stats"></div>
+    <div class="row">
+      <div class="card">
+        <div class="card-title">Recent Invoices</div>
+        <div id="recent-inv"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Low Stock Alerts</div>
+        <div id="low-stock"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Quick Actions</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="newInvoice()">➕ New Invoice</button>
+        <button class="btn btn-success" onclick="openModal('product-modal');resetProductForm()">📦 Add Product</button>
+        <button class="btn btn-secondary" onclick="showPage('invoices')">📋 All Invoices</button>
+        <button class="btn btn-secondary" onclick="showPage('inventory')">🔍 Inventory</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- INVOICES -->
+  <div id="page-invoices" class="page">
+    <div class="card">
+      <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+        <span>🧾 Invoices</span>
+        <button class="btn btn-primary btn-sm" onclick="newInvoice()">➕ New Invoice</button>
+      </div>
+      <div class="search-bar">
+        <input type="text" id="inv-search" placeholder="Search by invoice # or customer..." oninput="renderInvoices()">
+        <select id="inv-status-filter" onchange="renderInvoices()" style="max-width:160px">
+          <option value="">All Statuses</option>
+          <option value="paid">Paid</option>
+          <option value="pending">Pending</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+      <div id="invoices-list"></div>
+    </div>
+  </div>
+
+  <!-- INVENTORY -->
+  <div id="page-inventory" class="page">
+    <div class="card">
+      <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+        <span>📦 Inventory</span>
+        <button class="btn btn-success btn-sm" onclick="openModal('product-modal');resetProductForm()">➕ Add Product</button>
+      </div>
+      <div class="search-bar">
+        <input type="text" id="prod-search" placeholder="Search products..." oninput="renderProducts()">
+        <select id="cat-filter" onchange="renderProducts()" style="max-width:160px">
+          <option value="">All Categories</option>
+        </select>
+      </div>
+      <div id="products-list"></div>
+    </div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div id="page-settings" class="page">
+    <div class="row">
+      <div class="card">
+        <div class="card-title">🏪 Shop Information</div>
+        <div class="form-group"><label>Shop Name</label><input type="text" id="s-shop-name"></div>
+        <div class="form-group"><label>Address</label><textarea id="s-shop-addr" rows="2"></textarea></div>
+        <div class="form-group"><label>Phone</label><input type="text" id="s-shop-phone"></div>
+        <div class="form-group"><label>Email</label><input type="email" id="s-shop-email"></div>
+        <button class="btn btn-primary" onclick="saveShopInfo()">Save Shop Info</button>
+      </div>
+      <div class="card">
+        <div class="card-title">🛡️ Security</div>
+        <div class="form-group"><label>New Password</label><input type="password" id="s-new-pw" placeholder="Leave blank to keep current"></div>
+        <button class="btn btn-danger" onclick="changePw()">Update Password</button>
+        <hr style="margin:20px 0;border:none;border-top:1px solid var(--silver)">
+        <div class="card-title">📐 Invoice Defaults</div>
+        <div class="form-group"><label>Tax Rate (%)</label><input type="number" id="s-tax-rate" step="0.01" min="0"></div>
+        <div class="form-group"><label>Invoice Prefix</label><input type="text" id="s-inv-prefix" placeholder="e.g. INV-"></div>
+        <button class="btn btn-primary" onclick="saveInvSettings()">Save Invoice Settings</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">📂 Data Backup</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+        <button class="btn btn-secondary" onclick="exportData()">📤 Export Backup</button>
+        <label class="btn btn-secondary" style="cursor:pointer">📥 Import Backup<input type="file" accept=".json" style="display:none" onchange="importData(event)"></label>
+        <button class="btn btn-danger" onclick="resetData()">🗑️ Reset All Data</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">eTouch POS — Data saved locally in your browser</div>
+</div>
+
+<!-- INVOICE MODAL -->
+<div id="invoice-modal" class="modal-overlay" onclick="closeOnOverlay(event,'invoice-modal')">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="inv-modal-title">New Invoice</div>
+      <button class="modal-close" onclick="closeModal('invoice-modal')">×</button>
+    </div>
+    <form id="inv-form" onsubmit="saveInvoice(event)">
+      <input type="hidden" id="inv-id">
+      <div class="row">
+        <div class="form-group"><label>Customer Name *</label><input type="text" id="inv-customer" required></div>
+        <div class="form-group"><label>Date *</label><input type="date" id="inv-date" required></div>
+      </div>
+      <div class="row">
+        <div class="form-group"><label>Status</label>
+          <select id="inv-status">
+            <option value="pending">Pending</option><option value="paid">Paid</option><option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Payment Method</label>
+          <select id="inv-payment">
+            <option value="cash">Cash</option><option value="card">Card</option><option value="transfer">Bank Transfer</option><option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-top:4px">
+        <label style="display:block;font-size:.78rem;font-weight:600;color:#555;margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Line Items</label>
+        <div id="line-items"></div>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="addLineItem()" style="margin-top:8px">➕ Add Item</button>
+      </div>
+      <div class="invoice-summary" id="inv-summary"></div>
+      <div style="margin-top:16px;display:flex;gap:8px;justify-content:flex-end">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('invoice-modal')">Cancel</button>
+        <button type="submit" class="btn btn-success">💾 Save Invoice</button>
+        <button type="button" class="btn btn-primary" onclick="window.print()">🖨️ Print</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- INVOICE VIEW MODAL -->
+<div id="inv-view-modal" class="modal-overlay" onclick="closeOnOverlay(event,'inv-view-modal')">
+  <div class="modal" style="max-width:700px">
+    <div class="modal-header">
+      <div class="modal-title">Invoice Preview</div>
+      <button class="modal-close" onclick="closeModal('inv-view-modal')">×</button>
+    </div>
+    <div id="inv-view-content"></div>
+    <div style="margin-top:16px;display:flex;gap:8px;justify-content:flex-end">
+      <button class="btn btn-secondary" onclick="closeModal('inv-view-modal')">Close</button>
+      <button class="btn btn-primary" onclick="window.print()">🖨️ Print</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div id="product-modal" class="modal-overlay" onclick="closeOnOverlay(event,'product-modal')">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="prod-modal-title">Add Product</div>
+      <button class="modal-close" onclick="closeModal('product-modal')">×</button>
+    </div>
+    <form id="prod-form" onsubmit="saveProduct(event)">
+      <input type="hidden" id="prod-id">
+      <div class="form-group"><label>Product Name *</label><input type="text" id="prod-name" required></div>
+      <div class="row">
+        <div class="form-group"><label>SKU / Part #</label><input type="text" id="prod-sku"></div>
+        <div class="form-group"><label>Category</label>
+          <select id="prod-cat">
+            <option value="GPU">GPU</option><option value="CPU">CPU</option><option value="RAM">RAM</option>
+            <option value="Storage">Storage</option><option value="Motherboard">Motherboard</option>
+            <option value="PSU">Power Supply</option><option value="Case">Case</option>
+            <option value="Peripheral">Peripheral</option><option value="Cable">Cable</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group"><label>Cost Price ($)</label><input type="number" id="prod-cost" step="0.01" min="0" value="0"></div>
+        <div class="form-group"><label>Sell Price ($) *</label><input type="number" id="prod-price" step="0.01" min="0" required value="0"></div>
+      </div>
+      <div class="row">
+        <div class="form-group"><label>Stock Qty</label><input type="number" id="prod-stock" min="0" value="0"></div>
+        <div class="form-group"><label>Low Stock Alert</label><input type="number" id="prod-low" min="0" value="5"></div>
+      </div>
+      <div class="form-group"><label>Notes</label><textarea id="prod-notes" rows="2"></textarea></div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('product-modal')">Cancel</button>
+        <button type="submit" class="btn btn-success">💾 Save Product</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- STOCK ADJUST MODAL -->
+<div id="stock-modal" class="modal-overlay" onclick="closeOnOverlay(event,'stock-modal')">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-header">
+      <div class="modal-title">📦 Adjust Stock</div>
+      <button class="modal-close" onclick="closeModal('stock-modal')">×</button>
+    </div>
+    <div id="stock-modal-body"></div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════
+   DATA STORE (localStorage)
+═══════════════════════════════════════════════ */
+const LS_KEY = 'etouch_pos_v1';
+let S = {}; // in-memory state
+
+function loadStore() {
+  try { S = JSON.parse(localStorage.getItem(LS_KEY) || '{}') } catch { S = {} }
+  if (!S.products) {
+    S.products = [
+      {id:1,name:'NVIDIA RTX 4070 Graphics Card',sku:'GPU-001',category:'GPU',cost:699.99,price:899.99,stock:5,lowStock:3,notes:''},
+      {id:2,name:'AMD Ryzen 7 7800X3D CPU',sku:'CPU-002',category:'CPU',cost:299.99,price:449.99,stock:3,lowStock:2,notes:''},
+      {id:3,name:'Corsair Vengeance 32GB DDR5 RAM',sku:'RAM-003',category:'RAM',cost:89.99,price:129.99,stock:12,lowStock:5,notes:''},
+      {id:4,name:'Samsung 990 Pro 2TB NVMe SSD',sku:'SSD-004',category:'Storage',cost:139.99,price:179.99,stock:8,lowStock:3,notes:''},
+      {id:5,name:'ASUS ROG Strix B650-E Motherboard',sku:'MB-005',category:'Motherboard',cost:249.99,price:349.99,stock:4,lowStock:2,notes:''},
+      {id:6,name:'Corsair RM750x 750W PSU',sku:'PSU-006',category:'PSU',cost:79.99,price:109.99,stock:7,lowStock:3,notes:''},
+      {id:7,name:'Logitech MX Master 3S Mouse',sku:'PER-007',category:'Peripheral',cost:79.99,price:99.99,stock:15,lowStock:5,notes:''},
+      {id:8,name:'USB-C to USB-C Cable 6ft',sku:'CBL-008',category:'Cable',cost:4.99,price:12.99,stock:50,lowStock:10,notes:''},
+    ];
+  }
+  if (!S.invoices) S.invoices = [];
+  if (!S.settings) {
+    S.settings = { password:'etouch2024', shopName:'eTouch Computers', shopAddr:'123 Main St, City, State 12345', shopPhone:'(555) 123-4567', shopEmail:'info@etouchcomputers.com', taxRate:0, invPrefix:'INV-', invCounter:1000 };
+  }
+  if (!S.nextId) { S.nextId = Math.max(0, ...S.products.map(p=>p.id), ...S.invoices.map(i=>i.id)) + 1; }
+  save();
+}
+
+function save() { localStorage.setItem(LS_KEY, JSON.stringify(S)); }
+function nextId() { const id = S.nextId++; save(); return id; }
+
+/* ═══════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════ */
+document.getElementById('login-form').addEventListener('submit', handleLogin);
+
+// Init — runs immediately when script parses
+(function init() {
+  try {
+    const auth = localStorage.getItem('pos_auth');
+    // Ensure store is at least loaded
+    loadStore();
+    if (auth === '1') {
+      document.getElementById('login-page').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      loadSettingsUI();
+      loadDashboard();
+      populateCatFilter();
+    } else {
+      showLogin();
+    }
+  } catch(err) {
+    console.error('Init error:', err);
+    showLogin();
+  }
+})();
+
+function showLogin() {
+  document.getElementById('login-page').style.display = 'flex';
+  document.getElementById('app').style.display = 'none';
+}
+function showApp() {
+  loadStore();
+  document.getElementById('login-page').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  loadSettingsUI();
+  loadDashboard();
+  populateCatFilter();
+}
+
+/* ═══════════════════════════════════════════════
+   AUTH
+═══════════════════════════════════════════════ */
+function handleLogin(e) {
+  e.preventDefault();
+  const pw = document.getElementById('login-password').value;
+  if (pw === S.settings.password) {
+    localStorage.setItem('pos_auth', '1');
+    showApp();
+  } else {
+    const err = document.getElementById('login-error');
+    err.style.display = 'block';
+    document.getElementById('login-password').value = '';
+    err.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+function logout() {
+  localStorage.removeItem('pos_auth');
+  showLogin();
+  document.getElementById('login-password').value = '';
+}
+
+/* ═══════════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════════ */
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('nav button[data-page]').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  const btn = document.querySelector('nav button[data-page="' + name + '"]');
+  if (btn) btn.classList.add('active');
+  if (name === 'dashboard') loadDashboard();
+  if (name === 'invoices') renderInvoices();
+  if (name === 'inventory') renderProducts();
+  if (name === 'settings') loadSettingsUI();
+}
+window.showPage = showPage;
+
+/* ═══════════════════════════════════════════════
+   DASHBOARD
+═══════════════════════════════════════════════ */
+function loadDashboard() {
+  const paid = S.invoices.filter(i => i.status === 'paid');
+  const pending = S.invoices.filter(i => i.status === 'pending');
+  const lowProducts = S.products.filter(p => p.stock <= p.lowStock);
+  const totalRev = paid.reduce((s, i) => s + i.total, 0);
+  const pendingAmt = pending.reduce((s, i) => s + i.total, 0);
+
+  document.getElementById('stats').innerHTML = `
+    <div class="stat-card g"><div class="stat-label">Revenue (Paid)</div><div class="stat-value">$${fmt(totalRev)}</div></div>
+    <div class="stat-card o"><div class="stat-label">Pending</div><div class="stat-value">$${fmt(pendingAmt)}</div></div>
+    <div class="stat-card r"><div class="stat-label">Low Stock</div><div class="stat-value">${lowProducts.length}</div></div>
+    <div class="stat-card"><div class="stat-label">Total Products</div><div class="stat-value">${S.products.length}</div></div>`;
+
+  // Recent invoices
+  const recent = [...S.invoices].sort((a,b) => b.id - a.id).slice(0, 6);
+  const recentDiv = document.getElementById('recent-inv');
+  if (recent.length === 0) {
+    recentDiv.innerHTML = '<div class="alert alert-info">No invoices yet — create your first one!</div>';
+  } else {
+    recentDiv.innerHTML = `<table><thead><tr><th>#</th><th>Customer</th><th class="text-right">Total</th><th>Status</th><th></th></tr></thead><tbody>
+      ${recent.map(r => `<tr>
+        <td><strong>${e(r.invoiceNo)}</strong></td>
+        <td>${e(r.customer)}</td>
+        <td class="text-right">$${fmt(r.total)}</td>
+        <td><span class="badge badge-${r.status==='paid'?'green':r.status==='pending'?'orange':'red'}">${r.status}</span></td>
+        <td class="actions">
+          <button class="btn btn-secondary btn-sm" onclick="viewInvoice(${r.id})">👁</button>
+          <button class="btn btn-primary btn-sm" onclick="editInvoice(${r.id})">✏️</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteInvoice(${r.id})">🗑️</button>
+        </td>
+      </tr>`).join('')}
+    </tbody></table>`;
+  }
+
+  // Low stock
+  const lowDiv = document.getElementById('low-stock');
+  if (lowProducts.length === 0) {
+    lowDiv.innerHTML = '<div class="alert alert-success">✅ All products are well-stocked!</div>';
+  } else {
+    lowDiv.innerHTML = `<table><thead><tr><th>Product</th><th class="text-right">Stock</th><th class="text-right">Alert At</th></tr></thead><tbody>
+      ${lowProducts.map(p => `<tr>
+        <td>${e(p.name)}</td>
+        <td class="text-right"><strong style="color:${p.stock===0?'var(--red)':'var(--orange)'}">${p.stock}</strong></td>
+        <td class="text-right">${p.lowStock}</td>
+      </tr>`).join('')}
+    </tbody></table>`;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   INVOICES
+═══════════════════════════════════════════════ */
+function renderInvoices() {
+  const search = (document.getElementById('inv-search')?.value || '').toLowerCase();
+  const status = document.getElementById('inv-status-filter')?.value || '';
+  const filtered = S.invoices.filter(inv => {
+    const matchSearch = !search || inv.invoiceNo.toLowerCase().includes(search) || inv.customer.toLowerCase().includes(search);
+    const matchStatus = !status || inv.status === status;
+    return matchSearch && matchStatus;
+  }).sort((a,b) => b.id - a.id);
+
+  const div = document.getElementById('invoices-list');
+  if (filtered.length === 0) {
+    div.innerHTML = '<div class="alert alert-info">No invoices found.</div>';
+    return;
+  }
+  div.innerHTML = `<table><thead><tr><th>#</th><th>Customer</th><th>Date</th><th class="text-right">Total</th><th>Status</th><th></th></tr></thead><tbody>
+    ${filtered.map(inv => `<tr>
+      <td><strong>${e(inv.invoiceNo)}</strong></td>
+      <td>${e(inv.customer)}</td>
+      <td>${inv.date}</td>
+      <td class="text-right">$${fmt(inv.total)}</td>
+      <td><span class="badge badge-${inv.status==='paid'?'green':inv.status==='pending'?'orange':'red'}">${inv.status}</span></td>
+      <td class="actions">
+        <button class="btn btn-secondary btn-sm" onclick="viewInvoice(${inv.id})">👁</button>
+        <button class="btn btn-primary btn-sm" onclick="editInvoice(${inv.id})">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteInvoice(${inv.id})">🗑️</button>
+      </td>
+    </tr>`).join('')}
+  </tbody></table>`;
+}
+
+function newInvoice() {
+  document.getElementById('inv-modal-title').textContent = 'New Invoice';
+  document.getElementById('inv-id').value = '';
+  document.getElementById('inv-customer').value = '';
+  document.getElementById('inv-date').value = today();
+  document.getElementById('inv-status').value = 'pending';
+  document.getElementById('inv-payment').value = 'cash';
+  document.getElementById('line-items').innerHTML = '';
+  addLineItem();
+  updateInvSummary();
+  openModal('invoice-modal');
+}
+
+function editInvoice(id) {
+  const inv = S.invoices.find(i => i.id === id); if (!inv) return;
+  document.getElementById('inv-modal-title').textContent = 'Edit Invoice';
+  document.getElementById('inv-id').value = id;
+  document.getElementById('inv-customer').value = inv.customer;
+  document.getElementById('inv-date').value = inv.date;
+  document.getElementById('inv-status').value = inv.status;
+  document.getElementById('inv-payment').value = inv.paymentMethod || 'cash';
+  document.getElementById('line-items').innerHTML = '';
+  if (inv.items.length > 0) {
+    inv.items.forEach(item => addLineItem(item.desc, item.qty, item.price));
+  } else { addLineItem(); }
+  updateInvSummary();
+  openModal('invoice-modal');
+}
+
+function saveInvoice(e) {
+  e.preventDefault();
+  const id = document.getElementById('inv-id').value;
+  const customer = document.getElementById('inv-customer').value.trim();
+  const date = document.getElementById('inv-date').value;
+  const status = document.getElementById('inv-status').value;
+  const paymentMethod = document.getElementById('inv-payment').value;
+
+  const itemEls = document.querySelectorAll('.line-item-row');
+  const items = [];
+  itemEls.forEach(row => {
+    const desc = row.querySelector('.li-desc')?.value?.trim();
+    const qty = parseInt(row.querySelector('.li-qty')?.value) || 1;
+    const price = parseFloat(row.querySelector('.li-price')?.value) || 0;
+    if (desc && price > 0) items.push({ desc, qty, price, total: qty * price });
+  });
+  if (items.length === 0) { alert('Add at least one line item.'); return; }
+
+  const subtotal = items.reduce((s,i) => s + i.total, 0);
+  const taxRate = parseFloat(S.settings.taxRate || 0);
+  const taxAmount = subtotal * (taxRate / 100);
+  const total = subtotal + taxAmount;
+
+  if (id) {
+    const inv = S.invoices.find(i => i.id == id);
+    if (inv) {
+      // Restore stock if was previously paid and now isn't
+      if (inv.status === 'paid' && status !== 'paid') {
+        inv.items.forEach(item => {
+          const prod = S.products.find(p => p.name.toLowerCase() === item.desc.toLowerCase());
+          if (prod) prod.stock += item.qty;
+        });
+      }
+      Object.assign(inv, { customer, date, status, paymentMethod, items, subtotal, taxRate, taxAmount, total });
+    }
+  } else {
+    const prefix = S.settings.invPrefix || 'INV-';
+    const counter = ++S.settings.invCounter;
+    const invoiceNo = prefix + String(counter).padStart(5, '0');
+    S.invoices.push({ id: nextId(), invoiceNo, customer, date, status, paymentMethod, items, subtotal, taxRate, taxAmount, total });
+  }
+
+  // Update stock if paid
+  if (status === 'paid') {
+    items.forEach(item => {
+      const prod = S.products.find(p => p.name.toLowerCase() === item.desc.toLowerCase());
+      if (prod) {
+        prod.stock = Math.max(0, prod.stock - item.qty);
+      }
+    });
+  }
+
+  save();
+  closeModal('invoice-modal');
+  showPage('invoices');
+  loadDashboard();
+}
+
+function deleteInvoice(id) {
+  if (!confirm('Delete this invoice?')) return;
+  S.invoices = S.invoices.filter(i => i.id !== id);
+  save();
+  renderInvoices();
+  loadDashboard();
+}
+
+function viewInvoice(id) {
+  const inv = S.invoices.find(i => i.id === id); if (!inv) return;
+  const { shopName, shopAddr, shopPhone } = S.settings;
+  const taxRate = inv.taxRate || 0;
+
+  const itemsHtml = inv.items.map(item =>
+    `<tr><td>${e(item.desc)}</td><td style="text-align:center">${item.qty}</td><td style="text-align:right">$${fmt(item.price)}</td><td style="text-align:right">$${fmt(item.total)}</td></tr>`
+  ).join('');
+
+  document.getElementById('inv-view-content').innerHTML = `
+    <div style="border:2px solid var(--navy);border-radius:10px;padding:24px">
+      <div class="invoice-header">
+        <div>
+          <div class="invoice-shop">${e(shopName)}</div>
+          <div style="color:#666;font-size:.84rem">${e(shopAddr)}</div>
+          <div style="color:#666;font-size:.84rem">${e(shopPhone)}</div>
+        </div>
+        <div class="invoice-meta">
+          <strong>${e(inv.invoiceNo)}</strong>
+          Date: ${inv.date}<br>
+          Status: <span class="badge badge-${inv.status==='paid'?'green':inv.status==='pending'?'orange':'red'}">${inv.status}</span><br>
+          Paid via: ${e(inv.paymentMethod || '—')}
+        </div>
+      </div>
+      <div style="margin-bottom:12px"><strong>Bill To:</strong> ${e(inv.customer)}</div>
+      <table>
+        <thead><tr><th>Description</th><th style="text-align:center">Qty</th><th style="text-align:right">Unit Price</th><th style="text-align:right">Total</th></tr></thead>
+        <tbody>${itemsHtml}</tbody>
+      </table>
+      <div class="invoice-total-row">
+        <div class="invoice-total-box">
+          <div class="invoice-total-label">Subtotal</div><div style="margin-bottom:5px">$${fmt(inv.subtotal)}</div>
+          ${taxRate > 0 ? `<div class="invoice-total-label">Tax (${taxRate}%)</div><div style="margin-bottom:5px">$${fmt(inv.taxAmount)}</div>` : ''}
+          <div class="invoice-total-label">TOTAL</div>
+          <div class="invoice-total-value">$${fmt(inv.total)}</div>
+        </div>
+      </div>
+    </div>`;
+  openModal('inv-view-modal');
+}
+
+/* ═══════════════════════════════════════════════
+   LINE ITEMS
+═══════════════════════════════════════════════ */
+function addLineItem(desc='', qty=1, price='') {
+  const div = document.getElementById('line-items');
+  const row = document.createElement('div');
+  row.className = 'line-item-row';
+  row.innerHTML = `
+    <input type="text" class="li-desc" placeholder="Description or product name" value="${eAttr(desc)}" oninput="updateInvSummary()">
+    <input type="number" class="li-qty" value="${qty}" min="1" placeholder="Qty" oninput="updateInvSummary()">
+    <input type="number" class="li-price" value="${price}" step="0.01" min="0" placeholder="Price" oninput="updateInvSummary()">
+    <span class="li-total" style="text-align:right;font-weight:700;color:var(--navy)">$0.00</span>
+    <button type="button" class="remove-item" onclick="this.parentElement.remove();updateInvSummary()">×</button>`;
+  div.appendChild(row);
+  updateInvSummary();
+}
+
+function updateInvSummary() {
+  const rows = document.querySelectorAll('.line-item-row');
+  let subtotal = 0;
+  rows.forEach(row => {
+    const qty = parseFloat(row.querySelector('.li-qty')?.value) || 0;
+    const price = parseFloat(row.querySelector('.li-price')?.value) || 0;
+    const total = qty * price;
+    const el = row.querySelector('.li-total');
+    if (el) el.textContent = '$' + fmt(total);
+    subtotal += total;
+  });
+  const taxRate = parseFloat(S.settings.taxRate || 0);
+  const taxAmount = subtotal * (taxRate / 100);
+  const total = subtotal + taxAmount;
+  const taxRow = taxRate > 0 ? `<span>Tax (${taxRate}%): <strong>$${fmt(taxAmount)}</strong></span>` : '';
+  document.getElementById('inv-summary').innerHTML = `
+    <span>Subtotal: <strong>$${fmt(subtotal)}</strong></span> ${taxRow}
+    <span style="font-size:1rem;color:var(--navy);margin-left:16px">Total: <strong>$${fmt(total)}</strong></span>`;
+}
+
+/* ═══════════════════════════════════════════════
+   INVENTORY
+═══════════════════════════════════════════════ */
+function renderProducts() {
+  const search = (document.getElementById('prod-search')?.value || '').toLowerCase();
+  const cat = document.getElementById('cat-filter')?.value || '';
+  const filtered = S.products.filter(p => {
+    const matchSearch = !search || p.name.toLowerCase().includes(search) || (p.sku||'').toLowerCase().includes(search);
+    const matchCat = !cat || p.category === cat;
+    return matchSearch && matchCat;
+  }).sort((a,b) => a.name.localeCompare(b.name));
+
+  const div = document.getElementById('products-list');
+  if (filtered.length === 0) {
+    div.innerHTML = '<div class="alert alert-info">No products found.</div>';
+    return;
+  }
+  div.innerHTML = `<table><thead><tr><th>Name / SKU</th><th>Category</th><th class="text-right">Cost</th><th class="text-right">Price</th><th class="text-right">Stock</th><th></th></tr></thead><tbody>
+    ${filtered.map(p => {
+      const profit = p.price - p.cost;
+      const profitPct = p.cost > 0 ? ((profit / p.cost) * 100).toFixed(0) : '—';
+      const stockColor = p.stock === 0 ? 'var(--red)' : p.stock <= p.lowStock ? 'var(--orange)' : 'var(--green)';
+      return `<tr>
+        <td><strong>${e(p.name)}</strong><br><span style="font-size:.76rem;color:#888">${e(p.sku || 'No SKU')}</span></td>
+        <td><span class="badge badge-blue">${p.category}</span></td>
+        <td class="text-right">$${fmt(p.cost)}</td>
+        <td class="text-right"><strong>$${fmt(p.price)}</strong><br><span style="font-size:.74rem;color:var(--green)">+$${fmt(profit)} (${profitPct}%)</span></td>
+        <td class="text-right">
+          <span style="color:${stockColor}"><strong>${p.stock}</strong></span>
+          <span style="font-size:.72rem;color:#999"> / min ${p.lowStock}</span>
+        </td>
+        <td class="actions">
+          <button class="btn btn-secondary btn-sm" onclick="adjustStockUI(${p.id})">📦</button>
+          <button class="btn btn-primary btn-sm" onclick="editProduct(${p.id})">✏️</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteProduct(${p.id})">🗑️</button>
+        </td>
+      </tr>`;
+    }).join('')}
+  </tbody></table>`;
+}
+
+function resetProductForm() {
+  document.getElementById('prod-modal-title').textContent = 'Add Product';
+  document.getElementById('prod-id').value = '';
+  document.getElementById('prod-name').value = '';
+  document.getElementById('prod-sku').value = '';
+  document.getElementById('prod-cat').value = 'Other';
+  document.getElementById('prod-cost').value = '0';
+  document.getElementById('prod-price').value = '0';
+  document.getElementById('prod-stock').value = '0';
+  document.getElementById('prod-low').value = '5';
+  document.getElementById('prod-notes').value = '';
+}
+
+function editProduct(id) {
+  const p = S.products.find(x => x.id === id); if (!p) return;
+  document.getElementById('prod-modal-title').textContent = 'Edit Product';
+  document.getElementById('prod-id').value = id;
+  document.getElementById('prod-name').value = p.name;
+  document.getElementById('prod-sku').value = p.sku || '';
+  document.getElementById('prod-cat').value = p.category;
+  document.getElementById('prod-cost').value = p.cost;
+  document.getElementById('prod-price').value = p.price;
+  document.getElementById('prod-stock').value = p.stock;
+  document.getElementById('prod-low').value = p.lowStock;
+  document.getElementById('prod-notes').value = p.notes || '';
+  openModal('product-modal');
+}
+
+function saveProduct(e) {
+  e.preventDefault();
+  const id = document.getElementById('prod-id').value;
+  const data = {
+    name: document.getElementById('prod-name').value.trim(),
+    sku: document.getElementById('prod-sku').value.trim(),
+    category: document.getElementById('prod-cat').value,
+    cost: parseFloat(document.getElementById('prod-cost').value) || 0,
+    price: parseFloat(document.getElementById('prod-price').value) || 0,
+    stock: parseInt(document.getElementById('prod-stock').value) || 0,
+    lowStock: parseInt(document.getElementById('prod-low').value) || 5,
+    notes: document.getElementById('prod-notes').value.trim(),
+  };
+  if (id) {
+    const prod = S.products.find(p => p.id == id);
+    if (prod) Object.assign(prod, data);
+  } else {
+    S.products.push({ id: nextId(), ...data });
+  }
+  save();
+  closeModal('product-modal');
+  renderProducts();
+  loadDashboard();
+  populateCatFilter();
+}
+
+function deleteProduct(id) {
+  if (!confirm('Delete this product?')) return;
+  S.products = S.products.filter(p => p.id !== id);
+  save();
+  renderProducts();
+  loadDashboard();
+}
+
+function adjustStockUI(id) {
+  const p = S.products.find(x => x.id === id); if (!p) return;
+  document.getElementById('stock-modal-body').innerHTML = `
+    <div class="form-group"><label>Product</label><input type="text" value="${e(p.name)}" readonly style="background:var(--silver)"></div>
+    <div class="form-group"><label>Current Stock</label><input type="number" id="stock-adj-val" value="${p.stock}" readonly style="background:var(--silver)"></div>
+    <div class="form-group"><label>Adjustment <span style="font-weight:400;text-transform:none;font-size:.78rem">(positive = add, negative = remove)</span></label>
+    <input type="number" id="stock-adj-delta" placeholder="e.g. 10 or -3" autofocus></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px">
+      <button class="btn btn-secondary" onclick="closeModal('stock-modal')">Cancel</button>
+      <button class="btn btn-success" onclick="applyStockAdj(${id})">Apply</button>
+    </div>`;
+  openModal('stock-modal');
+  setTimeout(() => document.getElementById('stock-adj-delta')?.focus(), 100);
+}
+
+function applyStockAdj(id) {
+  const delta = parseInt(document.getElementById('stock-adj-delta').value) || 0;
+  const prod = S.products.find(p => p.id === id);
+  if (!prod) return;
+  prod.stock = Math.max(0, prod.stock + delta);
+  save();
+  closeModal('stock-modal');
+  renderProducts();
+  loadDashboard();
+}
+
+/* ═══════════════════════════════════════════════
+   SETTINGS
+═══════════════════════════════════════════════ */
+function loadSettingsUI() {
+  document.getElementById('s-shop-name').value = S.settings.shopName || '';
+  document.getElementById('s-shop-addr').value = S.settings.shopAddr || '';
+  document.getElementById('s-shop-phone').value = S.settings.shopPhone || '';
+  document.getElementById('s-shop-email').value = S.settings.shopEmail || '';
+  document.getElementById('s-tax-rate').value = S.settings.taxRate || 0;
+  document.getElementById('s-inv-prefix').value = S.settings.invPrefix || 'INV-';
+}
+
+function saveShopInfo() {
+  S.settings.shopName = document.getElementById('s-shop-name').value.trim() || 'eTouch Computers';
+  S.settings.shopAddr = document.getElementById('s-shop-addr').value.trim();
+  S.settings.shopPhone = document.getElementById('s-shop-phone').value.trim();
+  S.settings.shopEmail = document.getElementById('s-shop-email').value.trim();
+  save();
+  alert('Shop info saved!');
+}
+
+function saveInvSettings() {
+  S.settings.taxRate = parseFloat(document.getElementById('s-tax-rate').value) || 0;
+  S.settings.invPrefix = document.getElementById('s-inv-prefix').value.trim() || 'INV-';
+  save();
+  alert('Invoice settings saved!');
+}
+
+function changePw() {
+  const newPw = document.getElementById('s-new-pw').value.trim();
+  if (!newPw) { alert('Enter a new password.'); return; }
+  S.settings.password = newPw;
+  save();
+  document.getElementById('s-new-pw').value = '';
+  alert('Password updated!');
+}
+
+/* ═══════════════════════════════════════════════
+   DATA EXPORT / IMPORT / RESET
+═══════════════════════════════════════════════ */
+function exportData() {
+  const exp = { products: S.products, invoices: S.invoices, settings: S.settings, exportedAt: new Date().toISOString() };
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(exp, null, 2)], { type: 'application/json' }));
+  a.download = 'etouch-pos-backup-' + new Date().toISOString().split('T')[0] + '.json';
+  a.click();
+}
+
+function importData(e) {
+  const file = e.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const d = JSON.parse(ev.target.result);
+      if (!confirm('This will REPLACE all existing data. Continue?')) return;
+      S.products = d.products || [];
+      S.invoices = d.invoices || [];
+      if (d.settings) Object.assign(S.settings, d.settings);
+      S.nextId = Math.max(0, ...S.products.map(p=>p.id), ...S.invoices.map(i=>i.id)) + 1;
+      save();
+      alert('Data imported successfully!');
+      showApp();
+    } catch(err) { alert('Import failed: ' + err.message); }
+  };
+  reader.readAsText(file);
+}
+
+function resetData() {
+  if (!confirm('⚠️ This will DELETE all invoices and reset your password. Are you sure?')) return;
+  if (!confirm('FINAL CONFIRM — type YES in the next prompt to proceed.')) return;
+  if (prompt('Type YES to confirm:') !== 'YES') return;
+  S.invoices = [];
+  S.products = [];
+  S.settings.password = 'etouch2024';
+  S.settings.invCounter = 1000;
+  S.nextId = 1;
+  save();
+  alert('Data reset. Password is now: etouch2024');
+  logout();
+}
+
+/* ═══════════════════════════════════════════════
+   MODALS
+═══════════════════════════════════════════════ */
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function closeOnOverlay(e, id) { if (e.target.id === id) closeModal(id); }
+function populateCatFilter() {
+  const cats = [...new Set(S.products.map(p => p.category))].sort();
+  const sel = document.getElementById('cat-filter');
+  if (!sel) return;
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">All Categories</option>';
+  cats.forEach(c => { sel.innerHTML += `<option value="${e(c)}">${e(c)}</option>`; });
+  sel.value = cur;
+}
+
+/* ═══════════════════════════════════════════════
+   UTILITIES
+═══════════════════════════════════════════════ */
+function fmt(n) { return (parseFloat(n) || 0).toFixed(2); }
+function today() { return new Date().toISOString().split('T')[0]; }
+function e(s) { if (!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function eAttr(s) { if (!s) return ''; return e(s).replace(/'/g,'&#39;'); }
+window.newInvoice = newInvoice;
+</script>
+</body>
+</html>
