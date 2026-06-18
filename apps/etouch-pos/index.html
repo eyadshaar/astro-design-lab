@@ -8,19 +8,21 @@
 :root{--navy:#1E3A6E;--navy-dark:#152a52;--silver:#E8ECEF;--silver-dark:#c8cdd2;--white:#fff;--green:#2e7d32;--red:#c62828;--orange:#e65100;--shadow:0 4px 12px rgba(0,0,0,.18);--radius:10px}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--silver);min-height:100vh}
-header{background:var(--navy);color:var(--white);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,.25);position:sticky;top:0;z-index:100}
-.logo{font-size:1.2rem;font-weight:700;letter-spacing:.5px}
-.logo span{color:#7fb3e0}
-nav{display:flex;gap:4px;flex-wrap:wrap}
-nav button{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.85);padding:7px 14px;border-radius:6px;cursor:pointer;font-size:.85rem;font-weight:500;transition:all .15s}
+header{background:var(--navy);color:var(--white);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,.25);position:sticky;top:0;z-index:100}
+.logo-wrap{display:flex;align-items:center;gap:10px}
+.logo-wrap img{height:44px;width:44px;object-fit:contain;border-radius:8px}
+.logo{font-size:1.15rem;font-weight:700;letter-spacing:.3px;line-height:1.2}
+.logo span{display:block;font-size:.72rem;color:rgba(255,255,255,.65);font-weight:400}
+nav{display:flex;gap:3px;flex-wrap:wrap}
+nav button{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.85);padding:6px 12px;border-radius:6px;cursor:pointer;font-size:.82rem;font-weight:500;transition:all .15s}
 nav button:hover,nav button.active{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.5);color:#fff}
 .logout-btn{background:rgba(198,40,40,.55)!important;border-color:rgba(198,40,40,.8)!important}
 .logout-btn:hover{background:rgba(198,40,40,.85)!important}
 .page{display:none;padding:24px;max-width:1200px;margin:0 auto}
 .page.active{display:block}
 .card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin-bottom:20px}
-.card-title{font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--silver)}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:8px;border:none;cursor:pointer;font-size:.88rem;font-weight:600;transition:all .15s}
+.card-title{font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--silver);display:flex;justify-content:space-between;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:8px;border:none;cursor:pointer;font-size:.86rem;font-weight:600;transition:all .15s}
 .btn-primary{background:linear-gradient(145deg,#2a4a8a,var(--navy));color:#fff;box-shadow:0 4px 10px rgba(30,58,110,.4),inset 0 1px 0 rgba(255,255,255,.15);border:1px solid #0d2347}
 .btn-primary:hover{background:linear-gradient(145deg,#3a5a9a,#1a3a6e);transform:translateY(-1px)}
 .btn-success{background:linear-gradient(145deg,#3a9a3a,var(--green));color:#fff;box-shadow:0 4px 10px rgba(46,125,50,.4),inset 0 1px 0 rgba(255,255,255,.15);border:1px solid #1b5e20}
@@ -29,81 +31,94 @@ nav button:hover,nav button.active{background:rgba(255,255,255,.18);border-color
 .btn-danger:hover{background:linear-gradient(145deg,#e64040,#c62828);transform:translateY(-1px)}
 .btn-secondary{background:linear-gradient(145deg,#dde3e8,var(--silver-dark));color:var(--navy);box-shadow:0 4px 10px rgba(0,0,0,.1),inset 0 1px 0 rgba(255,255,255,.8);border:1px solid #aab4bc}
 .btn-secondary:hover{background:linear-gradient(145deg,#eef1f4,#c8cdd2);transform:translateY(-1px)}
-.btn-sm{padding:5px 12px;font-size:.8rem}
-.form-group{margin-bottom:14px}
-.form-group label{display:block;font-size:.78rem;font-weight:600;color:#555;margin-bottom:5px;text-transform:uppercase;letter-spacing:.4px}
-input,select,textarea{width:100%;padding:10px 13px;border:2px solid #d0d8e0;border-radius:8px;font-size:.93rem;background:#fafbfc;transition:border-color .15s,box-shadow .15s;outline:none}
+.btn-sm{padding:5px 11px;font-size:.78rem}
+.form-group{margin-bottom:13px}
+.form-group label{display:block;font-size:.76rem;font-weight:600;color:#555;margin-bottom:5px;text-transform:uppercase;letter-spacing:.4px}
+input,select,textarea{width:100%;padding:9px 12px;border:2px solid #d0d8e0;border-radius:8px;font-size:.92rem;background:#fafbfc;transition:border-color .15s,box-shadow .15s;outline:none}
 input:focus,select:focus,textarea:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(30,58,110,.1);background:#fff}
 input[type=number]{-moz-appearance:textfield}
 input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
 table{width:100%;border-collapse:collapse}
-th{background:var(--navy);color:#fff;padding:10px 12px;text-align:left;font-size:.76rem;font-weight:600;text-transform:uppercase;letter-spacing:.4px}
-td{padding:10px 12px;border-bottom:1px solid var(--silver);font-size:.88rem}
+th{background:var(--navy);color:#fff;padding:9px 11px;text-align:left;font-size:.74rem;font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+td{padding:9px 11px;border-bottom:1px solid var(--silver);font-size:.87rem}
 tr:hover td{background:#f4f7fb}
 tr:last-child td{border-bottom:none}
 .text-right{text-align:right}
-.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:700;text-transform:uppercase}
+.badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:.7rem;font-weight:700;text-transform:uppercase}
 .badge-green{background:#e8f5e9;color:var(--green)}
 .badge-red{background:#ffebee;color:var(--red)}
 .badge-orange{background:#fff3e0;color:var(--orange)}
 .badge-blue{background:#e3f2fd;color:#1565c0}
 .actions{display:flex;gap:5px;justify-content:flex-end}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin-bottom:24px}
-.stat-card{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);border-top:4px solid var(--navy)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:16px;margin-bottom:24px}
+.stat-card{background:var(--white);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);border-top:4px solid var(--navy)}
 .stat-card.g{border-top-color:var(--green)}.stat-card.o{border-top-color:var(--orange)}.stat-card.r{border-top-color:var(--red)}
-.stat-label{font-size:.72rem;font-weight:700;text-transform:uppercase;color:#777;letter-spacing:.5px;margin-bottom:6px}
-.stat-value{font-size:1.75rem;font-weight:700;color:var(--navy)}
+.stat-label{font-size:.7rem;font-weight:700;text-transform:uppercase;color:#777;letter-spacing:.5px;margin-bottom:5px}
+.stat-value{font-size:1.7rem;font-weight:700;color:var(--navy)}
 .stat-card.g .stat-value{color:var(--green)}.stat-card.o .stat-value{color:var(--orange)}.stat-card.r .stat-value{color:var(--red)}
-#login-page{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,var(--navy) 0%,#0d1f3c 100%)}
-.login-box{background:var(--white);border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.4);padding:40px 34px;width:100%;max-width:380px}
-.login-logo{text-align:center;font-size:1.5rem;font-weight:800;color:var(--navy);margin-bottom:4px}
-.login-sub{text-align:center;color:#888;font-size:.82rem;margin-bottom:26px}
-.login-error{background:#ffebee;color:var(--red);padding:10px 14px;border-radius:8px;font-size:.86rem;margin-bottom:14px;display:none;border-left:4px solid var(--red)}
+#login-page{display:none;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,var(--navy) 0%,#0d1f3c 100%);padding:20px}
+.login-box{background:var(--white);border-radius:16px;box-shadow:0 24px 70px rgba(0,0,0,.45);padding:40px 36px;width:100%;max-width:400px;text-align:center}
+.login-logo-img{width:90px;height:90px;object-fit:contain;border-radius:16px;margin:0 auto 14px;display:block;box-shadow:0 4px 16px rgba(0,0,0,.2)}
+.login-logo{font-size:1.4rem;font-weight:800;color:var(--navy);margin-bottom:2px}
+.login-sub{color:#888;font-size:.8rem;margin-bottom:24px}
+.login-error{background:#ffebee;color:var(--red);padding:10px 14px;border-radius:8px;font-size:.84rem;margin-bottom:14px;display:none;border-left:4px solid var(--red);text-align:left}
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center}
 .modal-overlay.open{display:flex}
-.modal{background:var(--white);border-radius:12px;padding:26px;width:90%;max-width:620px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)}
-.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.modal{background:var(--white);border-radius:12px;padding:26px;width:90%;max-width:640px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 70px rgba(0,0,0,.3);position:relative}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--silver)}
 .modal-title{font-size:1.05rem;font-weight:700;color:var(--navy)}
-.modal-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:#888;padding:4px 8px;border-radius:6px}
+.modal-close{background:none;border:none;font-size:1.5rem;cursor:pointer;color:#888;padding:4px 8px;border-radius:6px;line-height:1}
 .modal-close:hover{background:var(--silver);color:var(--navy)}
 .line-item-row{display:grid;grid-template-columns:2fr 80px 100px 90px auto;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--silver)}
 .line-item-row:last-child{border-bottom:none}
 .remove-item{background:#ffebee;color:var(--red);border:none;border-radius:6px;padding:6px 10px;cursor:pointer;font-size:1rem}
 .remove-item:hover{background:#ffcdd2}
-.alert{padding:11px 15px;border-radius:8px;font-size:.86rem;margin-bottom:14px;border-left:4px solid}
+.alert{padding:10px 14px;border-radius:8px;font-size:.84rem;margin-bottom:13px;border-left:4px solid}
 .alert-info{background:#e3f2fd;border-color:#1565c0;color:#1565c0}
 .alert-warning{background:#fff3e0;border-color:var(--orange);color:var(--orange)}
 .alert-success{background:#e8f5e9;border-color:var(--green);color:var(--green)}
 .search-bar{display:flex;gap:10px;margin-bottom:14px}
 .search-bar input{flex:1}
-.modal-overlay.open #invoice-view-content,
-.modal-overlay.open #invoice-modal,
-.modal-overlay.open #product-modal{display:block}
-.invoice-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
-.invoice-shop{font-size:1.1rem;font-weight:700;color:var(--navy)}
-.invoice-meta{text-align:right;font-size:.86rem;color:#555}
-.invoice-meta strong{display:block;font-size:.98rem;color:var(--navy)}
+.invoice-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;gap:16px}
+.invoice-logo{height:60px;width:60px;object-fit:contain;border-radius:10px}
+.invoice-shop{font-size:1.05rem;font-weight:700;color:var(--navy)}
+.invoice-meta{text-align:right;font-size:.84rem;color:#555;flex-shrink:0}
+.invoice-meta strong{display:block;font-size:.96rem;color:var(--navy)}
 .invoice-total-row{display:flex;justify-content:flex-end;margin-top:14px}
-.invoice-total-box{background:var(--navy);color:#fff;padding:14px 22px;border-radius:8px;min-width:200px}
-.invoice-total-label{font-size:.75rem;opacity:.8;text-transform:uppercase;letter-spacing:.4px}
-.invoice-total-value{font-size:1.45rem;font-weight:700}
-.invoice-summary{background:#f4f7fb;padding:12px;border-radius:8px;margin-top:14px;text-align:right;font-size:.9rem;color:#555}
-.invoice-summary strong{color:var(--navy);font-size:1.05rem}
-@media print{header,nav,.no-print,.btn,.actions,.modal-overlay{display:none!important}
-body{background:#fff}.page{padding:0;max-width:100%}.card{box-shadow:none;border:1px solid #ccc;padding:12px}
-th{background:#333!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-.invoice-total-box{background:#333!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-#invoice-view-modal{display:block!important}}
-.page-footer{text-align:center;color:#999;font-size:.76rem;padding:20px;margin-top:30px}
+.invoice-total-box{background:var(--navy);color:#fff;padding:13px 20px;border-radius:8px;min-width:190px}
+.invoice-total-label{font-size:.72rem;opacity:.8;text-transform:uppercase;letter-spacing:.4px}
+.invoice-total-value{font-size:1.4rem;font-weight:700}
+.invoice-summary{background:#f4f7fb;padding:11px;border-radius:8px;margin-top:13px;text-align:right;font-size:.88rem;color:#555}
+.invoice-summary strong{color:var(--navy)}
+.invoice-view-box{border:2px solid var(--navy);border-radius:10px;padding:22px}
+.invoice-items-table{width:100%;border-collapse:collapse;margin-top:12px}
+.invoice-items-table th{background:#2a4a8a;font-size:.72rem;padding:8px 10px}
+.invoice-items-table td{padding:8px 10px;font-size:.87rem}
+@media print{header,nav,.no-print,.btn,.actions,.modal-overlay,.page-footer{display:none!important}
+body{background:#fff}.page{padding:0;max-width:100%}.card{box-shadow:none;border:1px solid #ccc;padding:12px}.invoice-view-box{border:1px solid #333;box-shadow:none}
+th{background:#333!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.invoice-total-box{background:#333!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+#inv-view-modal,#inv-view-content{display:block!important}.modal-overlay{position:static!important;background:none!important;display:block!important}}
+.page-footer{text-align:center;color:#999;font-size:.75rem;padding:18px;margin-top:28px}
+.tabs{display:flex;gap:4px;border-bottom:2px solid var(--silver);margin-bottom:18px}
+.tab-btn{background:none;border:none;border-bottom:3px solid transparent;padding:8px 16px;cursor:pointer;font-size:.87rem;font-weight:600;color:#777;margin-bottom:-2px;transition:all .15s}
+.tab-btn:hover{color:var(--navy)}
+.tab-btn.active{color:var(--navy);border-bottom-color:var(--navy)}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+.no-data{text-align:center;color:#999;padding:32px;font-size:.9rem}
+.empty-state{text-align:center;padding:40px 20px;color:#888}
+.empty-state .icon{font-size:3rem;margin-bottom:10px;opacity:.5}
+.customer-detail{font-size:.84rem;color:#666;line-height:1.5}
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
+<!-- ═══════════════ LOGIN PAGE ═══════════════ -->
 <div id="login-page">
   <div class="login-box">
+    <img src="https://scontent-hou1-1.xx.fbcdn.net/v/t39.30808-6/707329185_4350854538565537_1534657188143859289_n.jpg?stp=dst-jpg_tt6&cstp=mx1254x1254&ctp=s1254x1254&_nc_cat=103&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=mUAKHd2mdHYQ7kNvwEdk4wZ&_nc_oc=Adq6JweMZMfa5rP8YVtzwWnMmHOr2mHFFq4gA0THo8un6kprqzWDeq_6Ja2LzwtR2YrlRvHoNk6shKniD7-Ty6E2&_nc_zt=23&_nc_ht=scontent-hou1-1.xx&_nc_gid=rjQO24SR6LCLVp4EhYY4Mg&_nc_ss=7b2a8&oh=00_Af-jM9NjYBfFLleQg51BIgTna2zB9WiuAxdkSHUFft9kYw&oe=6A3910DA" alt="eTouch Computers Logo" class="login-logo-img">
     <div class="login-logo">eTouch Computers</div>
     <div class="login-sub">Point of Sale &amp; Inventory System</div>
     <div class="login-error" id="login-error">Incorrect password. Please try again.</div>
@@ -112,19 +127,27 @@ th{background:#333!important;-webkit-print-color-adjust:exact;print-color-adjust
         <label>Password</label>
         <input type="password" id="login-password" placeholder="Enter your password" required autofocus>
       </div>
-      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:12px;">Sign In</button>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:11px;font-size:.95rem;">Sign In</button>
     </form>
+    <div style="margin-top:18px;text-align:center">
+      <button class="btn btn-secondary btn-sm" onclick="logout(); localStorage.removeItem('pos_auth')" style="font-size:.78rem">🗑️ Reset All Data</button>
+    </div>
   </div>
 </div>
 
-<!-- MAIN APP -->
+<!-- ═══════════════ MAIN APP ═══════════════ -->
 <div id="app" style="display:none">
   <header>
-    <div class="logo">eTouch <span>Computers</span> POS</div>
+    <div class="logo-wrap">
+      <img src="https://scontent-hou1-1.xx.fbcdn.net/v/t39.30808-6/707329185_4350854538565537_1534657188143859289_n.jpg?stp=dst-jpg_tt6&cstp=mx1254x1254&ctp=s1254x1254&_nc_cat=103&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=mUAKHd2mdHYQ7kNvwEdk4wZ&_nc_oc=Adq6JweMZMfa5rP8YVtzwWnMmHOr2mHFFq4gA0THo8un6kprqzWDeq_6Ja2LzwtR2YrlRvHoNk6shKniD7-Ty6E2&_nc_zt=23&_nc_ht=scontent-hou1-1.xx&_nc_gid=rjQO24SR6LCLVp4EhYY4Mg&_nc_ss=7b2a8&oh=00_Af-jM9NjYBfFLleQg51BIgTna2zB9WiuAxdkSHUFft9kYw&oe=6A3910DA" alt="Logo">
+      <div class="logo">eTouch Computers<span id="header-tagline">POS System</span></div>
+    </div>
     <nav>
       <button class="active" data-page="dashboard" onclick="showPage('dashboard')">📊 Dashboard</button>
       <button data-page="invoices" onclick="showPage('invoices')">🧾 Invoices</button>
       <button data-page="inventory" onclick="showPage('inventory')">📦 Inventory</button>
+      <button data-page="customers" onclick="showPage('customers')">👥 Customers</button>
+      <button data-page="categories" onclick="showPage('categories')">🏷️ Categories</button>
       <button data-page="settings" onclick="showPage('settings')">⚙️ Settings</button>
       <button class="logout-btn" onclick="logout()">🚪 Logout</button>
     </nav>
@@ -148,6 +171,7 @@ th{background:#333!important;-webkit-print-color-adjust:exact;print-color-adjust
       <div style="display:flex;gap:10px;flex-wrap:wrap">
         <button class="btn btn-primary" onclick="newInvoice()">➕ New Invoice</button>
         <button class="btn btn-success" onclick="openModal('product-modal');resetProductForm()">📦 Add Product</button>
+        <button class="btn btn-secondary" onclick="showPage('customers'); setTimeout(()=>openModal('customer-modal'),100)">👤 Add Customer</button>
         <button class="btn btn-secondary" onclick="showPage('invoices')">📋 All Invoices</button>
         <button class="btn btn-secondary" onclick="showPage('inventory')">🔍 Inventory</button>
       </div>
@@ -157,13 +181,13 @@ th{background:#333!important;-webkit-print-color-adjust:exact;print-color-adjust
   <!-- INVOICES -->
   <div id="page-invoices" class="page">
     <div class="card">
-      <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+      <div class="card-title">
         <span>🧾 Invoices</span>
         <button class="btn btn-primary btn-sm" onclick="newInvoice()">➕ New Invoice</button>
       </div>
       <div class="search-bar">
         <input type="text" id="inv-search" placeholder="Search by invoice # or customer..." oninput="renderInvoices()">
-        <select id="inv-status-filter" onchange="renderInvoices()" style="max-width:160px">
+        <select id="inv-status-filter" onchange="renderInvoices()" style="max-width:155px">
           <option value="">All Statuses</option>
           <option value="paid">Paid</option>
           <option value="pending">Pending</option>
@@ -177,17 +201,42 @@ th{background:#333!important;-webkit-print-color-adjust:exact;print-color-adjust
   <!-- INVENTORY -->
   <div id="page-inventory" class="page">
     <div class="card">
-      <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+      <div class="card-title">
         <span>📦 Inventory</span>
         <button class="btn btn-success btn-sm" onclick="openModal('product-modal');resetProductForm()">➕ Add Product</button>
       </div>
       <div class="search-bar">
         <input type="text" id="prod-search" placeholder="Search products..." oninput="renderProducts()">
-        <select id="cat-filter" onchange="renderProducts()" style="max-width:160px">
+        <select id="cat-filter" onchange="renderProducts()" style="max-width:155px">
           <option value="">All Categories</option>
         </select>
       </div>
       <div id="products-list"></div>
+    </div>
+  </div>
+
+  <!-- CUSTOMERS -->
+  <div id="page-customers" class="page">
+    <div class="card">
+      <div class="card-title">
+        <span>👥 Customers</span>
+        <button class="btn btn-primary btn-sm" onclick="openModal('customer-modal')">➕ Add Customer</button>
+      </div>
+      <div class="search-bar">
+        <input type="text" id="cust-search" placeholder="Search by name, email, or phone..." oninput="renderCustomers()">
+      </div>
+      <div id="customers-list"></div>
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <div id="page-categories" class="page">
+    <div class="card">
+      <div class="card-title">
+        <span>🏷️ Product Categories</span>
+        <button class="btn btn-success btn-sm" onclick="openModal('category-modal')">➕ Add Category</button>
+      </div>
+      <div id="categories-list"></div>
     </div>
   </div>
 
@@ -200,16 +249,17 @@ th{background:#333!important;-webkit-print-color-adjust:exact;print-color-adjust
         <div class="form-group"><label>Address</label><textarea id="s-shop-addr" rows="2"></textarea></div>
         <div class="form-group"><label>Phone</label><input type="text" id="s-shop-phone"></div>
         <div class="form-group"><label>Email</label><input type="email" id="s-shop-email"></div>
+        <div class="form-group"><label>Logo URL</label><input type="text" id="s-logo-url" placeholder="https://..."></div>
         <button class="btn btn-primary" onclick="saveShopInfo()">Save Shop Info</button>
       </div>
       <div class="card">
         <div class="card-title">🛡️ Security</div>
         <div class="form-group"><label>New Password</label><input type="password" id="s-new-pw" placeholder="Leave blank to keep current"></div>
         <button class="btn btn-danger" onclick="changePw()">Update Password</button>
-        <hr style="margin:20px 0;border:none;border-top:1px solid var(--silver)">
+        <hr style="margin:18px 0;border:none;border-top:1px solid var(--silver)">
         <div class="card-title">📐 Invoice Defaults</div>
         <div class="form-group"><label>Tax Rate (%)</label><input type="number" id="s-tax-rate" step="0.01" min="0"></div>
-        <div class="form-group"><label>Invoice Prefix</label><input type="text" id="s-inv-prefix" placeholder="e.g. INV-"></div>
+        <div class="form-group"><label>Invoice Prefix</label><input type="text" id="s-inv-prefix"></div>
         <button class="btn btn-primary" onclick="saveInvSettings()">Save Invoice Settings</button>
       </div>
     </div>
@@ -236,7 +286,13 @@ th{background:#333!important;-webkit-print-color-adjust:exact;print-color-adjust
     <form id="inv-form" onsubmit="saveInvoice(event)">
       <input type="hidden" id="inv-id">
       <div class="row">
-        <div class="form-group"><label>Customer Name *</label><input type="text" id="inv-customer" required></div>
+        <div class="form-group">
+          <label>Customer *</label>
+          <select id="inv-customer" required onchange="invCustomerChanged()">
+            <option value="">— Select or type new —</option>
+          </select>
+          <input type="text" id="inv-customer-new" placeholder="Or type new customer name" style="margin-top:6px;display:none">
+        </div>
         <div class="form-group"><label>Date *</label><input type="date" id="inv-date" required></div>
       </div>
       <div class="row">
@@ -251,13 +307,13 @@ th{background:#333!important;-webkit-print-color-adjust:exact;print-color-adjust
           </select>
         </div>
       </div>
-      <div style="margin-top:4px">
-        <label style="display:block;font-size:.78rem;font-weight:600;color:#555;margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Line Items</label>
+      <div>
+        <label style="display:block;font-size:.76rem;font-weight:600;color:#555;margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">Line Items</label>
         <div id="line-items"></div>
         <button type="button" class="btn btn-secondary btn-sm" onclick="addLineItem()" style="margin-top:8px">➕ Add Item</button>
       </div>
       <div class="invoice-summary" id="inv-summary"></div>
-      <div style="margin-top:16px;display:flex;gap:8px;justify-content:flex-end">
+      <div style="margin-top:14px;display:flex;gap:8px;justify-content:flex-end">
         <button type="button" class="btn btn-secondary" onclick="closeModal('invoice-modal')">Cancel</button>
         <button type="submit" class="btn btn-success">💾 Save Invoice</button>
         <button type="button" class="btn btn-primary" onclick="window.print()">🖨️ Print</button>
@@ -274,7 +330,7 @@ th{background:#333!important;-webkit-print-color-adjust:exact;print-color-adjust
       <button class="modal-close" onclick="closeModal('inv-view-modal')">×</button>
     </div>
     <div id="inv-view-content"></div>
-    <div style="margin-top:16px;display:flex;gap:8px;justify-content:flex-end">
+    <div style="margin-top:14px;display:flex;gap:8px;justify-content:flex-end">
       <button class="btn btn-secondary" onclick="closeModal('inv-view-modal')">Close</button>
       <button class="btn btn-primary" onclick="window.print()">🖨️ Print</button>
     </div>
@@ -293,12 +349,18 @@ th{background:#333!important;-webkit-print-color-adjust:exact;print-color-adjust
       <div class="form-group"><label>Product Name *</label><input type="text" id="prod-name" required></div>
       <div class="row">
         <div class="form-group"><label>SKU / Part #</label><input type="text" id="prod-sku"></div>
-        <div class="form-group"><label>Category</label>
+        <div class="form-group">
+          <label>Category</label>
           <select id="prod-cat">
-            <option value="GPU">GPU</option><option value="CPU">CPU</option><option value="RAM">RAM</option>
-            <option value="Storage">Storage</option><option value="Motherboard">Motherboard</option>
-            <option value="PSU">Power Supply</option><option value="Case">Case</option>
-            <option value="Peripheral">Peripheral</option><option value="Cable">Cable</option>
+            <option value="GPU">GPU</option>
+            <option value="CPU">CPU</option>
+            <option value="RAM">RAM</option>
+            <option value="Storage">Storage</option>
+            <option value="Motherboard">Motherboard</option>
+            <option value="PSU">Power Supply</option>
+            <option value="Case">Case</option>
+            <option value="Peripheral">Peripheral</option>
+            <option value="Cable">Cable</option>
             <option value="Other">Other</option>
           </select>
         </div>
@@ -312,9 +374,51 @@ th{background:#333!important;-webkit-print-color-adjust:exact;print-color-adjust
         <div class="form-group"><label>Low Stock Alert</label><input type="number" id="prod-low" min="0" value="5"></div>
       </div>
       <div class="form-group"><label>Notes</label><textarea id="prod-notes" rows="2"></textarea></div>
-      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px">
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px">
         <button type="button" class="btn btn-secondary" onclick="closeModal('product-modal')">Cancel</button>
         <button type="submit" class="btn btn-success">💾 Save Product</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- CUSTOMER MODAL -->
+<div id="customer-modal" class="modal-overlay" onclick="closeOnOverlay(event,'customer-modal')">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="cust-modal-title">Add Customer</div>
+      <button class="modal-close" onclick="closeModal('customer-modal')">×</button>
+    </div>
+    <form id="cust-form" onsubmit="saveCustomer(event)">
+      <input type="hidden" id="cust-id">
+      <div class="form-group"><label>Full Name *</label><input type="text" id="cust-name" required></div>
+      <div class="row">
+        <div class="form-group"><label>Phone</label><input type="text" id="cust-phone" placeholder="(555) 123-4567"></div>
+        <div class="form-group"><label>Email</label><input type="email" id="cust-email" placeholder="customer@example.com"></div>
+      </div>
+      <div class="form-group"><label>Address</label><textarea id="cust-address" rows="2" placeholder="Street, City, State, ZIP"></textarea></div>
+      <div class="form-group"><label>Notes</label><textarea id="cust-notes" rows="2" placeholder="Any notes about this customer..."></textarea></div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('customer-modal')">Cancel</button>
+        <button type="submit" class="btn btn-success">💾 Save Customer</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- CATEGORY MODAL -->
+<div id="category-modal" class="modal-overlay" onclick="closeOnOverlay(event,'category-modal')">
+  <div class="modal" style="max-width:440px">
+    <div class="modal-header">
+      <div class="modal-title" id="cat-modal-title">Add Category</div>
+      <button class="modal-close" onclick="closeModal('category-modal')">×</button>
+    </div>
+    <form id="cat-form" onsubmit="saveCategory(event)">
+      <input type="hidden" id="cat-id">
+      <div class="form-group"><label>Category Name *</label><input type="text" id="cat-name" required placeholder="e.g. Monitors, Keyboards, etc."></div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('category-modal')">Cancel</button>
+        <button type="submit" class="btn btn-success">💾 Save Category</button>
       </div>
     </form>
   </div>
@@ -333,13 +437,13 @@ th{background:#333!important;-webkit-print-color-adjust:exact;print-color-adjust
 
 <script>
 /* ═══════════════════════════════════════════════
-   DATA STORE (localStorage)
+   DATA STORE
 ═══════════════════════════════════════════════ */
 const LS_KEY = 'etouch_pos_v1';
-let S = {}; // in-memory state
+let S = {};
 
 function loadStore() {
-  try { S = JSON.parse(localStorage.getItem(LS_KEY) || '{}') } catch { S = {} }
+  try { S = JSON.parse(localStorage.getItem(LS_KEY) || '{}'); } catch { S = {}; }
   if (!S.products) {
     S.products = [
       {id:1,name:'NVIDIA RTX 4070 Graphics Card',sku:'GPU-001',category:'GPU',cost:699.99,price:899.99,stock:5,lowStock:3,notes:''},
@@ -353,10 +457,12 @@ function loadStore() {
     ];
   }
   if (!S.invoices) S.invoices = [];
+  if (!S.customers) S.customers = [];
+  if (!S.categories) S.categories = ['GPU','CPU','RAM','Storage','Motherboard','PSU','Case','Peripheral','Cable','Other'];
   if (!S.settings) {
-    S.settings = { password:'etouch2024', shopName:'eTouch Computers', shopAddr:'123 Main St, City, State 12345', shopPhone:'(555) 123-4567', shopEmail:'info@etouchcomputers.com', taxRate:0, invPrefix:'INV-', invCounter:1000 };
+    S.settings = { password:'etouch2024', shopName:'eTouch Computers', shopAddr:'123 Main St, City, State 12345', shopPhone:'(555) 123-4567', shopEmail:'info@etouchcomputers.com', logoUrl:'', taxRate:0, invPrefix:'INV-', invCounter:1000 };
   }
-  if (!S.nextId) { S.nextId = Math.max(0, ...S.products.map(p=>p.id), ...S.invoices.map(i=>i.id)) + 1; }
+  if (!S.nextId) { S.nextId = Math.max(0, ...S.products.map(p=>p.id), ...S.invoices.map(i=>i.id), ...S.customers.map(c=>c.id)) + 1; }
   save();
 }
 
@@ -368,18 +474,12 @@ function nextId() { const id = S.nextId++; save(); return id; }
 ═══════════════════════════════════════════════ */
 document.getElementById('login-form').addEventListener('submit', handleLogin);
 
-// Init — runs immediately when script parses
 (function init() {
   try {
     const auth = localStorage.getItem('pos_auth');
-    // Ensure store is at least loaded
     loadStore();
     if (auth === '1') {
-      document.getElementById('login-page').style.display = 'none';
-      document.getElementById('app').style.display = 'block';
-      loadSettingsUI();
-      loadDashboard();
-      populateCatFilter();
+      showApp();
     } else {
       showLogin();
     }
@@ -393,13 +493,22 @@ function showLogin() {
   document.getElementById('login-page').style.display = 'flex';
   document.getElementById('app').style.display = 'none';
 }
+
 function showApp() {
-  loadStore();
   document.getElementById('login-page').style.display = 'none';
   document.getElementById('app').style.display = 'block';
+  updateLogo();
   loadSettingsUI();
   loadDashboard();
   populateCatFilter();
+}
+
+/* ═══════════════════════════════════════════════
+   LOGO
+═══════════════════════════════════════════════ */
+function updateLogo() {
+  const url = S.settings.logoUrl || 'https://scontent-hou1-1.xx.fbcdn.net/v/t39.30808-6/707329185_4350854538565537_1534657188143859289_n.jpg?stp=dst-jpg_tt6&cstp=mx1254x1254&ctp=s1254x1254&_nc_cat=103&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=mUAKHd2mdHYQ7kNvwEdk4wZ&_nc_oc=Adq6JweMZMfa5rP8YVtzwWnMmHOr2mHFFq4gA0THo8un6kprqzWDeq_6Ja2LzwtR2YrlRvHoNk6shKniD7-Ty6E2&_nc_zt=23&_nc_ht=scontent-hou1-1.xx&_nc_gid=rjQO24SR6LCLVp4EhYY4Mg&_nc_ss=7b2a8&oh=00_Af-jM9NjYBfFLleQg51BIgTna2zB9WiuAxdkSHUFft9kYw&oe=6A3910DA';
+  document.querySelectorAll('.logo-wrap img, .login-logo-img').forEach(img => { img.src = url; });
 }
 
 /* ═══════════════════════════════════════════════
@@ -415,17 +524,18 @@ function handleLogin(e) {
     const err = document.getElementById('login-error');
     err.style.display = 'block';
     document.getElementById('login-password').value = '';
-    err.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 }
+
 function logout() {
   localStorage.removeItem('pos_auth');
   showLogin();
   document.getElementById('login-password').value = '';
+  document.getElementById('login-error').style.display = 'none';
 }
 
 /* ═══════════════════════════════════════════════
-   NAV
+   NAVIGATION
 ═══════════════════════════════════════════════ */
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -435,7 +545,9 @@ function showPage(name) {
   if (btn) btn.classList.add('active');
   if (name === 'dashboard') loadDashboard();
   if (name === 'invoices') renderInvoices();
-  if (name === 'inventory') renderProducts();
+  if (name === 'inventory') { renderProducts(); populateCatFilter(); }
+  if (name === 'customers') renderCustomers();
+  if (name === 'categories') renderCategories();
   if (name === 'settings') loadSettingsUI();
 }
 window.showPage = showPage;
@@ -454,7 +566,9 @@ function loadDashboard() {
     <div class="stat-card g"><div class="stat-label">Revenue (Paid)</div><div class="stat-value">$${fmt(totalRev)}</div></div>
     <div class="stat-card o"><div class="stat-label">Pending</div><div class="stat-value">$${fmt(pendingAmt)}</div></div>
     <div class="stat-card r"><div class="stat-label">Low Stock</div><div class="stat-value">${lowProducts.length}</div></div>
-    <div class="stat-card"><div class="stat-label">Total Products</div><div class="stat-value">${S.products.length}</div></div>`;
+    <div class="stat-card"><div class="stat-label">Total Products</div><div class="stat-value">${S.products.length}</div></div>
+    <div class="stat-card"><div class="stat-label">Customers</div><div class="stat-value">${S.customers.length}</div></div>
+    <div class="stat-card"><div class="stat-label">Invoices</div><div class="stat-value">${S.invoices.length}</div></div>`;
 
   // Recent invoices
   const recent = [...S.invoices].sort((a,b) => b.id - a.id).slice(0, 6);
@@ -499,7 +613,7 @@ function renderInvoices() {
   const search = (document.getElementById('inv-search')?.value || '').toLowerCase();
   const status = document.getElementById('inv-status-filter')?.value || '';
   const filtered = S.invoices.filter(inv => {
-    const matchSearch = !search || inv.invoiceNo.toLowerCase().includes(search) || inv.customer.toLowerCase().includes(search);
+    const matchSearch = !search || inv.invoiceNo.toLowerCase().includes(search) || (inv.customer||'').toLowerCase().includes(search);
     const matchStatus = !status || inv.status === status;
     return matchSearch && matchStatus;
   }).sort((a,b) => b.id - a.id);
@@ -525,13 +639,31 @@ function renderInvoices() {
   </tbody></table>`;
 }
 
+function populateCustomerSelect(selected) {
+  const sel = document.getElementById('inv-customer');
+  if (!sel) return;
+  sel.innerHTML = '<option value="">— Select or type new —</option>';
+  S.customers.forEach(c => { sel.innerHTML += `<option value="${e(c.name)}">${e(c.name)}</option>`; });
+  if (selected) sel.value = selected;
+}
+
+function invCustomerChanged() {
+  const sel = document.getElementById('inv-customer');
+  const newInput = document.getElementById('inv-customer-new');
+  if (sel.value === '') newInput.style.display = 'block';
+  else newInput.style.display = 'none';
+}
+
 function newInvoice() {
   document.getElementById('inv-modal-title').textContent = 'New Invoice';
   document.getElementById('inv-id').value = '';
   document.getElementById('inv-customer').value = '';
+  document.getElementById('inv-customer-new').value = '';
+  document.getElementById('inv-customer-new').style.display = 'none';
   document.getElementById('inv-date').value = today();
   document.getElementById('inv-status').value = 'pending';
   document.getElementById('inv-payment').value = 'cash';
+  populateCustomerSelect('');
   document.getElementById('line-items').innerHTML = '';
   addLineItem();
   updateInvSummary();
@@ -542,7 +674,9 @@ function editInvoice(id) {
   const inv = S.invoices.find(i => i.id === id); if (!inv) return;
   document.getElementById('inv-modal-title').textContent = 'Edit Invoice';
   document.getElementById('inv-id').value = id;
-  document.getElementById('inv-customer').value = inv.customer;
+  populateCustomerSelect(inv.customer);
+  document.getElementById('inv-customer-new').value = '';
+  document.getElementById('inv-customer-new').style.display = inv.customer && !S.customers.find(c=>c.name===inv.customer) ? 'block' : 'none';
   document.getElementById('inv-date').value = inv.date;
   document.getElementById('inv-status').value = inv.status;
   document.getElementById('inv-payment').value = inv.paymentMethod || 'cash';
@@ -554,10 +688,16 @@ function editInvoice(id) {
   openModal('invoice-modal');
 }
 
+function getInvoiceCustomer() {
+  const sel = document.getElementById('inv-customer').value;
+  if (sel) return sel;
+  return document.getElementById('inv-customer-new').value.trim() || 'Walk-in Customer';
+}
+
 function saveInvoice(e) {
   e.preventDefault();
   const id = document.getElementById('inv-id').value;
-  const customer = document.getElementById('inv-customer').value.trim();
+  const customer = getInvoiceCustomer();
   const date = document.getElementById('inv-date').value;
   const status = document.getElementById('inv-status').value;
   const paymentMethod = document.getElementById('inv-payment').value;
@@ -580,7 +720,6 @@ function saveInvoice(e) {
   if (id) {
     const inv = S.invoices.find(i => i.id == id);
     if (inv) {
-      // Restore stock if was previously paid and now isn't
       if (inv.status === 'paid' && status !== 'paid') {
         inv.items.forEach(item => {
           const prod = S.products.find(p => p.name.toLowerCase() === item.desc.toLowerCase());
@@ -596,13 +735,10 @@ function saveInvoice(e) {
     S.invoices.push({ id: nextId(), invoiceNo, customer, date, status, paymentMethod, items, subtotal, taxRate, taxAmount, total });
   }
 
-  // Update stock if paid
   if (status === 'paid') {
     items.forEach(item => {
       const prod = S.products.find(p => p.name.toLowerCase() === item.desc.toLowerCase());
-      if (prod) {
-        prod.stock = Math.max(0, prod.stock - item.qty);
-      }
+      if (prod) prod.stock = Math.max(0, prod.stock - item.qty);
     });
   }
 
@@ -622,20 +758,37 @@ function deleteInvoice(id) {
 
 function viewInvoice(id) {
   const inv = S.invoices.find(i => i.id === id); if (!inv) return;
-  const { shopName, shopAddr, shopPhone } = S.settings;
+  const { shopName, shopAddr, shopPhone, logoUrl } = S.settings;
+  const logoToUse = logoUrl || 'https://scontent-hou1-1.xx.fbcdn.net/v/t39.30808-6/707329185_4350854538565537_1534657188143859289_n.jpg?stp=dst-jpg_tt6&cstp=mx1254x1254&ctp=s1254x1254&_nc_cat=103&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=mUAKHd2mdHYQ7kNvwEdk4wZ&_nc_oc=Adq6JweMZMfa5rP8YVtzwWnMmHOr2mHFFq4gA0THo8un6kprqzWDeq_6Ja2LzwtR2YrlRvHoNk6shKniD7-Ty6E2&_nc_zt=23&_nc_ht=scontent-hou1-1.xx&_nc_gid=rjQO24SR6LCLVp4EhYY4Mg&_nc_ss=7b2a8&oh=00_Af-jM9NjYBfFLleQg51BIgTna2zB9WiuAxdkSHUFft9kYw&oe=6A3910DA';
   const taxRate = inv.taxRate || 0;
+  const cust = S.customers.find(c => c.name === inv.customer);
 
   const itemsHtml = inv.items.map(item =>
     `<tr><td>${e(item.desc)}</td><td style="text-align:center">${item.qty}</td><td style="text-align:right">$${fmt(item.price)}</td><td style="text-align:right">$${fmt(item.total)}</td></tr>`
   ).join('');
 
+  let custInfo = '';
+  if (cust) {
+    custInfo = `<div style="margin-bottom:10px">
+      <strong>Bill To:</strong> ${e(cust.name)}<br>
+      ${cust.phone ? `<span style="color:#666">📞 ${e(cust.phone)}</span><br>` : ''}
+      ${cust.email ? `<span style="color:#666">✉️ ${e(cust.email)}</span><br>` : ''}
+      ${cust.address ? `<span style="color:#666">🏠 ${e(cust.address)}</span>` : ''}
+    </div>`;
+  } else {
+    custInfo = `<div style="margin-bottom:10px"><strong>Bill To:</strong> ${e(inv.customer)}</div>`;
+  }
+
   document.getElementById('inv-view-content').innerHTML = `
-    <div style="border:2px solid var(--navy);border-radius:10px;padding:24px">
+    <div class="invoice-view-box">
       <div class="invoice-header">
-        <div>
-          <div class="invoice-shop">${e(shopName)}</div>
-          <div style="color:#666;font-size:.84rem">${e(shopAddr)}</div>
-          <div style="color:#666;font-size:.84rem">${e(shopPhone)}</div>
+        <div style="display:flex;align-items:center;gap:14px">
+          <img src="${logoToUse}" class="invoice-logo" alt="Logo" onerror="this.style.display='none'">
+          <div>
+            <div class="invoice-shop">${e(shopName)}</div>
+            <div style="color:#666;font-size:.82rem">${e(shopAddr)}</div>
+            <div style="color:#666;font-size:.82rem">${e(shopPhone)}</div>
+          </div>
         </div>
         <div class="invoice-meta">
           <strong>${e(inv.invoiceNo)}</strong>
@@ -644,15 +797,15 @@ function viewInvoice(id) {
           Paid via: ${e(inv.paymentMethod || '—')}
         </div>
       </div>
-      <div style="margin-bottom:12px"><strong>Bill To:</strong> ${e(inv.customer)}</div>
-      <table>
+      ${custInfo}
+      <table class="invoice-items-table">
         <thead><tr><th>Description</th><th style="text-align:center">Qty</th><th style="text-align:right">Unit Price</th><th style="text-align:right">Total</th></tr></thead>
         <tbody>${itemsHtml}</tbody>
       </table>
       <div class="invoice-total-row">
         <div class="invoice-total-box">
-          <div class="invoice-total-label">Subtotal</div><div style="margin-bottom:5px">$${fmt(inv.subtotal)}</div>
-          ${taxRate > 0 ? `<div class="invoice-total-label">Tax (${taxRate}%)</div><div style="margin-bottom:5px">$${fmt(inv.taxAmount)}</div>` : ''}
+          <div class="invoice-total-label">Subtotal</div><div style="margin-bottom:4px">$${fmt(inv.subtotal)}</div>
+          ${taxRate > 0 ? `<div class="invoice-total-label">Tax (${taxRate}%)</div><div style="margin-bottom:4px">$${fmt(inv.taxAmount)}</div>` : ''}
           <div class="invoice-total-label">TOTAL</div>
           <div class="invoice-total-value">$${fmt(inv.total)}</div>
         </div>
@@ -695,7 +848,7 @@ function updateInvSummary() {
   const taxRow = taxRate > 0 ? `<span>Tax (${taxRate}%): <strong>$${fmt(taxAmount)}</strong></span>` : '';
   document.getElementById('inv-summary').innerHTML = `
     <span>Subtotal: <strong>$${fmt(subtotal)}</strong></span> ${taxRow}
-    <span style="font-size:1rem;color:var(--navy);margin-left:16px">Total: <strong>$${fmt(total)}</strong></span>`;
+    <span style="font-size:1rem;color:var(--navy);margin-left:14px">Total: <strong>$${fmt(total)}</strong></span>`;
 }
 
 /* ═══════════════════════════════════════════════
@@ -712,7 +865,7 @@ function renderProducts() {
 
   const div = document.getElementById('products-list');
   if (filtered.length === 0) {
-    div.innerHTML = '<div class="alert alert-info">No products found.</div>';
+    div.innerHTML = '<div class="empty-state"><div class="icon">📦</div>No products found.</div>';
     return;
   }
   div.innerHTML = `<table><thead><tr><th>Name / SKU</th><th>Category</th><th class="text-right">Cost</th><th class="text-right">Price</th><th class="text-right">Stock</th><th></th></tr></thead><tbody>
@@ -721,13 +874,13 @@ function renderProducts() {
       const profitPct = p.cost > 0 ? ((profit / p.cost) * 100).toFixed(0) : '—';
       const stockColor = p.stock === 0 ? 'var(--red)' : p.stock <= p.lowStock ? 'var(--orange)' : 'var(--green)';
       return `<tr>
-        <td><strong>${e(p.name)}</strong><br><span style="font-size:.76rem;color:#888">${e(p.sku || 'No SKU')}</span></td>
-        <td><span class="badge badge-blue">${p.category}</span></td>
+        <td><strong>${e(p.name)}</strong><br><span style="font-size:.74rem;color:#888">${e(p.sku || 'No SKU')}</span></td>
+        <td><span class="badge badge-blue">${e(p.category)}</span></td>
         <td class="text-right">$${fmt(p.cost)}</td>
-        <td class="text-right"><strong>$${fmt(p.price)}</strong><br><span style="font-size:.74rem;color:var(--green)">+$${fmt(profit)} (${profitPct}%)</span></td>
+        <td class="text-right"><strong>$${fmt(p.price)}</strong><br><span style="font-size:.72rem;color:var(--green)">+$${fmt(profit)} (${profitPct}%)</span></td>
         <td class="text-right">
           <span style="color:${stockColor}"><strong>${p.stock}</strong></span>
-          <span style="font-size:.72rem;color:#999"> / min ${p.lowStock}</span>
+          <span style="font-size:.7rem;color:#999"> / min ${p.lowStock}</span>
         </td>
         <td class="actions">
           <button class="btn btn-secondary btn-sm" onclick="adjustStockUI(${p.id})">📦</button>
@@ -806,9 +959,9 @@ function adjustStockUI(id) {
   document.getElementById('stock-modal-body').innerHTML = `
     <div class="form-group"><label>Product</label><input type="text" value="${e(p.name)}" readonly style="background:var(--silver)"></div>
     <div class="form-group"><label>Current Stock</label><input type="number" id="stock-adj-val" value="${p.stock}" readonly style="background:var(--silver)"></div>
-    <div class="form-group"><label>Adjustment <span style="font-weight:400;text-transform:none;font-size:.78rem">(positive = add, negative = remove)</span></label>
+    <div class="form-group"><label>Adjustment <span style="font-weight:400;text-transform:none;font-size:.74rem">(positive = add, negative = remove)</span></label>
     <input type="number" id="stock-adj-delta" placeholder="e.g. 10 or -3" autofocus></div>
-    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px">
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px">
       <button class="btn btn-secondary" onclick="closeModal('stock-modal')">Cancel</button>
       <button class="btn btn-success" onclick="applyStockAdj(${id})">Apply</button>
     </div>`;
@@ -828,6 +981,141 @@ function applyStockAdj(id) {
 }
 
 /* ═══════════════════════════════════════════════
+   CUSTOMERS
+═══════════════════════════════════════════════ */
+function renderCustomers() {
+  const search = (document.getElementById('cust-search')?.value || '').toLowerCase();
+  const filtered = S.customers.filter(c => {
+    if (!search) return true;
+    return c.name.toLowerCase().includes(search) ||
+      (c.email||'').toLowerCase().includes(search) ||
+      (c.phone||'').toLowerCase().includes(search) ||
+      (c.address||'').toLowerCase().includes(search);
+  }).sort((a,b) => a.name.localeCompare(b.name));
+
+  const div = document.getElementById('customers-list');
+  if (filtered.length === 0) {
+    div.innerHTML = '<div class="empty-state"><div class="icon">👥</div>No customers found.<br><button class="btn btn-primary" style="margin-top:12px" onclick="openModal(\'customer-modal\')">➕ Add First Customer</button></div>';
+    return;
+  }
+  div.innerHTML = `<table><thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Address</th><th></th></tr></thead><tbody>
+    ${filtered.map(c => `<tr>
+      <td><strong>${e(c.name)}</strong></td>
+      <td>${e(c.phone || '—')}</td>
+      <td>${e(c.email || '—')}</td>
+      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e(c.address || '—')}</td>
+      <td class="actions">
+        <button class="btn btn-primary btn-sm" onclick="editCustomer(${c.id})">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteCustomer(${c.id})">🗑️</button>
+      </td>
+    </tr>`).join('')}
+  </tbody></table>`;
+}
+
+function editCustomer(id) {
+  const c = S.customers.find(x => x.id === id); if (!c) return;
+  document.getElementById('cust-modal-title').textContent = 'Edit Customer';
+  document.getElementById('cust-id').value = id;
+  document.getElementById('cust-name').value = c.name;
+  document.getElementById('cust-phone').value = c.phone || '';
+  document.getElementById('cust-email').value = c.email || '';
+  document.getElementById('cust-address').value = c.address || '';
+  document.getElementById('cust-notes').value = c.notes || '';
+  openModal('customer-modal');
+}
+
+function saveCustomer(e) {
+  e.preventDefault();
+  const id = document.getElementById('cust-id').value;
+  const data = {
+    name: document.getElementById('cust-name').value.trim(),
+    phone: document.getElementById('cust-phone').value.trim(),
+    email: document.getElementById('cust-email').value.trim(),
+    address: document.getElementById('cust-address').value.trim(),
+    notes: document.getElementById('cust-notes').value.trim(),
+  };
+  if (!data.name) { alert('Customer name is required.'); return; }
+  if (id) {
+    const cust = S.customers.find(c => c.id == id);
+    if (cust) Object.assign(cust, data);
+  } else {
+    S.customers.push({ id: nextId(), ...data });
+  }
+  save();
+  closeModal('customer-modal');
+  renderCustomers();
+  loadDashboard();
+}
+
+function deleteCustomer(id) {
+  if (!confirm('Delete this customer?')) return;
+  S.customers = S.customers.filter(c => c.id !== id);
+  save();
+  renderCustomers();
+}
+
+/* ═══════════════════════════════════════════════
+   CATEGORIES
+═══════════════════════════════════════════════ */
+function renderCategories() {
+  const div = document.getElementById('categories-list');
+  if (S.categories.length === 0) {
+    div.innerHTML = '<div class="empty-state"><div class="icon">🏷️</div>No categories yet.</div>';
+    return;
+  }
+  // Count products per category
+  const counts = {};
+  S.products.forEach(p => { counts[p.category] = (counts[p.category] || 0) + 1; });
+
+  div.innerHTML = `<table><thead><tr><th>Category</th><th class="text-right">Products</th><th></th></tr></thead><tbody>
+    ${S.categories.map(cat => `<tr>
+      <td><strong>${e(cat)}</strong></td>
+      <td class="text-right">${counts[cat] || 0}</td>
+      <td class="actions">
+        <button class="btn btn-primary btn-sm" onclick="editCategory('${eAttr(cat)}')">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteCategory('${eAttr(cat)}')" ${counts[cat] > 0 ? 'title="Cannot delete: products exist" disabled style="opacity:.4"' : ''}>🗑️</button>
+      </td>
+    </tr>`).join('')}
+  </tbody></table>`;
+}
+
+function editCategory(name) {
+  document.getElementById('cat-id').value = name;
+  document.getElementById('cat-name').value = name;
+  openModal('category-modal');
+}
+
+function saveCategory(e) {
+  e.preventDefault();
+  const oldName = document.getElementById('cat-id').value;
+  const newName = document.getElementById('cat-name').value.trim();
+  if (!newName) return;
+
+  if (oldName !== newName) {
+    // Update category name
+    const idx = S.categories.indexOf(oldName);
+    if (idx !== -1) S.categories[idx] = newName;
+    // Update products using this category
+    S.products.forEach(p => { if (p.category === oldName) p.category = newName; });
+  }
+  save();
+  closeModal('category-modal');
+  renderCategories();
+  populateCatFilter();
+  renderProducts();
+}
+
+function deleteCategory(name) {
+  const counts = S.products.filter(p => p.category === name).length;
+  if (counts > 0) { alert('Cannot delete — ' + counts + ' product(s) use this category. Reassign them first.'); return; }
+  if (!confirm('Delete category "' + name + '"?')) return;
+  S.categories = S.categories.filter(c => c !== name);
+  save();
+  renderCategories();
+  populateCatFilter();
+}
+
+/* ═══════════════════════════════════════════════
    SETTINGS
 ═══════════════════════════════════════════════ */
 function loadSettingsUI() {
@@ -835,6 +1123,7 @@ function loadSettingsUI() {
   document.getElementById('s-shop-addr').value = S.settings.shopAddr || '';
   document.getElementById('s-shop-phone').value = S.settings.shopPhone || '';
   document.getElementById('s-shop-email').value = S.settings.shopEmail || '';
+  document.getElementById('s-logo-url').value = S.settings.logoUrl || '';
   document.getElementById('s-tax-rate').value = S.settings.taxRate || 0;
   document.getElementById('s-inv-prefix').value = S.settings.invPrefix || 'INV-';
 }
@@ -844,7 +1133,9 @@ function saveShopInfo() {
   S.settings.shopAddr = document.getElementById('s-shop-addr').value.trim();
   S.settings.shopPhone = document.getElementById('s-shop-phone').value.trim();
   S.settings.shopEmail = document.getElementById('s-shop-email').value.trim();
+  S.settings.logoUrl = document.getElementById('s-logo-url').value.trim();
   save();
+  updateLogo();
   alert('Shop info saved!');
 }
 
@@ -868,7 +1159,7 @@ function changePw() {
    DATA EXPORT / IMPORT / RESET
 ═══════════════════════════════════════════════ */
 function exportData() {
-  const exp = { products: S.products, invoices: S.invoices, settings: S.settings, exportedAt: new Date().toISOString() };
+  const exp = { products: S.products, invoices: S.invoices, customers: S.customers, categories: S.categories, settings: S.settings, exportedAt: new Date().toISOString() };
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([JSON.stringify(exp, null, 2)], { type: 'application/json' }));
   a.download = 'etouch-pos-backup-' + new Date().toISOString().split('T')[0] + '.json';
@@ -884,8 +1175,10 @@ function importData(e) {
       if (!confirm('This will REPLACE all existing data. Continue?')) return;
       S.products = d.products || [];
       S.invoices = d.invoices || [];
+      S.customers = d.customers || [];
+      S.categories = d.categories && d.categories.length > 0 ? d.categories : ['GPU','CPU','RAM','Storage','Motherboard','PSU','Case','Peripheral','Cable','Other'];
       if (d.settings) Object.assign(S.settings, d.settings);
-      S.nextId = Math.max(0, ...S.products.map(p=>p.id), ...S.invoices.map(i=>i.id)) + 1;
+      S.nextId = Math.max(0, ...S.products.map(p=>p.id), ...S.invoices.map(i=>i.id), ...S.customers.map(c=>c.id)) + 1;
       save();
       alert('Data imported successfully!');
       showApp();
@@ -895,11 +1188,13 @@ function importData(e) {
 }
 
 function resetData() {
-  if (!confirm('⚠️ This will DELETE all invoices and reset your password. Are you sure?')) return;
-  if (!confirm('FINAL CONFIRM — type YES in the next prompt to proceed.')) return;
+  if (!confirm('⚠️ This will DELETE all invoices, products, customers and reset your password. Are you sure?')) return;
+  if (!confirm('FINAL CONFIRM — type YES to proceed.')) return;
   if (prompt('Type YES to confirm:') !== 'YES') return;
   S.invoices = [];
   S.products = [];
+  S.customers = [];
+  S.categories = ['GPU','CPU','RAM','Storage','Motherboard','PSU','Case','Peripheral','Cable','Other'];
   S.settings.password = 'etouch2024';
   S.settings.invCounter = 1000;
   S.nextId = 1;
@@ -915,7 +1210,7 @@ function openModal(id) { document.getElementById(id).classList.add('open'); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 function closeOnOverlay(e, id) { if (e.target.id === id) closeModal(id); }
 function populateCatFilter() {
-  const cats = [...new Set(S.products.map(p => p.category))].sort();
+  const cats = [...new Set(S.categories)].sort();
   const sel = document.getElementById('cat-filter');
   if (!sel) return;
   const cur = sel.value;
