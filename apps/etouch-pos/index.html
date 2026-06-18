@@ -118,7 +118,7 @@ th{background:#333!important;-webkit-print-color-adjust:exact;print-color-adjust
 <!-- ═══════════════ LOGIN PAGE ═══════════════ -->
 <div id="login-page">
   <div class="login-box">
-    <img src="https://scontent-hou1-1.xx.fbcdn.net/v/t39.30808-6/707329185_4350854538565537_1534657188143859289_n.jpg?stp=dst-jpg_tt6&cstp=mx1254x1254&ctp=s1254x1254&_nc_cat=103&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=mUAKHd2mdHYQ7kNvwEdk4wZ&_nc_oc=Adq6JweMZMfa5rP8YVtzwWnMmHOr2mHFFq4gA0THo8un6kprqzWDeq_6Ja2LzwtR2YrlRvHoNk6shKniD7-Ty6E2&_nc_zt=23&_nc_ht=scontent-hou1-1.xx&_nc_gid=rjQO24SR6LCLVp4EhYY4Mg&_nc_ss=7b2a8&oh=00_Af-jM9NjYBfFLleQg51BIgTna2zB9WiuAxdkSHUFft9kYw&oe=6A3910DA" alt="eTouch Computers Logo" class="login-logo-img">
+    <img src="/logo.jpg" alt="eTouch Computers Logo" class="login-logo-img">
     <div class="login-logo">eTouch Computers</div>
     <div class="login-sub">Point of Sale &amp; Inventory System</div>
     <div class="login-error" id="login-error">Incorrect password. Please try again.</div>
@@ -139,7 +139,7 @@ th{background:#333!important;-webkit-print-color-adjust:exact;print-color-adjust
 <div id="app" style="display:none">
   <header>
     <div class="logo-wrap">
-      <img src="https://scontent-hou1-1.xx.fbcdn.net/v/t39.30808-6/707329185_4350854538565537_1534657188143859289_n.jpg?stp=dst-jpg_tt6&cstp=mx1254x1254&ctp=s1254x1254&_nc_cat=103&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=mUAKHd2mdHYQ7kNvwEdk4wZ&_nc_oc=Adq6JweMZMfa5rP8YVtzwWnMmHOr2mHFFq4gA0THo8un6kprqzWDeq_6Ja2LzwtR2YrlRvHoNk6shKniD7-Ty6E2&_nc_zt=23&_nc_ht=scontent-hou1-1.xx&_nc_gid=rjQO24SR6LCLVp4EhYY4Mg&_nc_ss=7b2a8&oh=00_Af-jM9NjYBfFLleQg51BIgTna2zB9WiuAxdkSHUFft9kYw&oe=6A3910DA" alt="Logo">
+      <img src="/logo.jpg" alt="Logo">
       <div class="logo">eTouch Computers<span id="header-tagline">POS System</span></div>
     </div>
     <nav>
@@ -507,7 +507,7 @@ function showApp() {
    LOGO
 ═══════════════════════════════════════════════ */
 function updateLogo() {
-  const url = S.settings.logoUrl || 'https://scontent-hou1-1.xx.fbcdn.net/v/t39.30808-6/707329185_4350854538565537_1534657188143859289_n.jpg?stp=dst-jpg_tt6&cstp=mx1254x1254&ctp=s1254x1254&_nc_cat=103&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=mUAKHd2mdHYQ7kNvwEdk4wZ&_nc_oc=Adq6JweMZMfa5rP8YVtzwWnMmHOr2mHFFq4gA0THo8un6kprqzWDeq_6Ja2LzwtR2YrlRvHoNk6shKniD7-Ty6E2&_nc_zt=23&_nc_ht=scontent-hou1-1.xx&_nc_gid=rjQO24SR6LCLVp4EhYY4Mg&_nc_ss=7b2a8&oh=00_Af-jM9NjYBfFLleQg51BIgTna2zB9WiuAxdkSHUFft9kYw&oe=6A3910DA';
+  const url = S.settings.logoUrl || '/logo.jpg';
   document.querySelectorAll('.logo-wrap img, .login-logo-img').forEach(img => { img.src = url; });
 }
 
@@ -759,7 +759,7 @@ function deleteInvoice(id) {
 function viewInvoice(id) {
   const inv = S.invoices.find(i => i.id === id); if (!inv) return;
   const { shopName, shopAddr, shopPhone, logoUrl } = S.settings;
-  const logoToUse = logoUrl || 'https://scontent-hou1-1.xx.fbcdn.net/v/t39.30808-6/707329185_4350854538565537_1534657188143859289_n.jpg?stp=dst-jpg_tt6&cstp=mx1254x1254&ctp=s1254x1254&_nc_cat=103&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=mUAKHd2mdHYQ7kNvwEdk4wZ&_nc_oc=Adq6JweMZMfa5rP8YVtzwWnMmHOr2mHFFq4gA0THo8un6kprqzWDeq_6Ja2LzwtR2YrlRvHoNk6shKniD7-Ty6E2&_nc_zt=23&_nc_ht=scontent-hou1-1.xx&_nc_gid=rjQO24SR6LCLVp4EhYY4Mg&_nc_ss=7b2a8&oh=00_Af-jM9NjYBfFLleQg51BIgTna2zB9WiuAxdkSHUFft9kYw&oe=6A3910DA';
+  const logoToUse = logoUrl || '/logo.jpg';
   const taxRate = inv.taxRate || 0;
   const cust = S.customers.find(c => c.name === inv.customer);
 
