@@ -1,4 +1,5 @@
 ---
+import css from "../styles/global.css?inline";
 interface Props { title: string; activeNav?: string; }
 const { title, activeNav = "" } = Astro.props;
 const nav = [
@@ -15,14 +16,20 @@ const nav = [
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles/global.css" />
+  <style set:html={css}></style>
 </head>
 <body>
   <div class="app-shell">
     <nav class="navbar">
       <div class="navbar-inner">
         <a href="/" class="navbar-brand">
-          <div class="navbar-logo">C</div>
+          <div class="navbar-logo">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+          </div>
           <div class="navbar-name">
             <div>eTouch Computers</div>
             <div class="navbar-sub">Point of Sale</div>
@@ -42,7 +49,7 @@ const nav = [
     </nav>
     <main class="main-wrap"><slot /></main>
     <footer style="text-align:center;padding:1.5rem;color:var(--muted);font-size:.78rem;border-top:1px solid var(--border);background:var(--white)">
-      2024 eTouch Computers &mdash; eTouchPOS
+      &copy; 2024 eTouch Computers &mdash; eTouchPOS
     </footer>
   </div>
 </body>
