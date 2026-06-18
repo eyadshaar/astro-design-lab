@@ -23,13 +23,7 @@ const nav = [
     <nav class="navbar">
       <div class="navbar-inner">
         <a href="/" class="navbar-brand">
-          <div class="navbar-logo">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-              <line x1="8" y1="21" x2="16" y2="21"></line>
-              <line x1="12" y1="17" x2="12" y2="21"></line>
-            </svg>
-          </div>
+          <img src="/logo.jpg" alt="eTouch" style="height:36px;width:auto;border-radius:8px;object-fit:contain">
           <div class="navbar-name">
             <div>eTouch Computers</div>
             <div class="navbar-sub">Point of Sale</div>
@@ -45,8 +39,9 @@ const nav = [
             </li>
           ))}
         </ul>
-      </div>
-    </nav>
+                <form method="POST" action="/api/logout" style="margin:0"><button type="submit" style="background:transparent;border:1px solid rgba(255,255,255,0.4);color:rgba(255,255,255,0.8);padding:.4rem .9rem;border-radius:8px;cursor:pointer;font-size:.8rem;font-weight:500">Logout</button></form>
+              </div>
+            </nav>
     <main class="main-wrap"><slot /></main>
     <footer style="text-align:center;padding:1.5rem;color:var(--muted);font-size:.78rem;border-top:1px solid var(--border);background:var(--white)">
       &copy; 2024 eTouch Computers &mdash; eTouchPOS

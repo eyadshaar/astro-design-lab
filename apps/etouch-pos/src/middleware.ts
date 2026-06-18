@@ -1,6 +1,27 @@
 import { defineMiddleware } from "astro:middleware";
 
+// In Cloudflare Pages, D1/KV bindings are available on globalThis
+// We must inject them into runtime.env BEFORE the auth check runs
+function getD1Env(): Record<string, any> {
+  // Cloudflare Pages binds D1/KV/etc on globalThis as named properties
+  const env: Record<string, any> = {};
+  // DB is the D1 binding name from wrangler.toml
+  if (typeof (globalThis as any).DB !== 'undefined') {
+    env.DB = (globalThis as any).DB;
+  }
+  return env;
+}
+
 export const onRequest = defineMiddleware(async (context, next) => {
+  // Inject actual Cloudflare bindings into runtime.env
+  // This runs BEFORE the auth middleware and fixes the process.env=[] issue
+  if (!(context.locals as any).runtime) {
+    (context.locals as any).runtime = {};
+  }
+  if (!(context.locals as any).runtime.env || Object.keys((context.locals as any).runtime.env).length === 0) {
+    (context.locals as any).runtime.env = getD1Env();
+  }
+
   const { pathname } = context.url;
 
   if (
