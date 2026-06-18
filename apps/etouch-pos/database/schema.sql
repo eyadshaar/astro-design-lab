@@ -75,6 +75,19 @@ CREATE TABLE IF NOT EXISTS settings (
   value TEXT
 );
 
+
+-- Auth sessions (simple password-based login)
+CREATE TABLE IF NOT EXISTS auth_sessions (
+  id        INTEGER PRIMARY KEY AUTOINCREMENT,
+  password  TEXT NOT NULL,
+  token     TEXT NOT NULL UNIQUE,
+  label     TEXT DEFAULT 'Default',
+  created_at INTEGER DEFAULT (unixepoch())
+);
+
+-- Default password: etouch2024  —  CHANGE THIS after first login!
+INSERT OR IGNORE INTO auth_sessions (password, token, label) VALUES
+  ('etouch2024', 'etouch-session-2024', 'Default');
 -- Seed default categories
 INSERT OR IGNORE INTO categories (name) VALUES
   ('GPUs'), ('CPUs'), ('RAM'), ('Storage'), ('Motherboards'),
