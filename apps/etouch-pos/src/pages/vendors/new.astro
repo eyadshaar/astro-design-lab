@@ -1,0 +1,49 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+const db = (Astro.locals as any).runtime?.env?.DB;
+const error = new URL(Astro.request.url).searchParams.get("error") || "";
+---
+<BaseLayout title="Add Vendor — eTouchPOS" activeNav="vendors">
+  <div class="page-header"><h2>Add Vendor</h2><a href="/vendors" class="btn btn-secondary">+ Back</a></div>
+  <div style="max-width:640px">
+    {error && <div class="alert alert-danger">{error.replace(/\+/g," ")}</div>}
+    <div class="card">
+      <div class="card-header">Vendor Information</div>
+      <div class="card-body">
+        <form method="POST" action="/api/vendors">
+          <input type="hidden" name="action" value="create" />
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem">
+            <div class="form-group" style="grid-column:1/-1">
+              <label class="form-label">Vendor Name *</label>
+              <input class="form-control" name="name" required placeholder="e.g. Acme Supplies Pty Ltd" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Contact Person</label>
+              <input class="form-control" name="contact_person" placeholder="e.g. Jane Smith" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone</label>
+              <input class="form-control" name="phone" type="tel" placeholder="e.g. 0412 345 678" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input class="form-control" name="email" type="email" placeholder="e.g. orders@acme.com.au" />
+            </div>
+            <div class="form-group" style="grid-column:1/-1">
+              <label class="form-label">Address</label>
+              <textarea class="form-control" name="address" rows="2" placeholder="Street, Suburb, State, Postcode"></textarea>
+            </div>
+            <div class="form-group" style="grid-column:1/-1">
+              <label class="form-label">Notes</label>
+              <textarea class="form-control" name="notes" rows="3" placeholder="Payment terms, delivery notes, etc."></textarea>
+            </div>
+          </div>
+          <div style="margin-top:1.5rem;display:flex;gap:1rem">
+            <button type="submit" class="btn btn-primary btn-lg">+ Add Vendor</button>
+            <a href="/vendors" class="btn btn-secondary btn-lg">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

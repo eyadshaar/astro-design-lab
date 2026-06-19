@@ -1,0 +1,124 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import type { D1Database } from "@cloudflare/workers-types";
+interface Props { env: { DB: D1Database } }
+const { env } = Astro.props as Props;
+const id = new URL(Astro.request.url).pathname.split("/").pop();
+let customer: any = null;
+let invoices: any[] = [];
+try {
+  const [cr, ir] = await Promise.all([
+    env.DB.prepare("SELECT * FROM customers WHERE id=?").bind(id).first(),
+    env.DB.prepare("SELECT i.*, c.name as customer_name FROM invoices i LEFT JOIN customers c ON i.customer_id=c.id WHERE i.customer_id=? ORDER BY i.created_at DESC LIMIT 10").bind(id).all(),
+  ]);
+  customer = cr;
+  invoices = ir.results || [];
+} catch(e) {}
+if (!customer) return Astro.redirect("/customers");
+const fmt = (n: number) => "$"+Number(n||0).toFixed(2);
+const fmtD = (ts: number) => ts ? new Date(ts*1000).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}) : "—";
+const totalPaid = invoices.filter((i: any)=>i.status==="paid").reduce((s:number,i:any)=>s+i.total,0);
+const error = new URL(Astro.request.url).searchParams.get("error") || "";
+---
+<BaseLayout title={"Edit "+customer.name+" — eTouchPOS"} activeNav="customers">
+  {error && <div class="alert alert-danger">{error.replace(/\+/g," ")}</div>}
+  <div class="page-header">
+    <h2>{customer.name}</h2>
+    <div style="display:flex;gap:.75rem">
+      <a href="/customers" class="btn btn-secondary">+ Back</a>
+      <form method="POST" action={"/api/customers?action=delete&id="+customer.id} onsubmit="return confirm('Delete this customer? Cannot be undone.')">
+        <button type="submit" class="btn btn-danger">Delete</button>
+      </form>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 320px;gap:1.5rem;align-items:start">
+    <div>
+      <div class="card" style="margin-bottom:1.5rem">
+        <div class="card-header">Edit Customer</div>
+        <div class="card-body">
+          <form method="POST" action={"/api/customers?action=update&id="+customer.id}>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem">
+              <div class="form-group" style="grid-column:1/-1">
+                <label class="form-label">Full Name *</label>
+                <input class="form-control" name="name" value={customer.name||""} required />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Phone</label>
+                <input class="form-control" name="phone" type="tel" value={customer.phone||""} />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email</label>
+                <input class="form-control" name="email" type="email" value={customer.email||""} />
+              </div>
+              <div class="form-group" style="grid-column:1/-1">
+                <label class="form-label">Address</label>
+                <textarea class="form-control" name="address" rows="2">{customer.address||""}</textarea>
+              </div>
+            </div>
+            <div style="margin-top:1.5rem">
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      {invoices.length > 0 && (
+        <div class="card">
+          <div class="card-header">Recent Invoices ({invoices.length})</div>
+          <div class="card-body" style="padding:0">
+            <div style="overflow-x:auto">
+              <table class="data-table" style="margin:0">
+                <thead><tr><th>Invoice #</th><th class="text-right">Total</th><th>Status</th><th>Date</th><th></th></tr></thead>
+                <tbody>
+                  {invoices.map((inv: any) => (
+                    <tr>
+                      <td><a href={"/invoices/"+inv.id} style="font-weight:700;color:var(--navy);font-family:monospace">{inv.invoice_no}</a></td>
+                      <td class="text-right font-bold">{fmt(inv.total)}</td>
+                      <td><span class={"status-pill pill-"+inv.status}>{inv.status}</span></td>
+                      <td class="text-muted" style="font-size:.82rem">{fmtD(inv.created_at)}</td>
+                      <td><a href={"/invoices/"+inv.id} class="btn btn-secondary btn-sm">View</a></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+
+    <div>
+      <div class="card">
+        <div class="card-header">Contact Details</div>
+        <div class="card-body">
+          <div style="margin-bottom:1.25rem">
+            <div class="stat-label">Phone</div>
+            <div style="font-size:1rem;font-weight:600">{customer.phone||"—"}</div>
+          </div>
+          <div style="margin-bottom:1.25rem">
+            <div class="stat-label">Email</div>
+            <div style="font-size:1rem;font-weight:600">{customer.email||"—"}</div>
+          </div>
+          <div style="margin-bottom:1.25rem">
+            <div class="stat-label">Address</div>
+            <div style="font-size:.9rem;color:var(--muted);line-height:1.5">{customer.address||"—"}</div>
+          </div>
+          <div style="border-top:1px solid var(--border);padding-top:1rem;margin-top:.5rem">
+            <div class="stat-label">Customer Since</div>
+            <div style="font-size:1rem;font-weight:600">{fmtD(customer.created_at)}</div>
+          </div>
+        </div>
+      </div>
+      {invoices.length > 0 && (
+        <div class="card" style="margin-top:1.25rem">
+          <div class="card-header">At a Glance</div>
+          <div class="card-body">
+            <div style="margin-bottom:1rem"><div class="stat-label">Total Invoices</div><div style="font-size:1.2rem;font-weight:800;color:var(--navy)">{invoices.length}</div></div>
+            <div><div class="stat-label">Total Paid</div><div style="font-size:1.1rem;font-weight:700;color:var(--success)">{fmt(totalPaid)}</div></div>
+          </div>
+        </div>
+      )}
+    </div>
+  </div>
+</BaseLayout>

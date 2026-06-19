@@ -1,0 +1,62 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import type { D1Database } from "@cloudflare/workers-types";
+interface Props { env: { DB: D1Database } }
+const { env } = Astro.props as Props;
+let customers: any[] = [];
+try {
+  const r = await env.DB.prepare("SELECT * FROM customers ORDER BY name").all();
+  customers = r.results || [];
+} catch(e) {}
+const sf = new URL(Astro.request.url).searchParams.get("search") || "";
+const filtered = customers.filter((c: any) => {
+  if (!sf) return true;
+  const s = sf.toLowerCase();
+  return (c.name||"").toLowerCase().includes(s) || (c.phone||"").includes(s) || (c.email||"").toLowerCase().includes(s);
+});
+const created = Astro.request.url.includes("created=1");
+const updated = Astro.request.url.includes("updated=1");
+const deleted = Astro.request.url.includes("deleted=1");
+const fmtD = (ts: number) => ts ? new Date(ts*1000).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}) : "—";
+---
+<BaseLayout title="Customers — eTouchPOS" activeNav="customers">
+  {created && <div class="alert alert-success">Customer added!</div>}
+  {updated && <div class="alert alert-success">Customer updated!</div>}
+  {deleted && <div class="alert alert-success">Customer deleted.</div>}
+  <div class="page-header"><h2>Customers</h2><a href="/customers/new" class="btn btn-primary">+ Add Customer</a></div>
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-label">Total Customers</div><div class="stat-value">{customers.length}</div></div>
+    <div class="stat-card"><div class="stat-label">Showing</div><div class="stat-value">{filtered.length}{filtered.length!==customers.length?" of "+customers.length:""}</div></div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <span>{filtered.length} customer{filtered.length!==1?"s":""}</span>
+      <form method="GET" class="flex gap-1 align-center">
+        <input class="form-control" name="search" value={sf} placeholder="Search name, phone, email..." style="max-width:260px;height:34px;padding:0 .75rem" />
+        <button type="submit" class="btn btn-secondary btn-sm">Search</button>
+        {sf && <a href="/customers" class="btn btn-secondary btn-sm">Clear</a>}
+      </form>
+    </div>
+    {filtered.length === 0 ? (
+      <div class="card-body"><div class="empty-state"><div class="empty-icon">C</div><div style="font-weight:700;margin-bottom:.5rem">{customers.length===0?"No customers yet":"No matches"}</div><div style="margin-bottom:1rem">{customers.length===0?"Add your first customer to get started":"Try different search terms"}</div>{customers.length===0 ? <a href="/customers/new" class="btn btn-primary">+ Add First Customer</a> : <a href="/customers" class="btn btn-secondary">Clear Search</a>}</div></div>
+    ) : (
+      <div style="overflow-x:auto">
+        <table class="data-table">
+          <thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Address</th><th>Added</th><th></th></tr></thead>
+          <tbody>
+            {filtered.map((c: any) => (
+              <tr>
+                <td><a href={"/customers/"+c.id} style="font-weight:600;color:var(--navy);text-decoration:none">{c.name}</a></td>
+                <td class="text-muted">{c.phone||"—"}</td>
+                <td class="text-muted">{c.email||"—"}</td>
+                <td class="text-muted" style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{c.address||"—"}</td>
+                <td class="text-muted" style="font-size:.82rem">{fmtD(c.created_at)}</td>
+                <td><a href={"/customers/"+c.id} class="btn btn-secondary btn-sm">Edit</a></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )}
+  </div>
+</BaseLayout>

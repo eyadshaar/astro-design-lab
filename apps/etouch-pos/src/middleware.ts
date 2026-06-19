@@ -1,25 +1,26 @@
 import { defineMiddleware } from "astro:middleware";
 
-// In Cloudflare Pages, D1/KV bindings are available on globalThis
-// We must inject them into runtime.env BEFORE the auth check runs
-function getD1Env(): Record<string, any> {
-  // Cloudflare Pages binds D1/KV/etc on globalThis as named properties
-  const env: Record<string, any> = {};
-  // DB is the D1 binding name from wrangler.toml
-  if (typeof (globalThis as any).DB !== 'undefined') {
-    env.DB = (globalThis as any).DB;
+// Cloudflare injects bindings into globalThis.runtime.env
+// This is set by the Cloudflare server entrypoint before rendering
+function getCloudflareEnv(): Record<string, any> {
+  const cfRuntime = (globalThis as any).runtime;
+  if (cfRuntime?.env) {
+    return cfRuntime.env;
   }
-  return env;
+  // Fallback: check if Cloudflare bindings are directly on globalThis
+  // (some Cloudflare environments expose them this way)
+  return (globalThis as any);
 }
 
 export const onRequest = defineMiddleware(async (context, next) => {
-  // Inject actual Cloudflare bindings into runtime.env
-  // This runs BEFORE the auth middleware and fixes the process.env=[] issue
+  // Inject Cloudflare env with D1 bindings into context.locals
+  // This makes env.DB available to API routes via ctx.locals.runtime.env.DB
   if (!(context.locals as any).runtime) {
     (context.locals as any).runtime = {};
   }
-  if (!(context.locals as any).runtime.env || Object.keys((context.locals as any).runtime.env).length === 0) {
-    (context.locals as any).runtime.env = getD1Env();
+  const existingEnv = (context.locals as any).runtime.env;
+  if (!existingEnv || Object.keys(existingEnv).length === 0) {
+    (context.locals as any).runtime.env = getCloudflareEnv();
   }
 
   const { pathname } = context.url;
@@ -33,24 +34,15 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return next();
   }
 
-  const session = context.cookies.get("etouch_session")?.value;
+  const session = context.cookies.get("pos_auth")?.value;
   if (!session) {
     return context.redirect("/login");
   }
 
-  try {
-    const db = (context.locals as any).runtime?.env?.DB;
-    if (db) {
-      const row = await db
-        .prepare("SELECT 1 FROM auth_sessions WHERE token = ?")
-        .bind(session)
-        .first();
-      if (!row) {
-        context.cookies.delete("etouch_session", { path: "/" });
-        return context.redirect("/login");
-      }
-    }
-  } catch(e) {}
+  if (!session || session !== "1") {
+    context.cookies.delete("pos_auth", { path: "/" });
+    return context.redirect("/login");
+  }
 
   return next();
 });

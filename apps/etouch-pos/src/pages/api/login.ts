@@ -1,35 +1,6 @@
 import type { APIRoute } from "astro";
 
-// Use the CF D1 REST API directly via fetch — bypasses env binding issues
-// Account ID and D1 DB ID are hardcoded here (available in Cloudflare dashboard)
-const CF_ACCOUNT_ID = "a3cedad2b8fe568c065ae8ed558b965e";
-const D1_DB_ID = "c81d52f7-c2ac-4dd6-9b3e-308c8ad5f36a";
-
-async function getD1Client() {
-  const token = process.env.CLOUDFLARE_API_TOKEN || process.env.CF_API_TOKEN;
-  return {
-    async exec(sql: string, params?: unknown[]) {
-      const body: any = { sql };
-      if (params?.length) body.params = params;
-      const res = await fetch(
-        `https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/d1/database/${D1_DB_ID}/query`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(body),
-        }
-      );
-      const data = await res.json();
-      if (!data.success) throw new Error(JSON.stringify(data.errors));
-      return data.result;
-    }
-  };
-}
-
-export const POST: APIRoute = async ({ request, cookies }) => {
+export const POST: APIRoute = async ({ request, cookies, locals }) => {
   const form = await request.formData();
   const password = form.get("password")?.toString().trim();
 
@@ -41,12 +12,34 @@ export const POST: APIRoute = async ({ request, cookies }) => {
   }
 
   try {
-    const db = await getD1Client();
-    const result = await db.exec(
-      "SELECT value FROM settings WHERE key = 'password' LIMIT 1"
-    );
+    // Try multiple ways to access D1 binding
+    // 1. From ctx.locals.runtime.env (set by Cloudflare middleware)
+    const runtimeEnv = (locals as any).runtime?.env;
+    // 2. Direct env from ctx.locals
+    const directEnv = (locals as any).env;
+    // 3. From process.env (fallback)
+    const processDb = (process.env as any).DB;
 
-    const storedHash = result[0]?.results?.[0]?.value;
+    // Pick whichever has the DB
+    const db = runtimeEnv?.DB ?? directEnv?.DB ?? processDb;
+
+    if (!db) {
+      return new Response(JSON.stringify({
+        error: "Database not configured",
+        runtimeEnvKeys: runtimeEnv ? Object.keys(runtimeEnv) : [],
+        directEnvKeys: directEnv ? Object.keys(directEnv) : [],
+        processEnvKeys: Object.keys(process.env).filter((k: string) => k.includes('DB') || k.includes('D1')),
+      }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    const result = await db
+      .prepare("SELECT value FROM settings WHERE key = 'password' LIMIT 1")
+      .first();
+
+    const storedHash = result?.value as string | undefined;
 
     if (!storedHash || password !== storedHash) {
       return new Response(JSON.stringify({ error: "Invalid password" }), {

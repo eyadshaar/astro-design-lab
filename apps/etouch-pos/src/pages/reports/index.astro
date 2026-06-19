@@ -1,0 +1,233 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import type { D1Database } from "@cloudflare/workers-types";
+interface Props { env: { DB: D1Database } }
+const { env } = Astro.props as Props;
+
+const db = (Astro.locals as any).runtime?.env?.DB;
+const fmt = (n) => "$" + Number(n || 0).toFixed(2);
+const fmtD = (ts) => ts ? new Date(ts * 1000).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "—";
+
+const today = new Date();
+const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1).toISOString().split("T")[0];
+const todayStr = today.toISOString().split("T")[0];
+
+const fromDate = Astro.request.url.includes("from=")
+  ? new URL(Astro.request.url).searchParams.get("from")
+  : startOfMonth;
+const toDate = Astro.request.url.includes("to=")
+  ? new URL(Astro.request.url).searchParams.get("to")
+  : todayStr;
+
+// --- SALES REPORT ---
+let salesData: any[] = [];
+let salesTotals: any = { count: 0, subtotal: 0, tax: 0, total: 0 };
+try {
+  const salesQuery = db
+    .prepare(`SELECT i.id, i.invoice_no, i.subtotal, i.tax, i.total, i.status, i.created_at, c.name as customer_name
+               FROM invoices i LEFT JOIN customers c ON i.customer_id=c.id
+               WHERE i.status='paid' AND date(i.created_at/1000,'unixepoch') BETWEEN ? AND ?
+               ORDER BY i.created_at DESC`)
+    .bind(fromDate, toDate);
+  const res = await salesQuery.all();
+  salesData = res.results || [];
+  salesTotals = {
+    count: salesData.length,
+    subtotal: salesData.reduce((s, r) => s + (r.subtotal || 0), 0),
+    tax: salesData.reduce((s, r) => s + (r.tax || 0), 0),
+    total: salesData.reduce((s, r) => s + (r.total || 0), 0),
+  };
+} catch (e) {}
+
+// --- INVENTORY REPORT ---
+let inventoryData: any[] = [];
+try {
+  const invQuery = db
+    .prepare(`SELECT p.id, p.sku, p.name, p.stock_qty, p.low_stock_threshold, p.cost_price, p.sell_price, c.name as category
+              FROM products p LEFT JOIN categories c ON p.category_id=c.id
+              ORDER BY p.stock_qty ASC, p.name ASC`);
+  const res = await invQuery.all();
+  inventoryData = res.results || [];
+} catch (e) {}
+
+// --- CUSTOMER REPORT ---
+let customerData: any[] = [];
+try {
+  const custQuery = db
+    .prepare(`SELECT c.id, c.name, c.email, COUNT(i.id) as invoice_count, SUM(i.total) as total_revenue
+              FROM customers c LEFT JOIN invoices i ON c.id=i.customer_id AND i.status='paid'
+              WHERE i.id IS NOT NULL
+              GROUP BY c.id, c.name, c.email
+              ORDER BY total_revenue DESC
+              LIMIT 50`);
+  const res = await custQuery.all();
+  customerData = res.results || [];
+} catch (e) {}
+
+const stockClass = (qty, threshold) =>
+  qty === 0 ? "badge-out" : qty <= (threshold || 5) ? "badge-low" : "badge-ok";
+
+const activeTab = new URL(Astro.request.url).searchParams.get("tab") || "sales";
+---
+
+<BaseLayout title="Reports — eTouchPOS" activeNav="reports">
+  <div class="page-header"><h2>Reports</h2></div>
+
+  <div class="tabs">
+    <a href="?tab=sales" class={"tab-btn" + (activeTab === "sales" ? " active" : "")}>Sales Report</a>
+    <a href="?tab=inventory" class={"tab-btn" + (activeTab === "inventory" ? " active" : "")}>Inventory Report</a>
+    <a href="?tab=customers" class={"tab-btn" + (activeTab === "customers" ? " active" : "")}>Customer Report</a>
+  </div>
+
+  <!-- SALES REPORT -->
+  {activeTab === "sales" && (
+    <div class="card">
+      <div class="card-header">Sales Report</div>
+      <div class="card-body">
+        <form method="GET" class="flex gap-1 align-center" style="flex-wrap:wrap;margin-bottom:1.5rem">
+          <input type="hidden" name="tab" value="sales" />
+          <label class="form-label" style="margin:0;font-weight:600">From:</label>
+          <input type="date" name="from" value={fromDate} class="form-control" style="max-width:160px;height:34px;padding:0 .75rem" />
+          <label class="form-label" style="margin:0;font-weight:600">To:</label>
+          <input type="date" name="to" value={toDate} class="form-control" style="max-width:160px;height:34px;padding:0 .75rem" />
+          <button type="submit" class="btn btn-primary btn-sm">Filter</button>
+        </form>
+
+        <div class="stats-row" style="margin-bottom:1.5rem">
+          <div class="stat-card"><div class="stat-label">Invoices</div><div class="stat-value">{salesTotals.count}</div></div>
+          <div class="stat-card"><div class="stat-label">Subtotal</div><div class="stat-value">{fmt(salesTotals.subtotal)}</div></div>
+          <div class="stat-card"><div class="stat-label">Tax</div><div class="stat-value">{fmt(salesTotals.tax)}</div></div>
+          <div class="stat-card"><div class="stat-label" style="color:var(--navy);font-weight:700">Total Revenue</div><div class="stat-value" style="color:var(--navy)">{fmt(salesTotals.total)}</div></div>
+        </div>
+
+        {salesData.length === 0 ? (
+          <div class="empty-state">
+            <div class="empty-icon">R</div>
+            <div style="font-weight:700;margin-bottom:.5rem">No sales data</div>
+            <div>Try a different date range</div>
+          </div>
+        ) : (
+          <div style="overflow-x:auto">
+            <table class="data-table">
+              <thead><tr><th>Invoice</th><th>Customer</th><th class="text-right">Subtotal</th><th class="text-right">Tax</th><th class="text-right">Total</th><th>Date</th></tr></thead>
+              <tbody>
+                {salesData.map((inv) => (
+                  <tr>
+                    <td><span style="font-weight:700;color:var(--navy);font-family:monospace">{inv.invoice_no}</span></td>
+                    <td>{inv.customer_name || "—"}</td>
+                    <td class="text-right">{fmt(inv.subtotal)}</td>
+                    <td class="text-right">{fmt(inv.tax)}</td>
+                    <td class="text-right font-bold">{fmt(inv.total)}</td>
+                    <td class="text-muted">{fmtD(inv.created_at)}</td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr style="background:var(--navy);color:#fff">
+                  <td colspan="2" style="font-weight:700">TOTAL</td>
+                  <td class="text-right font-bold">{fmt(salesTotals.subtotal)}</td>
+                  <td class="text-right font-bold">{fmt(salesTotals.tax)}</td>
+                  <td class="text-right font-bold">{fmt(salesTotals.total)}</td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  )}
+
+  <!-- INVENTORY REPORT -->
+  {activeTab === "inventory" && (
+    <div class="card">
+      <div class="card-header">Inventory Report</div>
+      <div class="card-body">
+        {inventoryData.length === 0 ? (
+          <div class="empty-state">
+            <div class="empty-icon">I</div>
+            <div style="font-weight:700;margin-bottom:.5rem">No products</div>
+            <div>Add products to see inventory report</div>
+          </div>
+        ) : (
+          <div style="overflow-x:auto">
+            <table class="data-table">
+              <thead><tr><th>SKU</th><th>Product</th><th>Category</th><th class="text-right">Cost</th><th class="text-right">Sell</th><th class="text-right">Stock</th><th class="text-right">Value</th></tr></thead>
+              <tbody>
+                {inventoryData.map((p) => (
+                  <tr>
+                    <td style="font-family:monospace;font-size:.8rem;color:var(--muted)">{p.sku || "—"}</td>
+                    <td><span style="font-weight:600;color:var(--navy)">{p.name}</span></td>
+                    <td class="text-muted">{p.category || "—"}</td>
+                    <td class="text-right">{fmt(p.cost_price)}</td>
+                    <td class="text-right font-bold">{fmt(p.sell_price)}</td>
+                    <td class="text-right"><span class={"badge " + stockClass(p.stock_qty || 0, p.low_stock_threshold)}>{p.stock_qty || 0}</span></td>
+                    <td class="text-right">{fmt((p.sell_price || 0) * (p.stock_qty || 0))}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  )}
+
+  <!-- CUSTOMER REPORT -->
+  {activeTab === "customers" && (
+    <div class="card">
+      <div class="card-header">Customer Report</div>
+      <div class="card-body">
+        {customerData.length === 0 ? (
+          <div class="empty-state">
+            <div class="empty-icon">C</div>
+            <div style="font-weight:700;margin-bottom:.5rem">No customer data</div>
+            <div>Customers with paid invoices will appear here</div>
+          </div>
+        ) : (
+          <div style="overflow-x:auto">
+            <table class="data-table">
+              <thead><tr><th>Customer</th><th>Email</th><th class="text-right">Invoices</th><th class="text-right">Total Revenue</th></tr></thead>
+              <tbody>
+                {customerData.map((c) => (
+                  <tr>
+                    <td><span style="font-weight:600;color:var(--navy)">{c.name}</span></td>
+                    <td class="text-muted">{c.email || "—"}</td>
+                    <td class="text-right">{c.invoice_count}</td>
+                    <td class="text-right font-bold" style="color:var(--navy)">{fmt(c.total_revenue)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  )}
+</BaseLayout>
+
+<style>
+  .tabs {
+    display: flex;
+    gap: 0.25rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border);
+  }
+  .tab-btn {
+    padding: 0.75rem 1.25rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-decoration: none;
+    border-radius: 0.375rem 0.375rem 0 0;
+    transition: all 0.15s;
+  }
+  .tab-btn:hover {
+    color: var(--navy);
+    background: rgba(30, 58, 110, 0.05);
+  }
+  .tab-btn.active {
+    color: var(--navy);
+    background: var(--navy);
+    color: #fff;
+  }
+</style>

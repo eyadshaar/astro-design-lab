@@ -1,0 +1,43 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import type { D1Database } from "@cloudflare/workers-types";
+interface Props { env: { DB: D1Database } }
+const { env } = Astro.props as Props;
+const error = new URL(Astro.request.url).searchParams.get("error") || "";
+---
+<BaseLayout title="Add Customer — eTouchPOS" activeNav="customers">
+  <div class="page-header"><h2>Add Customer</h2><a href="/customers" class="btn btn-secondary">+ Back</a></div>
+  <div style="max-width:640px">
+    {error && <div class="alert alert-danger">{error.replace(/\+/g," ")}</div>}
+    <div class="card">
+      <div class="card-header">Customer Information</div>
+      <div class="card-body">
+        <form method="POST" action="/api/customers">
+          <input type="hidden" name="action" value="create" />
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem">
+            <div class="form-group" style="grid-column:1/-1">
+              <label class="form-label">Full Name *</label>
+              <input class="form-control" name="name" required placeholder="e.g. John Doe" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone</label>
+              <input class="form-control" name="phone" type="tel" placeholder="e.g. 0412 345 678" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input class="form-control" name="email" type="email" placeholder="e.g. john@example.com" />
+            </div>
+            <div class="form-group" style="grid-column:1/-1">
+              <label class="form-label">Address</label>
+              <textarea class="form-control" name="address" rows="2" placeholder="Street, Suburb, State, Postcode"></textarea>
+            </div>
+          </div>
+          <div style="margin-top:1.5rem;display:flex;gap:1rem">
+            <button type="submit" class="btn btn-primary btn-lg">+ Add Customer</button>
+            <a href="/customers" class="btn btn-secondary btn-lg">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
