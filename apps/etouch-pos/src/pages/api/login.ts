@@ -1,67 +1,36 @@
 import type { APIRoute } from "astro";
 
-export const POST: APIRoute = async ({ request, cookies, locals }) => {
+const DEFAULT_PASSWORD = "etouch2024";
+
+export const POST: APIRoute = async ({ request, cookies, redirect, locals }) => {
   const form = await request.formData();
   const password = form.get("password")?.toString().trim();
 
   if (!password) {
-    return new Response(JSON.stringify({ error: "Password required" }), {
-      status: 400,
-      headers: { "Content-Type": "application/json" },
-    });
+    return redirect("/login?error=1");
   }
 
+  let storedPassword = DEFAULT_PASSWORD;
   try {
-    // Try multiple ways to access D1 binding
-    // 1. From ctx.locals.runtime.env (set by Cloudflare middleware)
     const runtimeEnv = (locals as any).runtime?.env;
-    // 2. Direct env from ctx.locals
-    const directEnv = (locals as any).env;
-    // 3. From process.env (fallback)
-    const processDb = (process.env as any).DB;
-
-    // Pick whichever has the DB
-    const db = runtimeEnv?.DB ?? directEnv?.DB ?? processDb;
-
-    if (!db) {
-      return new Response(JSON.stringify({
-        error: "Database not configured",
-        runtimeEnvKeys: runtimeEnv ? Object.keys(runtimeEnv) : [],
-        directEnvKeys: directEnv ? Object.keys(directEnv) : [],
-        processEnvKeys: Object.keys(process.env).filter((k: string) => k.includes('DB') || k.includes('D1')),
-      }), {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      });
+    const db = runtimeEnv?.DB;
+    if (db) {
+      const result = await db
+        .prepare("SELECT value FROM settings WHERE key = 'password' LIMIT 1")
+        .first();
+      if (result?.value) storedPassword = result.value as string;
     }
-
-    const result = await db
-      .prepare("SELECT value FROM settings WHERE key = 'password' LIMIT 1")
-      .first();
-
-    const storedHash = result?.value as string | undefined;
-
-    if (!storedHash || password !== storedHash) {
-      return new Response(JSON.stringify({ error: "Invalid password" }), {
-        status: 401,
-        headers: { "Content-Type": "application/json" },
-      });
-    }
-
-    cookies.set("pos_auth", "1", {
-      path: "/",
-      httpOnly: true,
-      sameSite: "lax",
-      maxAge: 60 * 60 * 24 * 7, // 1 week
-    });
-
-    return new Response(JSON.stringify({ ok: true }), {
-      headers: { "Content-Type": "application/json" },
-    });
-  } catch (err: any) {
-    return new Response(JSON.stringify({ error: err.message }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    });
+  } catch {
+    // D1 not available — use default
   }
+
+  if (password !== storedPassword) {
+    return redirect("/login?error=1");
+  }
+
+  const headers = new Headers({
+    "Set-Cookie": `pos_auth=1; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800`,
+    "Location": "https://etouch-pos.etouchcomputers.workers.dev/",
+  });
+  return new Response(null, { status: 302, headers });
 };
